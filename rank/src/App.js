@@ -1,28 +1,25 @@
 import React from 'react';
 import './App.css';
 import Header from './components/pages/header';
+import Demo from './components/pages/demo';
 
-
-class Main extends React.Component {
-  constructor() {
-    super()
-    this.state = {
-      currentPage: "home"
-    }
-  }
-
-render () {
-    return <div className="App">
-      <Header
-        title = {this.state.currentPage}
-      />
+function Main(){
+  return (
+    <div>
+      <Header title={"demo"}/>
+      {getPage()}
     </div>
-  }
+  )
 }
+
+function getPage() {
+  return <Demo/>
+}
+
 
 function App() {
   return (
-      <Main/>
+    <Main/>
   );
 }
 
