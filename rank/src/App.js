@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
-import Header from './components/pages/header';
-import Demo from './components/pages/demo';
+import Header from './pages/header';
+import Demo from './pages/demo';
 
 function Main(){
   return (

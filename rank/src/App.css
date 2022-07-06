@@ -25,7 +25,9 @@
 
 .App-demo {
   background-color:#fff5fe;
-  
+  padding-left: 7rem;
+  padding-right: 7rem;
+  padding-top: 3rem;
 }
 
 .bgcolor {
