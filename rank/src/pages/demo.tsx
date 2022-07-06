@@ -1,7 +1,7 @@
 import React from 'react';
 import BlobManager from '../components/blobs/blobManager';
 
-function Demo(props) {
+function Demo() {
     return (
         <div>
             <BlobManager 

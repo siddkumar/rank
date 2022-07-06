@@ -1,6 +1,10 @@
 import React from 'react';
 
-function Header(props) {
+export interface HeaderProps {
+    title: string
+}
+
+function Header( props : HeaderProps) {
     return (
         <div className="App-header">
             <p>
