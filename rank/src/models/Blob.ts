@@ -1,4 +1,4 @@
 export default interface Blob {
-    blobName: string
-    rank: number
+  blobName: string;
+  rank: number;
 }

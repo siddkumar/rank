@@ -1,26 +1,23 @@
-import React from 'react';
-import './App.css';
-import Header from './pages/header';
-import Demo from './pages/demo';
+import React from "react";
+import "./App.css";
+import Header from "./pages/header";
+import Demo from "./pages/demo";
 
-function Main(){
+function Main() {
   return (
     <div>
-      <Header title={"demo"}/>
+      <Header title={"demo"} />
       {getPage()}
     </div>
-  )
+  );
 }
 
 function getPage() {
-  return <Demo/>
+  return <Demo />;
 }
 
-
 function App() {
-  return (
-    <Main/>
-  );
+  return <Main />;
 }
 
 export default App;

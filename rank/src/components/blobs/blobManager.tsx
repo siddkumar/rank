@@ -1,23 +1,27 @@
-import React, { useState } from 'react';
-import { DragDropContext, Droppable, Draggable, DropResult } from 'react-beautiful-dnd';
-import Blob from '../../models/Blob';
+import React, { useState } from "react";
+import {
+  DragDropContext,
+  Droppable,
+  Draggable,
+  DropResult,
+} from "react-beautiful-dnd";
+import Blob from "../../models/Blob";
 
 export interface BlobManagerProps {
-    blobs: Blob[]
+  blobs: Blob[];
 }
 
-function BlobManager (props : BlobManagerProps) {
+function BlobManager(props: BlobManagerProps) {
+  const defaultList = props.blobs.map((blob) => {
+    return blob.blobName;
+  });
+  const [blobList, setBloblist] = useState(defaultList);
 
-    const defaultList = props.blobs.map((blob) => { return blob.blobName; } )
-    const [blobList, setBloblist] = useState(defaultList);
-
-    return (
-        <div>
-            <DragDropContext onDragEnd={handleDrop}>
-                <Droppable droppableId="list-container">
+  return (
+    <div>
+      <DragDropContext onDragEnd={handleDrop}>
+        <Droppable droppableId="list-container">
           {(provided) => (
-
-
             <div
               className="list-container"
               {...provided.droppableProps}
@@ -41,30 +45,30 @@ function BlobManager (props : BlobManagerProps) {
             </div>
           )}
         </Droppable>
-
-            </DragDropContext>
-            {/* <ul>
+      </DragDropContext>
+      {/* <ul>
                 {getBlobs(blobList)}
             </ul> */}
-        </div>
-    );
+    </div>
+  );
 
-    function handleDrop(droppedItem: DropResult) {
-        var updatedList = [...blobList]
-        const [reorderedItem] = updatedList.splice(droppedItem.source.index, 1)
-        // Add dropped item
-        updatedList.splice(droppedItem!.destination!.index, 0, reorderedItem);
-        // Update State
-        setBloblist(updatedList);
-    }
+  function handleDrop(droppedItem: DropResult) {
+    var updatedList = [...blobList];
+    const [reorderedItem] = updatedList.splice(droppedItem.source.index, 1);
+    // Add dropped item
+    updatedList.splice(droppedItem!.destination!.index, 0, reorderedItem);
+    // Update State
+    setBloblist(updatedList);
+  }
 
-
-    function getBlobs(blobs: Blob[]){
-        blobs.sort((a,b) => { return a.rank - b.rank });
-        return blobs.map( (blob, index) => { 
-            return <li>{blob.blobName}</li>
-        })
-    }
+  function getBlobs(blobs: Blob[]) {
+    blobs.sort((a, b) => {
+      return a.rank - b.rank;
+    });
+    return blobs.map((blob, index) => {
+      return <li>{blob.blobName}</li>;
+    });
+  }
 }
 
-export default BlobManager
+export default BlobManager;

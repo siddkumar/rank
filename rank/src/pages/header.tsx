@@ -1,17 +1,15 @@
-import React from 'react';
+import React from "react";
 
 export interface HeaderProps {
-    title: string
+  title: string;
 }
 
-function Header( props : HeaderProps) {
-    return (
-        <div className="App-header">
-            <p>
-              Welcome to the {props.title} page.
-            </p>
-        </div>
-    )
+function Header(props: HeaderProps) {
+  return (
+    <div className="App-header">
+      <p>Welcome to the {props.title} page.</p>
+    </div>
+  );
 }
 
-export default Header
+export default Header;
