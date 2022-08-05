@@ -1,5 +1,6 @@
 node_modules
-*.json
+key.json
 .Rhistory
 rank-backend/env
-
+.prettierignore
+.prettierrc.json
