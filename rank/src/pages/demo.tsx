@@ -8,6 +8,7 @@ function Demo() {
         blobs={[
           { blobName: "Best", rank: 0 },
           { blobName: "Worst", rank: 1 },
+          { blobName: "Mid" , rank: 2}
         ]}
       />
     </div>

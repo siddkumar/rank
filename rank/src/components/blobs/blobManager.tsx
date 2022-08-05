@@ -18,7 +18,7 @@ function BlobManager(props: BlobManagerProps) {
   const [blobList, setBloblist] = useState(defaultList);
 
   return (
-    <div>
+    <>
       <DragDropContext onDragEnd={handleDrop}>
         <Droppable droppableId="list-container">
           {(provided) => (
@@ -46,10 +46,10 @@ function BlobManager(props: BlobManagerProps) {
           )}
         </Droppable>
       </DragDropContext>
-      {/* <ul>
-                {getBlobs(blobList)}
-            </ul> */}
-    </div>
+      <button onClick={() => {console.log(blobList)}}>
+        Save
+      </button>
+    </>
   );
 
   function handleDrop(droppedItem: DropResult) {
