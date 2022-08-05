@@ -1,0 +1,31 @@
+
+.app-header {
+  background-color: #a285f24d;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  font-size: calc(10px + 2vmin);
+  font-family: 'Caveat', cursive;
+  color: rgb(18, 24, 109);
+  padding-left:2rem;
+  padding-right:2rem;
+}
+
+.header-logo {
+  height: calc(10px + 2vmin);
+  padding-right:0.5rem;
+}
+
+.header-left,
+.header-right {
+  align-items: center;
+  display: flex;
+}
+
+.header-right a {
+  color:rgb(18,24,109);
+  padding-left:0.5rem;
+  padding-right:0.5rem;
+}
+
