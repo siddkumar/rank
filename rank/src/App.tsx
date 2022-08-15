@@ -8,18 +8,26 @@ import CreateFromExisting from "./pages/create/fromExisting";
 import { Route, Routes } from "react-router-dom";
 import Home from "./pages/home";
 import CreateFromScratch from "./pages/create/fromScratch";
+import Rank from "./pages/rank/rank";
 
 function App() {
   return (
     <div>
-      <Header/>
+      <Header />
       <Routes>
-        <Route path="/" element={<Home/>}></Route>
-        <Route path="demo" element={<Demo/>}></Route>
-        <Route path="create" element={<Create/>}></Route>
-        <Route path="create/fromNew" element={<CreateFromNew/>}></Route>
-        <Route path="create/fromExisting" element={<CreateFromExisting/>}></Route>
-        <Route path="create/fromScratch" element={<CreateFromScratch/>}></Route>
+        <Route path="/" element={<Home />}></Route>
+        <Route path="demo" element={<Demo />}></Route>
+        <Route path="create" element={<Create />}></Route>
+        <Route path="create/fromNew" element={<CreateFromNew />}></Route>
+        <Route
+          path="create/fromExisting"
+          element={<CreateFromExisting />}
+        ></Route>
+        <Route
+          path="create/fromScratch"
+          element={<CreateFromScratch />}
+        ></Route>
+        <Route path="rank/" element={<Rank />}></Route>
       </Routes>
     </div>
   );

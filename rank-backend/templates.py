@@ -30,3 +30,24 @@ def create():
 
     except Exception as e:
         return f"An Error Occured:{e}"
+
+
+@templatesAPI.route("/templates", methods=["GET"])
+def read():
+    try:
+        templateId = request.args.get('id')
+        if (templateId):
+            template = db.document(templateId).get().to_dict()
+            print(template['items'])
+            data = {
+                u'createdBy': 'og-user',
+                u'items': template['items'],
+                u'name': template['name'],
+                u'origin': template['origin'],
+                u'sourceUrl': template['sourceUrl']
+            }
+            return jsonify(data), 200
+        else:
+            return 400
+    except Exception as e:
+        return f"An Error Occured: {e}"

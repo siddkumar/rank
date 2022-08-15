@@ -6,9 +6,9 @@ function Demo() {
     <div>
       <BlobManager
         blobs={[
-          { blobName: "Best", rank: 0 },
-          { blobName: "Worst", rank: 1 },
-          { blobName: "Mid" , rank: 2}
+          { name: "Best", rank: 0 },
+          { name: "Worst", rank: 1 },
+          { name: "Mid", rank: 2 },
         ]}
       />
     </div>

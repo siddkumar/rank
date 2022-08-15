@@ -1,14 +1,13 @@
 import React from "react";
-import logo from "../resources/logo.png"
+import logo from "../resources/logo.png";
 
-export interface HeaderProps {
-}
+export interface HeaderProps {}
 
 function Header(props: HeaderProps) {
   return (
     <div className="app-header">
       <div className="header-left">
-        <img src={logo} alt="logo" className="header-logo"/>
+        <img src={logo} alt="logo" className="header-logo" />
         <p className="header-title">rank anything</p>
       </div>
       <div className="header-right">

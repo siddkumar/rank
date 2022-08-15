@@ -5,15 +5,15 @@ import {
   Draggable,
   DropResult,
 } from "react-beautiful-dnd";
-import Blob from "../../models/Blob";
+import RankableItem from "../../models/RankableItem";
 
 export interface BlobManagerProps {
-  blobs: Blob[];
+  blobs: RankableItem[];
 }
 
 function BlobManager(props: BlobManagerProps) {
   const defaultList = props.blobs.map((blob) => {
-    return blob.blobName;
+    return blob.name;
   });
   const [blobList, setBloblist] = useState(defaultList);
 
@@ -46,7 +46,11 @@ function BlobManager(props: BlobManagerProps) {
           )}
         </Droppable>
       </DragDropContext>
-      <button onClick={() => {console.log(blobList)}}>
+      <button
+        onClick={() => {
+          console.log(blobList);
+        }}
+      >
         Save
       </button>
     </>
@@ -61,12 +65,12 @@ function BlobManager(props: BlobManagerProps) {
     setBloblist(updatedList);
   }
 
-  function getBlobs(blobs: Blob[]) {
+  function getBlobs(blobs: RankableItem[]) {
     blobs.sort((a, b) => {
       return a.rank - b.rank;
     });
     return blobs.map((blob, index) => {
-      return <li>{blob.blobName}</li>;
+      return <li>{blob.name}</li>;
     });
   }
 }
