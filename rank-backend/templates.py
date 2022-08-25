@@ -1,5 +1,6 @@
 from flask import Blueprint, request, jsonify
 from db import getDBClient
+import json
 
 templatesAPI = Blueprint('templates', __name__)
 db = getDBClient('templates')
@@ -18,7 +19,7 @@ def create():
             u'createdBy': 'users/' + userId,
             u'items': items,
             u'name': name,
-            u'orign': 'scratch',
+            u'origin': 'scratch',
             u'sourceUrl': ""
         }
 
@@ -27,7 +28,6 @@ def create():
         response = jsonify(
             {"success": True, "templateId": newTemplate.id}, 200)
         return response
-
     except Exception as e:
         return f"An Error Occured:{e}"
 
@@ -48,6 +48,19 @@ def read():
             }
             return jsonify(data), 200
         else:
-            return 400
+            allTemplates = db.stream()
+            r = []
+            for template in allTemplates:
+                t = template.to_dict()
+                data = {
+                    u'createdBy': 'og-user',
+                    u'items': t['items'],
+                    u'name': t['name'],
+                    u'origin': t['origin'],
+                    u'sourceUrl': t['sourceUrl'],
+                    u'id': template.id
+                }
+                r.append(data)
+            return json.dumps(r), 200
     except Exception as e:
         return f"An Error Occured: {e}"

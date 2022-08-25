@@ -29,7 +29,7 @@ function Rank() {
   useEffect(() => {
     const requestOptions = {
       method: "GET",
-      headers: { "Content-Type": "applicatoin/json" },
+      headers: { "Content-Type": "application/json" },
     };
 
     fetch("http://127.0.0.1:8080/templates?id=" + templateId, requestOptions)
