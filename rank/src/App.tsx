@@ -9,6 +9,7 @@ import { Route, Routes } from "react-router-dom";
 import Home from "./pages/home";
 import CreateFromScratch from "./pages/create/fromScratch";
 import Rank from "./pages/rank/rank";
+import { CreateFromLink } from "./pages/create/fromLink";
 
 function App() {
   return (
@@ -26,6 +27,10 @@ function App() {
         <Route
           path="create/fromScratch"
           element={<CreateFromScratch />}
+        ></Route>
+        <Route
+          path="create/fromLink"
+          element={<CreateFromLink/>}
         ></Route>
         <Route path="rank/" element={<Rank />}></Route>
       </Routes>

@@ -16,7 +16,6 @@ interface GetTemplateResponse {
   id: string
 }
 
-
 function CreateFromExisting() {
   const [stubs, setStubs] = useState<ExistingTemplateStub[]>([])
 
