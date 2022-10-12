@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup
 import requests
 import pandas as pd
 import numpy as np
+import re
 
 parserAPI = Blueprint('parser', __name__)
 
@@ -30,6 +31,9 @@ def parse():
                         for r in range(1, numRows):
                             columnWithoutTitle.append(df.loc[r, c].strip())
 
+                        templateName = df.loc[0, c].strip()
+                        templateName = re.sub(
+                            "[\(\[].*?[\)\]]", "", templateName)
                         potentialTemplate = {
                             u'templateName': df.loc[0, c].strip(),
                             u'templateItems': columnWithoutTitle
@@ -45,6 +49,8 @@ def parse():
                     continue
             else:
                 likelyTableName = e.text.strip()
+                likelyTableName = re.sub(
+                    "[\(\[].*?[\)\]]", "", likelyTableName)
 
         data = {
             u'tables': listOfTableTuples
