@@ -45,7 +45,7 @@ function Rank() {
         });
         setBlobs(bloblist);
         setTemplateName(templateResponse.name);
-        setView(RankViews.RANKING)
+        setView(RankViews.RANKING);
       });
   }, []);
 

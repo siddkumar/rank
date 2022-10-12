@@ -38,7 +38,6 @@ def read():
         templateId = request.args.get('id')
         if (templateId):
             template = db.document(templateId).get().to_dict()
-            print(template['items'])
             data = {
                 u'createdBy': 'og-user',
                 u'items': template['items'],

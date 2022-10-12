@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 
-interface TemplateEditorProps{
-  initialName: string,
-  initialItems: string[],
-  onSubmit: (name: string, items: string[]) => void
+interface TemplateEditorProps {
+  initialName: string;
+  initialItems: string[];
+  onSubmit: (name: string, items: string[]) => void;
 }
 
-export function TemplateEditor(props : TemplateEditorProps) {
+export function TemplateEditor(props: TemplateEditorProps) {
   const [templateName, setTemplateName] = useState(props.initialName);
-  const [items, setItems] = useState(props.initialItems)
+  const [items, setItems] = useState(props.initialItems);
 
   const onChangeTemplateName = (event: {
     target: { value: React.SetStateAction<string> };
@@ -38,11 +38,7 @@ export function TemplateEditor(props : TemplateEditorProps) {
   return (
     <>
       <label className="main-subtitle">Template Name:&nbsp;</label>
-      <input
-        type="text"
-        value={templateName}
-        onChange={onChangeTemplateName}
-      />
+      <input type="text" value={templateName} onChange={onChangeTemplateName} />
       <div className="main-subtitle">Rankable Things:</div>
       {items.map((item, i) => (
         <div key={i + "div-key"}>
@@ -64,9 +60,12 @@ export function TemplateEditor(props : TemplateEditorProps) {
       <button onClick={addItem} className="button-styles">
         Add Item
       </button>
-      <button onClick={() => props.onSubmit(templateName, items)} className="button-styles">
+      <button
+        onClick={() => props.onSubmit(templateName, items)}
+        className="button-styles"
+      >
         i'm done
       </button>
-      </>
-  )
+    </>
+  );
 }

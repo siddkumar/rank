@@ -28,10 +28,7 @@ function App() {
           path="create/fromScratch"
           element={<CreateFromScratch />}
         ></Route>
-        <Route
-          path="create/fromLink"
-          element={<CreateFromLink/>}
-        ></Route>
+        <Route path="create/fromLink" element={<CreateFromLink />}></Route>
         <Route path="rank/" element={<Rank />}></Route>
       </Routes>
     </div>

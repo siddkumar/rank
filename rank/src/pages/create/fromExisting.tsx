@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import "../../styles/create.css";
 
 interface ExistingTemplateStub {
-  id: string,
-  name: string
+  id: string;
+  name: string;
 }
 
 interface GetTemplateResponse {
@@ -13,11 +13,11 @@ interface GetTemplateResponse {
   name: string;
   origin: string;
   sourceUrl: string;
-  id: string
+  id: string;
 }
 
 function CreateFromExisting() {
-  const [stubs, setStubs] = useState<ExistingTemplateStub[]>([])
+  const [stubs, setStubs] = useState<ExistingTemplateStub[]>([]);
 
   useEffect(() => {
     const requestOptions = {
@@ -29,24 +29,21 @@ function CreateFromExisting() {
       .then((response) => response.json())
       .then((data) => {
         var templateResponse = data as GetTemplateResponse[];
-        var stubList: ExistingTemplateStub[] = []
-        templateResponse.map(
-          (template, t) => {
-            stubList.push( {id: template.id, name: template.name})
-          });
+        var stubList: ExistingTemplateStub[] = [];
+        templateResponse.map((template, t) => {
+          stubList.push({ id: template.id, name: template.name });
+        });
         setStubs(stubList);
-      })
-  }, [])
+      });
+  }, []);
 
   return (
     <div className="create-page-layout">
       <div className="main-title">Let's pick a template</div>
       <>
-      {stubs.map(
-        (stub, _s) => {
-          return (<a href={"/rank?templateId=" + stub.id}>{stub.name}</a>)
-        }
-      )}
+        {stubs.map((stub, _s) => {
+          return <a href={"/rank?templateId=" + stub.id}>{stub.name}</a>;
+        })}
       </>
     </div>
   );

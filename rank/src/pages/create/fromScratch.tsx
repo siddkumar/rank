@@ -40,7 +40,11 @@ function CreateFromScratch() {
     return (
       <div className="create-page-layout">
         <div className="main-title">Let's create a template</div>
-        <TemplateEditor initialName={""} initialItems={[""]} onSubmit={submitTemplate} />
+        <TemplateEditor
+          initialName={""}
+          initialItems={[""]}
+          onSubmit={submitTemplate}
+        />
       </div>
     );
   }
