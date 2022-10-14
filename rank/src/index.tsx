@@ -9,7 +9,7 @@ import AuthSetUp from "./components/authSetUp";
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
-     <AuthSetUp/>
+      <AuthSetUp />
       <App />
     </BrowserRouter>
   </React.StrictMode>,

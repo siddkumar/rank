@@ -4,7 +4,6 @@ import logo from "../resources/logo.png";
 export interface HeaderProps {}
 
 function Header(props: HeaderProps) {
-
   return (
     <div className="app-header">
       <div className="header-left">

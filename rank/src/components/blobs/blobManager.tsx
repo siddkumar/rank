@@ -20,25 +20,23 @@ function BlobManager(props: BlobManagerProps) {
   });
   const [blobList, setBloblist] = useState(defaultList);
 
-  function save(blobList: string[])
-  {
+  function save(blobList: string[]) {
     const auth = getAuth();
     const user = auth.currentUser;
     if (user) {
       const requestOptions = {
-        method:"POST",
-        headers: {"Content-Type": "application/json"},
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           emailAddress: user.email,
-          ranking:blobList,
-          templateId: props.templateId
-        })
-      }
-      fetch("http://127.0.0.1:8080/ranks/create", requestOptions)
-        .then((response) => console.log("saved"))
-    }
-    else
-    {
+          ranking: blobList,
+          templateId: props.templateId,
+        }),
+      };
+      fetch("http://127.0.0.1:8080/ranks/create", requestOptions).then(
+        (response) => console.log("saved")
+      );
+    } else {
       console.log("error, not signed in"); // TODO surface
     }
   }
@@ -62,7 +60,7 @@ function BlobManager(props: BlobManagerProps) {
                       {...provided.dragHandleProps}
                       {...provided.draggableProps}
                     >
-                      {index+1}. {item}
+                      {index + 1}. {item}
                     </div>
                   )}
                 </Draggable>
@@ -72,9 +70,7 @@ function BlobManager(props: BlobManagerProps) {
           )}
         </Droppable>
       </DragDropContext>
-      <button className="button-styles"
-        onClick={() => save(blobList)}
-      >
+      <button className="button-styles" onClick={() => save(blobList)}>
         Save
       </button>
     </>

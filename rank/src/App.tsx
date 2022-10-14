@@ -17,8 +17,8 @@ function App() {
     <div>
       <Header />
       <Routes>
-        <Route path="/" element={<Home/>}></Route>
-        <Route path="myStuff" element={<MyStuff/>}></Route>
+        <Route path="/" element={<Home />}></Route>
+        <Route path="myStuff" element={<MyStuff />}></Route>
         <Route path="demo" element={<Demo />}></Route>
         <Route path="create" element={<Create />}></Route>
         <Route path="create/fromNew" element={<CreateFromNew />}></Route>
