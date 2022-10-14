@@ -4,10 +4,12 @@ import "./styles/index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import { BrowserRouter } from "react-router-dom";
+import AuthSetUp from "./components/authSetUp";
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
+     <AuthSetUp/>
       <App />
     </BrowserRouter>
   </React.StrictMode>,
