@@ -4,6 +4,30 @@ import 'firebase/compat/auth';
 import { auth } from 'firebaseui';
 import { getAuth } from 'firebase/auth';
 
+interface Profile {
+    email: string,
+    family_name: string,
+    given_name: string,
+    granted_scopes: any,
+    id: string,
+    locale: any,
+    name: string,
+    picture: any,
+    verified_email: boolean
+}
+
+interface AdditionalUserInfo {
+    isNewUser: boolean,
+    providerId: string,
+    profile: Profile
+}
+
+export interface AuthResult {
+    user: any,
+    credential: any,
+    operationType: string,
+    additionalUserInfo: AdditionalUserInfo
+}
 
 export interface AuthWidgetProps {
     redirectUrl?: string | null
@@ -15,7 +39,24 @@ function AuthWidget(props: AuthWidgetProps) {
 
     var uiConfig = {
         callbacks: {
-          signInSuccessWithAuthResult: function(authResult: any, redirectUrl:string) {
+          signInSuccessWithAuthResult: function(authResult: AuthResult, redirectUrl:string) {
+            if(authResult.additionalUserInfo.isNewUser)
+            {
+                const email = authResult.additionalUserInfo.profile.email ?? getAuth().currentUser?.email;
+                const requestOptions = {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                      emailAddress: email
+                    }),
+                  };
+                  
+                fetch("http://127.0.0.1:8080/users/create", requestOptions)
+                  .then((response) => response.json())
+                  .then((_data) => 
+                  window.location.assign("/mystuff"))
+                return false;
+            }
             return true;
           },
         },

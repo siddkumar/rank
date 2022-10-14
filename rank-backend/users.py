@@ -18,3 +18,26 @@ def read():
             return jsonify(allUsers), 200
     except Exception as e:
         return f"An Error Occured: {e}"
+
+
+@usersAPI.route("/users/create", methods=['POST'])
+def create():
+    try:
+        emailAddress = request.json['emailAddress']
+
+        docs = db.where(u'emailAddress', u'==', emailAddress).stream()
+        for doc in docs:
+            return f"An Error Occured: User with that email already exists"
+
+        data = {
+            u'emailAddress': emailAddress,
+        }
+
+        newUser = db.document()
+        newUser.set(data)
+        response = jsonify(
+            {"success": True, "userId": newUser.id}, 200)
+        return response
+    except Exception as e:
+        print("error exception")
+        return f"An Error Occured: {e}"
