@@ -5,6 +5,7 @@ function Demo() {
   return (
     <div>
       <BlobManager
+        templateId="og-template"
         blobs={[
           { name: "Best", rank: 0 },
           { name: "Worst", rank: 1 },

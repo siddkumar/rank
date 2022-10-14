@@ -1,3 +1,4 @@
+import { getAuth } from "firebase/auth";
 import React, { useState } from "react";
 import {
   DragDropContext,
@@ -6,9 +7,11 @@ import {
   DropResult,
 } from "react-beautiful-dnd";
 import RankableItem from "../../models/RankableItem";
+import "../../styles/blobManager.css";
 
 export interface BlobManagerProps {
   blobs: RankableItem[];
+  templateId: string;
 }
 
 function BlobManager(props: BlobManagerProps) {
@@ -16,6 +19,29 @@ function BlobManager(props: BlobManagerProps) {
     return blob.name;
   });
   const [blobList, setBloblist] = useState(defaultList);
+
+  function save(blobList: string[])
+  {
+    const auth = getAuth();
+    const user = auth.currentUser;
+    if (user) {
+      const requestOptions = {
+        method:"POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({
+          emailAddress: user.email,
+          ranking:blobList,
+          templateId: props.templateId
+        })
+      }
+      fetch("http://127.0.0.1:8080/ranks/create", requestOptions)
+        .then((response) => console.log("saved"))
+    }
+    else
+    {
+      console.log("error, not signed in"); // TODO surface
+    }
+  }
 
   return (
     <>
@@ -36,7 +62,7 @@ function BlobManager(props: BlobManagerProps) {
                       {...provided.dragHandleProps}
                       {...provided.draggableProps}
                     >
-                      {item}
+                      {index+1}. {item}
                     </div>
                   )}
                 </Draggable>
@@ -46,10 +72,8 @@ function BlobManager(props: BlobManagerProps) {
           )}
         </Droppable>
       </DragDropContext>
-      <button
-        onClick={() => {
-          console.log(blobList);
-        }}
+      <button className="button-styles"
+        onClick={() => save(blobList)}
       >
         Save
       </button>

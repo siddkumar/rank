@@ -39,5 +39,4 @@ def create():
             {"success": True, "userId": newUser.id}, 200)
         return response
     except Exception as e:
-        print("error exception")
         return f"An Error Occured: {e}"
