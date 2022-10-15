@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from "react";
+import { ExistingTemplateStub } from "../../components/templates/templates";
+import { TemplatesList } from "../../components/templates/templatesList";
 import "../../styles/create.css";
-
-interface ExistingTemplateStub {
-  id: string;
-  name: string;
-}
 
 interface GetTemplateResponse {
   success: boolean;
@@ -40,11 +37,7 @@ function CreateFromExisting() {
   return (
     <div className="create-page-layout">
       <div className="main-title">Let's pick a template</div>
-      <>
-        {stubs.map((stub, _s) => {
-          return <a href={"/rank?templateId=" + stub.id}>{stub.name}</a>;
-        })}
-      </>
+      <TemplatesList stubs={stubs} />
     </div>
   );
 }

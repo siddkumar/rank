@@ -1,9 +1,7 @@
 import firebase from "firebase/compat/app";
 import "firebase/compat/firestore";
 import "firebase/compat/auth";
-import React, { useState } from "react";
-import { auth } from "firebaseui";
-import { getAuth } from "firebase/auth";
+import React from "react";
 
 function AuthSetUp() {
   // Your web app's Firebase configuration

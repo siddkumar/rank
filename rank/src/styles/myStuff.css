@@ -1,0 +1,27 @@
+.home-page-layout {
+  display: flex;
+  padding-top: 3rem;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  font-family: "Caveat", cursive;
+}
+
+.main-title {
+  font-size: xx-large;
+}
+
+.stuff-subtitle {
+  font-size: larger;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  margin-right: 1rem;
+  margin-left: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.myStuffContainer {
+  display: flex;
+  justify-content: space-around;
+}
