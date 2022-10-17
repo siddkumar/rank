@@ -3,13 +3,18 @@ import "firebaseui/dist/firebaseui.css";
 import "../../styles/myStuff.css";
 import { getAuth, onAuthStateChanged, User } from "firebase/auth";
 import { ExistingTemplateStub } from "../../components/templates/templates";
-import { TemplatesList } from "../../components/templates/templatesList";
+import {
+  RanksList,
+  TemplatesList,
+} from "../../components/templates/templatesList";
+import { ExistingRankStub } from "../rank/ranks";
 
 function MyStuff() {
   const auth = getAuth();
   const [existingUser, setUser] = useState<User | null>(null);
   const [stubs, setStubs] = useState<ExistingTemplateStub[]>([]);
   const [hasRequestedTemplates, setHasRequestedTemplates] = useState(false);
+  const [ranks, setRanks] = useState<ExistingRankStub[]>([]);
 
   onAuthStateChanged(auth, (user) => {
     if (user && !existingUser) {
@@ -23,6 +28,8 @@ function MyStuff() {
         method: "GET",
         headers: { "Content-Type": "application/json" },
       };
+
+      // get templates
       setHasRequestedTemplates(true);
       fetch(
         "http://127.0.0.1:8080/templates?email=" + existingUser?.email,
@@ -37,6 +44,21 @@ function MyStuff() {
           });
           setStubs(stublist);
         });
+
+      // get ranks
+      fetch(
+        "http://127.0.0.1:8080/ranks?email=" + existingUser?.email,
+        requestOptions
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          var response = data as ExistingRankStub[];
+          var stublist: ExistingRankStub[] = [];
+          response.map((template, _t) => {
+            stublist.push({ id: template.id, name: template.name });
+          });
+          setRanks(stublist);
+        });
     }
 
     return (
@@ -46,7 +68,10 @@ function MyStuff() {
             Your Templates
             <TemplatesList stubs={stubs} />
           </div>
-          <div className="stuff-subtitle">Your Ranks</div>
+          <div className="stuff-subtitle">
+            Your Ranks
+            <RanksList stubs={ranks} />
+          </div>
         </div>
         <button className="button-styles" onClick={() => auth.signOut()}>
           Sign Out

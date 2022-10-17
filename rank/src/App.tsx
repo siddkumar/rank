@@ -11,6 +11,7 @@ import Rank from "./pages/rank/rank";
 import { CreateFromLink } from "./pages/create/fromLink";
 import MyStuff from "./pages/home/myStuff";
 import SignIn from "./pages/home/signIn";
+import RankEdit from "./pages/rank/rankEdit";
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
         ></Route>
         <Route path="create/fromLink" element={<CreateFromLink />}></Route>
         <Route path="rank/" element={<Rank />}></Route>
+        <Route path="rank/edit" element={<RankEdit />}></Route>
       </Routes>
     </div>
   );
