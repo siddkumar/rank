@@ -4,7 +4,7 @@ import "firebaseui/dist/firebaseui.css";
 import "../../styles/home.css";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 
-function Home() {
+function SignIn() {
   const auth = getAuth();
   const [user, setUser] = useState(auth.currentUser);
   const [forceHide, setForceHide] = useState(false);
@@ -33,4 +33,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default SignIn;

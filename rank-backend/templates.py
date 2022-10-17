@@ -36,6 +36,7 @@ def create():
 def read():
     try:
         templateId = request.args.get('id')
+        email = request.args.get('email')
         if (templateId):
             template = db.document(templateId).get().to_dict()
             data = {
@@ -46,6 +47,23 @@ def read():
                 u'sourceUrl': template['sourceUrl']
             }
             return jsonify(data), 200
+        elif(email):
+            users = getDBClient('users')
+            usersMatchEmail = users.where(u'emailAddress', u'==', email)
+            user = usersMatchEmail.get()
+            r = []
+            for u in user:
+                templates = db.where(u'createdBy', u'==',
+                                     'users/' + u.id).get()
+                for temp in templates:
+                    t = temp.to_dict()
+                    data = {
+                        u'name': t['name'],
+                        u'id': temp.id
+                    }
+                    r.append(data)
+
+            return json.dumps(r), 200
         else:
             allTemplates = db.stream()
             r = []
