@@ -9,9 +9,7 @@ How to run backend:
 
 1. Set Up a virtual environment See (https://docs.python.org/3/library/venv.html)
 2. Make sure pip (and python) are already installed / up-to-date
-3. pip install flask
-4. pip install firebase
-5. pip install firebase_admin
-6. pip install bs4
-7. Talk to me to get a database key
-8. python init.py
+3. pip install -r requirements.txt
+4. Talk to me to get a database key
+5. export FLASK_APP=api/index.py
+6. flask run
