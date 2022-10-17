@@ -1,11 +1,10 @@
 # Required Imports
-import os
-from flask import Flask
+from flask import Flask, jsonify
 from flask_cors import CORS
 from users import usersAPI
-from templates import templatesAPI
-from ranks import ranksAPI
 from parser import parserAPI
+from ranks import ranksAPI
+from templates import templatesAPI
 
 # Initialize Flask App
 app = Flask(__name__)
@@ -17,7 +16,9 @@ app.register_blueprint(templatesAPI)
 app.register_blueprint(ranksAPI)
 app.register_blueprint(parserAPI)
 
-port = int(os.environ.get('PORT', 8080))
 
-if __name__ == '__main__':
-    app.run(threaded=True, host='0.0.0.0', port=port)
+@app.route('/', defaults={'path': ''})
+@app.route('/<path:path>')
+def catch_all(path):
+    print(path)
+    return jsonify("You visited: " + path)
