@@ -33,7 +33,7 @@ function BlobManager(props: BlobManagerProps) {
           templateId: props.templateId,
         }),
       };
-      fetch("http://127.0.0.1:8080/ranks/create", requestOptions).then(
+      fetch("https://rank-backend.vercel.app/ranks/create", requestOptions).then(
         (response) => console.log("saved")
       );
     } else {

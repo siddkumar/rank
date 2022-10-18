@@ -28,7 +28,7 @@ function CreateFromScratch() {
         userId: "og-user",
       }),
     };
-    fetch("http://127.0.0.1:8080/templates/createFromScratch", requestOptions)
+    fetch("https://rank-backend.vercel.app/createFromScratch", requestOptions)
       .then((response) => response.json())
       .then((data) => {
         setTemplateId((data[0] as CreateFromScratchPostResponse).templateId);

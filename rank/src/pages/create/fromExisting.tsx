@@ -22,7 +22,7 @@ function CreateFromExisting() {
       headers: { "Content-Type": "application/json" },
     };
 
-    fetch("http://127.0.0.1:5000/templates", requestOptions)
+    fetch("https://rank-backend.vercel.app/templates", requestOptions)
       .then((response) => response.json())
       .then((data) => {
         var templateResponse = data as GetTemplateResponse[];

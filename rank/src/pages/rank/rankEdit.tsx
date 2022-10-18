@@ -25,7 +25,7 @@ function RankEdit() {
       headers: { "Content-Type": "application/json" },
     };
 
-    fetch("http://127.0.0.1:8080/ranks?id=" + id, requestOptions)
+    fetch("https://rank-backend.vercel.app/ranks?id=" + id, requestOptions)
       .then((response) => response.json())
       .then((data) => {
         var rankResponse = data as GetRankResponse;

@@ -32,7 +32,7 @@ function MyStuff() {
       // get templates
       setHasRequestedTemplates(true);
       fetch(
-        "http://127.0.0.1:8080/templates?email=" + existingUser?.email,
+        "https://rank-backend.vercel.app/templates?email=" + existingUser?.email,
         requestOptions
       )
         .then((response) => response.json())
@@ -47,7 +47,7 @@ function MyStuff() {
 
       // get ranks
       fetch(
-        "http://127.0.0.1:8080/ranks?email=" + existingUser?.email,
+        "https://rank-backend.vercel.app/ranks?email=" + existingUser?.email,
         requestOptions
       )
         .then((response) => response.json())

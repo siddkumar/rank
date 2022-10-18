@@ -54,7 +54,7 @@ function AuthWidget(props: AuthWidgetProps) {
             }),
           };
 
-          fetch("http://127.0.0.1:8080/users/create", requestOptions)
+          fetch("https://rank-backend.vercel.app//users/create", requestOptions)
             .then((response) => response.json())
             .then((_data) => window.location.assign("/mystuff"));
           return false;
