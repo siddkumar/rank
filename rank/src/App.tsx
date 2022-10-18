@@ -1,7 +1,6 @@
 import React from "react";
 import "./styles/App.css";
 import Header from "./pages/header";
-import Demo from "./pages/demo";
 import Create from "./pages/create/create";
 import CreateFromNew from "./pages/create/fromNew";
 import CreateFromExisting from "./pages/create/fromExisting";

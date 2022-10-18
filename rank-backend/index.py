@@ -10,7 +10,7 @@ import json
 # Initialize Flask App
 app = Flask(__name__)
 cors = CORS(app)
-
+app.config['CORS_HEADERS'] = 'Content-Type'
 
 if not os.path.isfile("./key.json"):
     print("could not find credentials file")
@@ -35,7 +35,7 @@ def templatesCreate():
         userId = request.json['userId']
 
         data = {
-            u'createdBy': 'users/' + userId,
+            u'createdBy': userId,
             u'items': items,
             u'name': name,
             u'origin': 'scratch',
@@ -56,7 +56,7 @@ def templatesRead():
         templateId = request.args.get('id')
         email = request.args.get('email')
         if (templateId):
-            template = db.document(templateId).get().to_dict()
+            template = templatesdb.document(templateId).get().to_dict()
             data = {
                 u'createdBy': 'og-user',
                 u'items': template['items'],
@@ -70,8 +70,7 @@ def templatesRead():
             user = usersMatchEmail.get()
             r = []
             for u in user:
-                templates = templatesdb.where(u'createdBy', u'==',
-                                     'users/' + u.id).get()
+                templates = templatesdb.where(u'createdBy', u'==', u.id).get()
                 for temp in templates:
                     t = temp.to_dict()
                     data = {

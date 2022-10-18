@@ -56,7 +56,7 @@ export function CreateFromLink() {
         link: wikiLink,
       }),
     };
-    fetch("https://rank-backend.vercel.app/parseLink", requestOptions)
+    fetch("https://rank-backend.vercel.app/parser/parseLink", requestOptions)
       .then((response) => response.json())
       .then((data) => {
         setTables((data as ParseLinkResponse).tables);
@@ -74,7 +74,10 @@ export function CreateFromLink() {
         userId: "og-user",
       }),
     };
-    fetch("https://rank-backend.vercel.app/createFromScratch", requestOptions)
+    fetch(
+      "https://rank-backend.vercel.app/templates/createFromScratch",
+      requestOptions
+    )
       .then((response) => response.json())
       .then((data) => {
         setTemplateId((data[0] as CreateFromScratchPostResponse).templateId);

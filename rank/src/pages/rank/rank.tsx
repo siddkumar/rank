@@ -32,7 +32,7 @@ function Rank() {
       headers: { "Content-Type": "application/json" },
     };
 
-    fetch("https://rank-backend.vercel.app/templates?id=" + templateId, requestOptions)
+    fetch("http://127.0.0.1:5000/templates?id=" + templateId, requestOptions)
       .then((response) => response.json())
       .then((data) => {
         var templateResponse = data as GetTemplateResponse;

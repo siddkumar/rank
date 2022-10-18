@@ -54,7 +54,7 @@ function AuthWidget(props: AuthWidgetProps) {
             }),
           };
 
-          fetch("https://rank-backend.vercel.app//users/create", requestOptions)
+          fetch("https://rank-backend.vercel.app/users/create", requestOptions)
             .then((response) => response.json())
             .then((_data) => window.location.assign("/mystuff"));
           return false;

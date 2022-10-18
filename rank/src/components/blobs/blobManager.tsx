@@ -33,9 +33,10 @@ function BlobManager(props: BlobManagerProps) {
           templateId: props.templateId,
         }),
       };
-      fetch("https://rank-backend.vercel.app/ranks/create", requestOptions).then(
-        (response) => console.log("saved")
-      );
+      fetch(
+        "https://rank-backend.vercel.app/ranks/create",
+        requestOptions
+      ).then((response) => console.log("saved"));
     } else {
       console.log("error, not signed in"); // TODO surface
     }
