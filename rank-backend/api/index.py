@@ -13,9 +13,7 @@ cors = CORS(app)
 
 
 if not os.path.isfile("./key.json"):
-    f = open("./key.json", "w")
-    f.write(os.environ['FIREBASE_KEY'])
-    f.close()
+    print("could not find credentials file")
 
 cred = credentials.Certificate("./key.json")
 firebase_admin.initialize_app(cred, {
