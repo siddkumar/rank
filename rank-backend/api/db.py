@@ -1,5 +1,5 @@
 import firebase_admin
-import os, json
+import os
 from firebase_admin import credentials, firestore
 
 # Initialize Firestore DB

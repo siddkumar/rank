@@ -1,8 +1,6 @@
 from flask import Blueprint, request, jsonify
 from bs4 import BeautifulSoup
 import requests
-import pandas as pd
-import numpy as np
 import re
 
 parserAPI = Blueprint('parser', __name__)
@@ -23,23 +21,47 @@ def parse():
             if (e.name == "table"):
                 if("wikitable" in e["class"]):
                     rows, numRows, numCols = pre_process_table(e)
-                    df = process_rows(rows, numRows, numCols)
                     cols = []
 
+                    colNames = []
+                    maxRow = 1
+                    for j, cell in enumerate(rows[0].find_all(['td', 'th'])):
+                        rep_row, rep_col = get_spans(cell)
+                        if rep_row > maxRow:
+                            maxRow = rep_row
+                        for i in range(0,rep_col):
+                            colNames.append(clean_string(cell.text))
+                            potentialTemplate = {
+                                u'templateName': clean_string(cell.text),
+                                u'templateItems': []
+                            }
+                            cols.append(potentialTemplate)
+
+
+                    stuffs = []
+                    for r in range(maxRow, numRows):
+                        row = []
+                        column_span_starter = 0
+                        for j, cell in enumerate(rows[r].find_all(['td','th'])):
+                            rep_row, rep_col = get_spans(cell)
+                            row.append(
+                                {'rowSize': rep_row, 'colSize': rep_col, 'text': clean_string(cell.text), 'colSpanStarter': column_span_starter}
+                            )
+                            column_span_starter += rep_col
+                        stuffs.append(row)
+
                     for c in range(numCols):
-                        columnWithoutTitle = []
-                        for r in range(1, numRows):
-                            columnWithoutTitle.append(df.loc[r, c].strip())
-
-                        templateName = df.loc[0, c].strip()
-                        templateName = re.sub(
-                            "[\(\[].*?[\)\]]", "", templateName)
-                        potentialTemplate = {
-                            u'templateName': df.loc[0, c].strip(),
-                            u'templateItems': columnWithoutTitle
-                        }
-                        cols.append(potentialTemplate)
-
+                        items = []
+                        r = 0 
+                        while r < len(stuffs):
+                            if (len(stuffs[r]) == 0):
+                                r += 1
+                                continue
+                            i = stuffs[r]
+                            popped = i.pop(0)
+                            items.append(popped['text'])
+                            r += popped['rowSize']
+                        cols[c]['templateItems'] = items
                     tableTuple = {
                         u'tableName': likelyTableName,
                         u'potentialTemplates': cols
@@ -48,9 +70,7 @@ def parse():
                 else:
                     continue
             else:
-                likelyTableName = e.text.strip()
-                likelyTableName = re.sub(
-                    "[\(\[].*?[\)\]]", "", likelyTableName)
+                likelyTableName = clean_string(e.text)
 
         data = {
             u'tables': listOfTableTuples
@@ -59,6 +79,10 @@ def parse():
     except Exception as e:
         return f"An Error Occured:{e}"
 
+def clean_string(s):
+    stripped_string = s.strip()
+    response = re.sub("[\(\[].*?[\)\]]", "", stripped_string)
+    return response
 
 def pre_process_table(table):
     """
@@ -115,34 +139,3 @@ def get_spans(cell):
         rep_col = 1
 
     return (rep_row, rep_col)
-
-
-def process_rows(rows, num_rows, num_cols):
-    """
-    INPUT:
-        1. rows - a list of table rows ie <tr>...</tr> elements
-    OUTPUT:
-        1. data - a Pandas dataframe with the html data in it
-    """
-    data = pd.DataFrame(np.ones((num_rows, num_cols))*np.nan)
-    for i, row in enumerate(rows):
-        try:
-            col_stat = data.iloc[i, :][data.iloc[i, :].isnull()].index[0]
-        except IndexError:
-            print(i, row)
-
-        for j, cell in enumerate(row.find_all(['td', 'th'])):
-            rep_row, rep_col = get_spans(cell)
-
-            # print("cols {0} to {1} with rep_col={2}".format(col_stat, col_stat+rep_col, rep_col))
-            # print("\trows {0} to {1} with rep_row={2}".format(i, i+rep_row, rep_row))
-
-            # find first non-na col and fill that one
-            while any(data.iloc[i, col_stat:col_stat+rep_col].notnull()):
-                col_stat += 1
-
-            data.iloc[i:i+rep_row, col_stat:col_stat+rep_col] = cell.getText()
-            if col_stat < data.shape[1]-1:
-                col_stat += rep_col
-
-    return data
