@@ -210,7 +210,7 @@ def parse():
         likelyTableName = ""
         for e in tablesAndHeaders:
             if (e.name == "table"):
-                if("wikitable" in e["class"]):
+                if(e.has_attr('class') and "wikitable" in e["class"]):
                     rows, numRows, numCols = pre_process_table(e)
                     cols = []
 
