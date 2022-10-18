@@ -331,8 +331,6 @@ def get_spans(cell):
 
     return (rep_row, rep_col)
 
-@app.route('/', defaults={'path': ''})
-@app.route('/<path:path>')
-def catch_all(path):
-    print(path)
-    return jsonify("You visited: " + path)
+@app.route('/')
+def home():
+    return 'Home Page Route'
