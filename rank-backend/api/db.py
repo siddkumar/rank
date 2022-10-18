@@ -16,7 +16,6 @@ firebase_admin.initialize_app(cred, {
 db = firestore.client()
 
 
-
 def getDBClient(dbName):
     if (dbName):
         return db.collection(dbName)

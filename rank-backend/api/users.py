@@ -4,7 +4,6 @@ from db import getDBClient
 usersAPI = Blueprint('users', __name__)
 db = getDBClient('users')
 
-
 @usersAPI.route("/users/list", methods=['GET'])
 def read():
     try:
