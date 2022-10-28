@@ -16,8 +16,12 @@ export function TemplatesList(props: TemplatesListProps) {
     <>
       {props.stubs.map((stub, _s) => {
         return (
-          <a key={stub.id} href={"/rank?templateId=" + stub.id}>
-            {stub.name}
+          <a
+            className="template-link"
+            key={stub.id}
+            href={"/rank?templateId=" + stub.id}
+          >
+            <button className="button-styles">{stub.name}</button>
           </a>
         );
       })}
@@ -30,8 +34,12 @@ export function RanksList(props: RanksListProps) {
     <>
       {props.stubs.map((stub, _s) => {
         return (
-          <a key={stub.id} href={"/rank/edit?id=" + stub.id}>
-            {stub.name}
+          <a
+            className="template-link"
+            key={stub.id}
+            href={"/rank/edit?id=" + stub.id}
+          >
+            <button className="button-styles">{stub.name}</button>
           </a>
         );
       })}

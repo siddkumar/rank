@@ -32,7 +32,8 @@ function MyStuff() {
       // get templates
       setHasRequestedTemplates(true);
       fetch(
-        "https://rank-backend.vercel.app/templates?email=" + existingUser?.email,
+        "https://rank-backend.vercel.app/templates?email=" +
+          existingUser?.email,
         requestOptions
       )
         .then((response) => response.json())
@@ -87,7 +88,7 @@ function MyStuff() {
           This page is where you can see your saved rankings and templates, but
           you must sign in to do so.
         </div>
-        <a className="button-styles" href={"/"}>
+        <a className="button-styles" href={"/signIn"}>
           Sign In
         </a>
       </>
@@ -98,7 +99,7 @@ function MyStuff() {
     <>
       <div className="home-page-layout">
         <div className="main-title">
-          Welcome {existingUser?.displayName ?? existingUser?.email} !
+          Hello {existingUser?.displayName ?? existingUser?.email} !
         </div>
         {existingUser ? renderMyStuff() : renderPleaseSignIn()}
       </div>

@@ -6,15 +6,34 @@ function Create() {
     <div className="create-page-layout">
       <div className="main-title">Let's start ranking!</div>
       <div className="main-subtitle">
-        Where do you want to pick your template from?
+        To start, you'll need a template to rank from
       </div>
-      <a href="/create/fromNew">
-        <button className="button-styles">create a new template</button>
-      </a>
-      <div>or</div>
-      <a href="/create/fromExisting">
-        <button className="button-styles">use an existing one</button>
-      </a>
+      <div className="choices-container">
+        <ul>
+          <div>
+            <li> I want to create a new template! </li>
+            <a href="/create/fromScratch">
+              <button className="button-styles">create from scratch</button>
+            </a>
+            <a href="/create/fromLink">
+              <button className="button-styles">
+                create from a wikipedia article
+              </button>
+            </a>
+          </div>
+          <div>
+            <li>I want to use an existing template!</li>
+            <a href="/create/fromExisting">
+              <button className="button-styles">
+                browse featured templates
+              </button>
+            </a>
+            <a href="/mystuff">
+              <button className="button-styles">see saved templates</button>
+            </a>
+          </div>
+        </ul>
+      </div>
     </div>
   );
 }

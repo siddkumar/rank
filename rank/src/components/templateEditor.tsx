@@ -37,9 +37,9 @@ export function TemplateEditor(props: TemplateEditorProps) {
 
   return (
     <>
-      <label className="main-subtitle">Template Name:&nbsp;</label>
+      <label className="main-subtitle">Name:&nbsp;</label>
       <input type="text" value={templateName} onChange={onChangeTemplateName} />
-      <div className="main-subtitle">Rankable Things:</div>
+      <div className="main-subtitle">Rankable Items:</div>
       {items.map((item, i) => (
         <div key={i + "div-key"}>
           <input
@@ -50,19 +50,19 @@ export function TemplateEditor(props: TemplateEditorProps) {
           ></input>
           <button
             key={i + "-button-key"}
-            className="close"
+            className="add-remove-button"
             onClick={(e) => removeItem(i)}
           >
             remove
           </button>
         </div>
       ))}
-      <button onClick={addItem} className="button-styles">
-        Add Item
+      <button onClick={addItem} className="add-remove-button">
+        add item
       </button>
       <button
         onClick={() => props.onSubmit(templateName, items)}
-        className="button-styles"
+        className="button-styles done-button"
       >
         i'm done
       </button>

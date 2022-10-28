@@ -1,5 +1,7 @@
+import { getAuth } from "firebase/auth";
 import React, { useState } from "react";
 import { TemplateEditor } from "../../components/templateEditor";
+import { PostNewTemplate } from "../../services/templatesService";
 import "../../styles/create.css";
 
 export enum CreateFromScratchViews {
@@ -8,34 +10,19 @@ export enum CreateFromScratchViews {
   READY = "ready",
 }
 
-interface CreateFromScratchPostResponse {
-  success: boolean;
-  templateId: string;
-}
-
 function CreateFromScratch() {
   const [view, setView] = useState(CreateFromScratchViews.CREATE);
   const [templateId, setTemplateId] = useState("");
 
   const submitTemplate = (templateName: string, items: string[]) => {
     setView(CreateFromScratchViews.SAVING);
-    const requestOptions = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        name: templateName,
-        items: items,
-        userId: "og-user",
-      }),
-    };
-    fetch(
-      "https://rank-backend.vercel.app/templates/createFromScratch",
-      requestOptions
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        setTemplateId((data[0] as CreateFromScratchPostResponse).templateId);
-      });
+
+    var email = getAuth().currentUser?.email;
+
+    PostNewTemplate(templateName, items, email ?? undefined).then((newId) =>
+      setTemplateId(newId)
+    );
+
     setView(CreateFromScratchViews.READY);
   };
 
@@ -43,11 +30,14 @@ function CreateFromScratch() {
     return (
       <div className="create-page-layout">
         <div className="main-title">Let's create a template</div>
-        <TemplateEditor
-          initialName={""}
-          initialItems={[""]}
-          onSubmit={submitTemplate}
-        />
+        <br></br>
+        <div>
+          <TemplateEditor
+            initialName={""}
+            initialItems={[""]}
+            onSubmit={submitTemplate}
+          />
+        </div>
       </div>
     );
   }
@@ -63,10 +53,14 @@ function CreateFromScratch() {
   function readyView() {
     return (
       <div className="create-page-layout">
-        <div className="main-title">Your Template is Ready!</div>
-        <a href={"/rank?templateId=" + templateId}>
-          <button className="button-styles">let's rank</button>
-        </a>
+        <div>
+          <div className="main-title">Your Template is Ready!</div>
+        </div>
+        <div>
+          <a href={"/rank?templateId=" + templateId}>
+            <button className="button-styles">let's rank</button>
+          </a>
+        </div>
       </div>
     );
   }

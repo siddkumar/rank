@@ -2,7 +2,6 @@ import React from "react";
 import "./styles/App.css";
 import Header from "./pages/header";
 import Create from "./pages/create/create";
-import CreateFromNew from "./pages/create/fromNew";
 import CreateFromExisting from "./pages/create/fromExisting";
 import { Route, Routes } from "react-router-dom";
 import CreateFromScratch from "./pages/create/fromScratch";
@@ -20,7 +19,6 @@ function App() {
         <Route path="myStuff" element={<MyStuff />}></Route>
         <Route path="signIn" element={<SignIn />}></Route>
         <Route path="/" element={<Create />}></Route>
-        <Route path="create/fromNew" element={<CreateFromNew />}></Route>
         <Route
           path="create/fromExisting"
           element={<CreateFromExisting />}

@@ -4,12 +4,7 @@ import "../../styles/rank.css";
 import { useSearchParams } from "react-router-dom";
 import BlobManager from "../../components/blobs/blobManager";
 import RankableItem from "../../models/RankableItem";
-
-interface GetRankResponse {
-  ranking: string[];
-  name: string;
-  templateId: string;
-}
+import { GetRankById } from "../../services/ranksService";
 
 function RankEdit() {
   const [view, setView] = useState(RankViews.LOADING);
@@ -20,27 +15,13 @@ function RankEdit() {
   const [templateId, setTemplateId] = useState("");
 
   useEffect(() => {
-    const requestOptions = {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-    };
-
-    fetch("https://rank-backend.vercel.app/ranks?id=" + id, requestOptions)
-      .then((response) => response.json())
-      .then((data) => {
-        var rankResponse = data as GetRankResponse;
-        var bloblist: RankableItem[] = [];
-        rankResponse.ranking.map((item, i) => {
-          bloblist.push({
-            name: item,
-            rank: i,
-          } as RankableItem);
-        });
-        setRanking(bloblist);
-        setRankName(rankResponse.name);
-        setTemplateId(rankResponse.templateId);
-        setView(RankViews.RANKING);
-      });
+    setView(RankViews.LOADING);
+    GetRankById(id ?? "").then(({ bloblist, templateId, rankName }) => {
+      setRanking(bloblist);
+      setRankName(rankName);
+      setTemplateId(templateId);
+      setView(RankViews.RANKING);
+    });
   }, []);
 
   function loadingView() {

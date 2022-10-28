@@ -12,9 +12,10 @@
 }
 
 .item-container {
-  background-color: #a285f24d;
-  border: 1px dotted black;
-  border-radius: 20%;
+  background-color: #368f8b4d;
+  border: 1px dotted #246a73;
+  border-radius: 25%;
   padding: 25px 70px;
   margin: 15px 50px;
+  color: #160f29;
 }

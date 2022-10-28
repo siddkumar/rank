@@ -27,12 +27,18 @@ templatesdb = db.collection('templates')
 
 @app.route("/templates/createFromScratch", methods=['POST'])
 def templatesCreate():
-    """
-    """
     try:
         name = request.json['name']
         items = request.json['items']
-        userId = request.json['userId']
+        email = request.json['email']
+
+        userId = "og-user"
+
+        if (email):
+            usersMatchEmail = usersdb.where(u'emailAddress', u'==', email)
+            user = usersMatchEmail.get()
+            for u in user:
+                userId = u.id
 
         data = {
             u'createdBy': userId,
@@ -95,20 +101,6 @@ def templatesRead():
                 }
                 r.append(data)
             return json.dumps(r), 200
-    except Exception as e:
-        return f"An Error Occured: {e}"
-
-@app.route("/users/list", methods=['GET'])
-def usersListRead():
-    try:
-        # Check if ID was passed to URL query
-        userId = request.args.get('id')
-        if userId:
-            user = usersdb.document(userId).get()
-            return jsonify(user.to_dict()), 200
-        else:
-            allUsers = [u.to_dict() for u in usersdb.stream()]
-            return jsonify(allUsers), 200
     except Exception as e:
         return f"An Error Occured: {e}"
 

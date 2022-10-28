@@ -1,14 +1,14 @@
 .app-header {
-  background-color: #a285f24d;
+  background-color: #160f29;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
   font-size: calc(10px + 2vmin);
   font-family: "Caveat", cursive;
-  color: rgb(18, 24, 109);
-  padding-left: 2rem;
-  padding-right: 2rem;
+  color: white;
+  padding-left: 8rem;
+  padding-right: 8rem;
 }
 
 .header-logo {
@@ -23,7 +23,11 @@
 }
 
 .header-right a {
-  color: rgb(18, 24, 109);
+  color: white;
+  font-family: "Open Sans", sans-serif;
+  font-size: 1rem;
+  text-transform: uppercase;
   padding-left: 0.5rem;
   padding-right: 0.5rem;
+  text-decoration: none;
 }

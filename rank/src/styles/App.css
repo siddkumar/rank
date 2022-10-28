@@ -5,41 +5,71 @@
 }
 
 .App-demo {
-  background-color: #fff5fe;
+  background-color: #f3dfc1;
   padding-left: 7rem;
   padding-right: 7rem;
   padding-top: 3rem;
 }
 
 .bgcolor {
-  background-color: #fff5fe;
+  background-color: #f3dfc1;
 }
 
+/* CSS */
 .button-styles {
-  background-color: #c2fbd7;
-  border-radius: 100px;
-  box-shadow: rgba(44, 187, 99, 0.2) 0 -25px 18px -14px inset,
-    rgba(44, 187, 99, 0.15) 0 1px 2px, rgba(44, 187, 99, 0.15) 0 2px 4px,
-    rgba(44, 187, 99, 0.15) 0 4px 8px, rgba(44, 187, 99, 0.15) 0 8px 16px,
-    rgba(44, 187, 99, 0.15) 0 16px 32px;
-  color: green;
+  background: linear-gradient(to bottom right, #246a73, #368f8b);
+  border: 0;
+  border-radius: 12px;
+  color: #ffffff;
   cursor: pointer;
   display: inline-block;
-  padding: 7px 20px;
+  font-family: "Open Sans", sans-serif;
+  outline: transparent;
   text-align: center;
   text-decoration: none;
-  transition: all 250ms;
-  border: 0;
-  font-size: 16px;
+  transition: box-shadow 0.2s ease-in-out;
   user-select: none;
   -webkit-user-select: none;
   touch-action: manipulation;
+  white-space: nowrap;
 }
 
-.button-styles:hover {
-  box-shadow: rgba(44, 187, 99, 0.35) 0 -25px 18px -14px inset,
-    rgba(44, 187, 99, 0.25) 0 1px 2px, rgba(44, 187, 99, 0.25) 0 2px 4px,
-    rgba(44, 187, 99, 0.25) 0 4px 8px, rgba(44, 187, 99, 0.25) 0 8px 16px,
-    rgba(44, 187, 99, 0.25) 0 16px 32px;
-  transform: scale(1.05) rotate(-1deg);
+.button-styles:not([disabled]):focus {
+  box-shadow: 0 0 0.25rem rgba(0, 0, 0, 0.5), -0.125rem -0.125rem 1rem #ddbea8,
+    0.125rem 0.125rem 1rem #368f8b;
+}
+
+.button-styles:not([disabled]):hover {
+  box-shadow: 0 0 0.25rem rgba(0, 0, 0, 0.5), -0.125rem -0.125rem 1rem #ddbea8,
+    0.125rem 0.125rem 1rem #368f8b;
+}
+
+.spinner {
+  display: inline-block;
+  transform: translateZ(1px);
+}
+.spinner > div {
+  display: inline-block;
+  width: 64px;
+  height: 64px;
+  margin: 8px;
+  border-radius: 50%;
+  background-image: linear-gradient(144deg, #160f29, #246a73 50%, #368f8b);
+  animation: lds-circle 2.4s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+}
+@keyframes lds-circle {
+  0%,
+  100% {
+    animation-timing-function: cubic-bezier(0.5, 0, 1, 0.5);
+  }
+  0% {
+    transform: rotateY(0deg);
+  }
+  50% {
+    transform: rotateY(1800deg);
+    animation-timing-function: cubic-bezier(0, 0.5, 0.5, 1);
+  }
+  100% {
+    transform: rotateY(3600deg);
+  }
 }

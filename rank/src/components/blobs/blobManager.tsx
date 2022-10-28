@@ -7,6 +7,7 @@ import {
   DropResult,
 } from "react-beautiful-dnd";
 import RankableItem from "../../models/RankableItem";
+import { PostNewRank } from "../../services/ranksService";
 import "../../styles/blobManager.css";
 
 export interface BlobManagerProps {
@@ -24,19 +25,9 @@ function BlobManager(props: BlobManagerProps) {
     const auth = getAuth();
     const user = auth.currentUser;
     if (user) {
-      const requestOptions = {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          emailAddress: user.email,
-          ranking: blobList,
-          templateId: props.templateId,
-        }),
-      };
-      fetch(
-        "https://rank-backend.vercel.app/ranks/create",
-        requestOptions
-      ).then((response) => console.log("saved"));
+      PostNewRank(blobList, props.templateId, user.email ?? "").then(
+        (response) => console.log("saved")
+      );
     } else {
       console.log("error, not signed in"); // TODO surface
     }
@@ -61,7 +52,7 @@ function BlobManager(props: BlobManagerProps) {
                       {...provided.dragHandleProps}
                       {...provided.draggableProps}
                     >
-                      {index + 1}. {item}
+                      <b>{index + 1}</b>. {item}
                     </div>
                   )}
                 </Draggable>
