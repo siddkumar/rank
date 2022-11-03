@@ -58,13 +58,16 @@ export function CreateFromLink() {
     return (
       <>
         <div className="main-title">Enter a link from Wikipedia</div>
-        <label className="main-subtitle">paste URL here:&nbsp;</label>
-        <input type="text" value={wikiLink} onChange={onChangeWikiLink} />
-        <div>
-          <button className="button-styles" onClick={() => submitLink()}>
-            find tables
-          </button>
+        <div className="card container">
+        <label className="main-subtitle">Paste URL here:&nbsp;</label>
+          <input type="text" value={wikiLink} onChange={onChangeWikiLink} />
+          <div>
+            <button className="button-styles" onClick={() => submitLink()}>
+              find tables
+            </button>
+          </div>
         </div>
+
       </>
     );
   }
@@ -74,7 +77,7 @@ export function CreateFromLink() {
       <>
         <div className="main-title">We found these tables...</div>
         <div className="main-subtitle">please select one to continue</div>
-        <div className="potential-template-wrapper">
+        <div className="potential-template-wrapper card container">
           {tables.map((table, t) => {
             return (
               <button
@@ -109,7 +112,7 @@ export function CreateFromLink() {
       <>
         <div className="main-title">We found these potential templates ...</div>
         <div className="main-subtitle">please select one to continue</div>
-        <div className="potential-template-wrapper">
+        <div className="potential-template-wrapper card container">
           {templates.map((template, _t) => {
             return (
               <button
@@ -124,7 +127,8 @@ export function CreateFromLink() {
               </button>
             );
           })}
-          <button
+        </div>
+        <button
             className="add-remove-button"
             onClick={() => {
               setChosenTableName("");
@@ -133,7 +137,6 @@ export function CreateFromLink() {
           >
             Go back
           </button>
-        </div>
       </>
     );
   }
@@ -142,10 +145,7 @@ export function CreateFromLink() {
     return (
       <>
         <div className="main-title">Edit this template</div>
-        <div className="main-subtitle">
-          scroll down and click "i'm done" to continue
-        </div>
-        <div>
+        <div className="card container">
           <TemplateEditor
             initialName={chosenTableName + " - " + chosenTemplate.templateName}
             initialItems={chosenTemplate.templateItems}

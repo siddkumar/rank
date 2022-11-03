@@ -39,7 +39,7 @@ function Rank() {
     return (
       <div className="rank-page-layout">
         <div className="main-title">{templateName}</div>
-        <BlobManager blobs={blobs} templateId={templateId ?? "og-template"} />
+          <BlobManager blobs={blobs} templateId={templateId ?? "og-template"} />
       </div>
     );
   }

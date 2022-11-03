@@ -9,11 +9,6 @@
   flex-direction: column;
 }
 
-.main-title {
-  font-size: xx-large;
-  color: #160f29;
-}
-
 .main-subtitle {
   font-size: larger;
   margin-top: 1rem;
@@ -37,7 +32,7 @@ li {
 }
 
 .button-styles {
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 500;
   line-height: 3.5;
   margin-top: 0.5rem;

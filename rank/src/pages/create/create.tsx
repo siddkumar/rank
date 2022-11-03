@@ -10,7 +10,7 @@ function Create() {
       </div>
       <div className="choices-container">
         <ul>
-          <div>
+          <div className="card container">
             <li> I want to create a new template! </li>
             <a href="/create/fromScratch">
               <button className="button-styles">create from scratch</button>
@@ -21,7 +21,7 @@ function Create() {
               </button>
             </a>
           </div>
-          <div>
+          <div className="card container">
             <li>I want to use an existing template!</li>
             <a href="/create/fromExisting">
               <button className="button-styles">

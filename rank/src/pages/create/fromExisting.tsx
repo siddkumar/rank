@@ -14,7 +14,7 @@ function CreateFromExisting() {
   return (
     <div className="create-page-layout">
       <div className="main-title">Let's pick a template</div>
-      <div className="potential-template-wrapper">
+      <div className="card container potential-template-wrapper">
         <TemplatesList stubs={stubs} />
       </div>
     </div>

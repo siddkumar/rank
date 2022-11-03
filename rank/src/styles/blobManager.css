@@ -5,17 +5,17 @@
 .list-container {
   display: flex;
   font-size: 18px;
-  background-color: transparent;
 
   flex-direction: column;
-  width: 40%;
 }
 
 .item-container {
-  background-color: #368f8b4d;
-  border: 1px dotted #246a73;
-  border-radius: 25%;
-  padding: 25px 70px;
-  margin: 15px 50px;
-  color: #160f29;
+  /* background-color: #368f8b4d; */
+  border: 1px dotted #160f29;
+  /* border-radius: 25%; */
+  /* padding: 1rem 1rem; */
+  /* margin: 1rem 1rem; */
+  /* color: #160f29; */
+  /* font-size: 1rem; */
+  padding: 0.5rem 0.5rem;
 }

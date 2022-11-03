@@ -31,7 +31,7 @@ function CreateFromScratch() {
       <div className="create-page-layout">
         <div className="main-title">Let's create a template</div>
         <br></br>
-        <div>
+        <div className="card container">
           <TemplateEditor
             initialName={""}
             initialItems={[""]}

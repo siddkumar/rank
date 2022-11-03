@@ -44,10 +44,10 @@ function BlobManager(props: BlobManagerProps) {
               ref={provided.innerRef}
             >
               {blobList.map((item, index) => (
-                <Draggable key={item} draggableId={item} index={index}>
+                <Draggable key={item+index} draggableId={item} index={index}>
                   {(provided) => (
                     <div
-                      className="item-container"
+                      className="item-container card"
                       ref={provided.innerRef}
                       {...provided.dragHandleProps}
                       {...provided.draggableProps}
