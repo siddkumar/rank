@@ -59,7 +59,7 @@ export function CreateFromLink() {
       <>
         <div className="main-title">Enter a link from Wikipedia</div>
         <div className="card container">
-        <label className="main-subtitle">Paste URL here:&nbsp;</label>
+          <label className="main-subtitle">Paste URL here:&nbsp;</label>
           <input type="text" value={wikiLink} onChange={onChangeWikiLink} />
           <div>
             <button className="button-styles" onClick={() => submitLink()}>
@@ -67,7 +67,6 @@ export function CreateFromLink() {
             </button>
           </div>
         </div>
-
       </>
     );
   }
@@ -129,14 +128,14 @@ export function CreateFromLink() {
           })}
         </div>
         <button
-            className="add-remove-button"
-            onClick={() => {
-              setChosenTableName("");
-              setView(FromLinkViews.PICKTABLE);
-            }}
-          >
-            Go back
-          </button>
+          className="add-remove-button"
+          onClick={() => {
+            setChosenTableName("");
+            setView(FromLinkViews.PICKTABLE);
+          }}
+        >
+          Go back
+        </button>
       </>
     );
   }

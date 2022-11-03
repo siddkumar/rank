@@ -44,16 +44,50 @@ function BlobManager(props: BlobManagerProps) {
               ref={provided.innerRef}
             >
               {blobList.map((item, index) => (
-                <Draggable key={item+index} draggableId={item} index={index}>
+                <Draggable key={item + index} draggableId={item} index={index}>
                   {(provided) => (
-                    <div
-                      className="item-container card"
-                      ref={provided.innerRef}
-                      {...provided.dragHandleProps}
-                      {...provided.draggableProps}
-                    >
-                      <b>{index + 1}</b>. {item}
-                    </div>
+                    <>
+                      <div
+                        className="item-container card row"
+                        ref={provided.innerRef}
+                        {...provided.dragHandleProps}
+                        {...provided.draggableProps}
+                      >
+                        <div>
+                          <b>{index + 1}</b>. {item}
+                        </div>
+                        <div className="controls">
+                          <div
+                            onClick={(e) => {
+                              moveItem(index, blobList.length);
+                            }}
+                          >
+                            <i className="fa-solid fa-angles-down"></i>
+                          </div>
+                          <div
+                            onClick={(e) => {
+                              moveItem(index, index + 1);
+                            }}
+                          >
+                            <i className="fa-solid fa-angle-down"></i>
+                          </div>
+                          <div
+                            onClick={(e) => {
+                              moveItem(index, index - 1);
+                            }}
+                          >
+                            <i className="fa-solid fa-angle-up"></i>
+                          </div>
+                          <div
+                            onClick={(e) => {
+                              moveItem(index, 0);
+                            }}
+                          >
+                            <i className="fa-solid fa-angles-up"></i>
+                          </div>
+                        </div>
+                      </div>
+                    </>
                   )}
                 </Draggable>
               ))}
@@ -67,6 +101,16 @@ function BlobManager(props: BlobManagerProps) {
       </button>
     </>
   );
+
+  function moveItem(from: number, to: number) {
+    if (from < 0 || to < 0) {
+      return;
+    }
+    var updatedList = [...blobList];
+    const [item] = updatedList.splice(from, 1);
+    updatedList.splice(to, 0, item);
+    setBloblist(updatedList);
+  }
 
   function handleDrop(droppedItem: DropResult) {
     var updatedList = [...blobList];
