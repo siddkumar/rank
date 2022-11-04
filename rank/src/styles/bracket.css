@@ -1,0 +1,12 @@
+
+.matchup-container {
+    margin-bottom: 0.5rem;
+    margin-top:0.5rem;
+    width: auto;
+}
+
+.round-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
