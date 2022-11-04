@@ -65,12 +65,12 @@ function MyStuff() {
     return (
       <>
         <div className="myStuffContainer">
-          <div className="stuff-subtitle card container">
-            Your Templates
+          <div className="container">
+            <div className="stuff-subtitle">Your Templates</div>
             <TemplatesList stubs={stubs} />
           </div>
-          <div className="stuff-subtitle card container">
-            Your Ranks
+          <div className="container">
+            <div className="stuff-subtitle">Your Ranks</div>
             <RanksList stubs={ranks} />
           </div>
         </div>

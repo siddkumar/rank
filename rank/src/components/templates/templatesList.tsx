@@ -13,19 +13,19 @@ export interface RanksListProps {
 
 export function TemplatesList(props: TemplatesListProps) {
   return (
-    <>
+    <div className="list-container">
       {props.stubs.map((stub, _s) => {
         return (
           <a
-            className="template-link"
+            className="template-link item-container card row"
             key={stub.id}
             href={"/rank?templateId=" + stub.id}
           >
-            <button className="button-styles">{stub.name}</button>
+            {stub.name}
           </a>
         );
       })}
-    </>
+    </div>
   );
 }
 
@@ -35,11 +35,11 @@ export function RanksList(props: RanksListProps) {
       {props.stubs.map((stub, _s) => {
         return (
           <a
-            className="template-link"
+            className="template-link item-container card row"
             key={stub.id}
             href={"/rank/edit?id=" + stub.id}
           >
-            <button className="button-styles">{stub.name}</button>
+            {stub.name}
           </a>
         );
       })}

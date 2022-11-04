@@ -1,6 +1,8 @@
 # Required Imports
 import firebase_admin
-import os, re, requests
+import os
+import re
+import requests
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from firebase_admin import credentials, firestore
@@ -25,6 +27,7 @@ rankdb = db.collection('ranks')
 usersdb = db.collection('users')
 templatesdb = db.collection('templates')
 
+
 @app.route("/templates/createFromScratch", methods=['POST'])
 def templatesCreate():
     try:
@@ -40,9 +43,13 @@ def templatesCreate():
             for u in user:
                 userId = u.id
 
+        # remove duplicates
+        filtered = []
+        [filtered.append(x) for x in items if x not in filtered]
+
         data = {
             u'createdBy': userId,
-            u'items': items,
+            u'items': filtered,
             u'name': name,
             u'origin': 'scratch',
             u'sourceUrl': ""
@@ -56,6 +63,7 @@ def templatesCreate():
     except Exception as e:
         return f"An Error Occured:{e}"
 
+
 @app.route("/templates", methods=["GET"])
 def templatesRead():
     try:
@@ -63,9 +71,13 @@ def templatesRead():
         email = request.args.get('email')
         if (templateId):
             template = templatesdb.document(templateId).get().to_dict()
+            # remove duplicates
+            items = template['items']
+            filtered = []
+            [filtered.append(x) for x in items if x not in filtered]
             data = {
                 u'createdBy': 'og-user',
-                u'items': template['items'],
+                u'items': filtered,
                 u'name': template['name'],
                 u'origin': template['origin'],
                 u'sourceUrl': template['sourceUrl']
@@ -87,22 +99,20 @@ def templatesRead():
 
             return json.dumps(r), 200
         else:
-            allTemplates = templatesdb.stream()
+            # Get Featured Templates
             r = []
-            for template in allTemplates:
-                t = template.to_dict()
+            templates = templatesdb.where(u'featured', u'==', True).get()
+            for temp in templates:
+                t = temp.to_dict()
                 data = {
-                    u'createdBy': 'og-user',
-                    u'items': t['items'],
                     u'name': t['name'],
-                    u'origin': t['origin'],
-                    u'sourceUrl': t['sourceUrl'],
-                    u'id': template.id
+                    u'id': temp.id
                 }
                 r.append(data)
             return json.dumps(r), 200
     except Exception as e:
         return f"An Error Occured: {e}"
+
 
 @app.route("/users/create", methods=['POST'])
 def usersCreate():
@@ -125,6 +135,7 @@ def usersCreate():
     except Exception as e:
         return f"An Error Occured: {e}"
 
+
 @app.route("/ranks", methods=['GET'])
 def ranksRead():
     try:
@@ -139,7 +150,8 @@ def ranksRead():
             }
             return jsonify(data), 200
         elif(emailAddress):
-            usersMatchEmail = usersdb.where(u'emailAddress', u'==', emailAddress)
+            usersMatchEmail = usersdb.where(
+                u'emailAddress', u'==', emailAddress)
             user = usersMatchEmail.get()
             response = []
             for u in user:
@@ -159,6 +171,7 @@ def ranksRead():
     except Exception as e:
         print("an error occurred")
         return f"An Error Occured: " + str(e)
+
 
 @app.route("/ranks/create", methods=['POST'])
 def ranksCreate():
@@ -189,6 +202,7 @@ def ranksCreate():
     except Exception as e:
         return f"An Error Occured"
 
+
 @app.route("/parser/parseLink", methods=['POST'])
 def parse():
     try:
@@ -212,7 +226,7 @@ def parse():
                         rep_row, rep_col = get_spans(cell)
                         if rep_row > maxRow:
                             maxRow = rep_row
-                        for i in range(0,rep_col):
+                        for i in range(0, rep_col):
                             colNames.append(clean_string(cell.text))
                             potentialTemplate = {
                                 u'templateName': clean_string(cell.text),
@@ -220,22 +234,22 @@ def parse():
                             }
                             cols.append(potentialTemplate)
 
-
                     stuffs = []
                     for r in range(maxRow, numRows):
                         row = []
                         column_span_starter = 0
-                        for j, cell in enumerate(rows[r].find_all(['td','th'])):
+                        for j, cell in enumerate(rows[r].find_all(['td', 'th'])):
                             rep_row, rep_col = get_spans(cell)
                             row.append(
-                                {'rowSize': rep_row, 'colSize': rep_col, 'text': clean_string(cell.text), 'colSpanStarter': column_span_starter}
+                                {'rowSize': rep_row, 'colSize': rep_col, 'text': clean_string(
+                                    cell.text), 'colSpanStarter': column_span_starter}
                             )
                             column_span_starter += rep_col
                         stuffs.append(row)
 
                     for c in range(numCols):
                         items = []
-                        r = 0 
+                        r = 0
                         while r < len(stuffs):
                             if (len(stuffs[r]) == 0):
                                 r += 1
@@ -262,10 +276,12 @@ def parse():
     except Exception as e:
         return f"An Error Occured:{e}"
 
+
 def clean_string(s):
     stripped_string = s.strip()
     response = re.sub("[\(\[].*?[\)\]]", "", stripped_string)
     return response
+
 
 def pre_process_table(table):
     """
@@ -304,6 +320,7 @@ def pre_process_table(table):
 
     return (rows, num_rows, num_cols)
 
+
 def get_spans(cell):
     """
     INPUT:
@@ -321,6 +338,7 @@ def get_spans(cell):
         rep_col = 1
 
     return (rep_row, rep_col)
+
 
 @app.route('/')
 def home():

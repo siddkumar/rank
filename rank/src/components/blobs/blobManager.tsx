@@ -8,7 +8,6 @@ import {
 } from "react-beautiful-dnd";
 import RankableItem from "../../models/RankableItem";
 import { PostNewRank } from "../../services/ranksService";
-import "../../styles/blobManager.css";
 
 export interface BlobManagerProps {
   blobs: RankableItem[];
