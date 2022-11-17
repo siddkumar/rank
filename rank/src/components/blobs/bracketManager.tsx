@@ -1,17 +1,24 @@
-import React from "react";
-import RankableItem from "../../models/RankableItem";
+import React, { useState } from "react";
+import RankableItem, { RankableDefaultString } from "../../models/RankableItem";
 import "../../styles/bracket.css"
+import BracketRound from "./bracketRound";
 
 export interface BracketManagerProps {
     blobs: RankableItem[];
 }
 
 function BracketManager (props: BracketManagerProps) {
-    
     const seeds = new Map();
+    var maxLen = 0;
     props.blobs.map((item, index) => {
         seeds.set(index + 1, item)
+        if ((item.name.length) > maxLen)
+        {
+            maxLen = item.name.length
+        }
     });
+
+    var seedsPerRound = [seeds]
 
     const numItems = props.blobs.length;
 
@@ -29,43 +36,82 @@ function BracketManager (props: BracketManagerProps) {
         exponent ++;
     }
 
-    const seedings = seeding( 2** exponent)
-    var matchupList : any[] = [];
-
-    for (var i = 0; i < seedings.length; i += 2)
+    var rounds =[]
+    for (var e = exponent; e > 0; e -=1)
     {
-        matchupList.push([seedings.at(i), seedings.at(i+1)]);
+        var round = []
+        var psuedoSeeds = seeding(2 ** e)
+        for (var i = 0; i < psuedoSeeds.length; i += 2)
+        {
+            round.push([psuedoSeeds.at(i), psuedoSeeds.at(i+1)]);
+        }
+
+        if(e != exponent)
+        {
+            var s = new Map();
+            for (var x = 0; x < psuedoSeeds.length; x += 1)
+            {
+                s.set(x + 1, {name: RankableDefaultString, rank: x});
+            }
+            seedsPerRound.push(s);
+        }
+
+        rounds.push(round)
     }
+
+    const [roundByRound, setRoundByRound] = useState(seedsPerRound);
+    const [winner, setWinner] = useState<string | null>(null);
+
+
+    function advance (psuedoSeed: number, i: RankableItem, round: number) {
+        if (round+1 == roundByRound.length)
+        {
+            setWinner(i.name);
+            return;
+        }
+        var newRoundByRound = [...roundByRound]
+        var replacing = newRoundByRound[round + 1].get(psuedoSeed);
+        newRoundByRound[round + 1].set(psuedoSeed, i)
+
+        if (replacing.name == winner) {
+            setWinner(null)
+        }
+
+        for (var j = round + 2; j < roundByRound.length; j++)
+        {
+            var keytoNullOut = null;
+            var ranktoNullOut = null
+            newRoundByRound[j].forEach((value: RankableItem, key: number) => {
+                if (value.name == replacing.name)
+                {
+                    keytoNullOut = key
+                    ranktoNullOut = value.rank
+                }
+            } )
+            if (keytoNullOut)
+            {
+                newRoundByRound[j].set(keytoNullOut, {name: RankableDefaultString, rank: ranktoNullOut} )
+            }
+        }
+        setRoundByRound(newRoundByRound)
+    }
+
     return (
         <div>
-            <div>
-                <div>Round 1</div>
+            <div className="bracket-container">
+                {rounds.map( (item, index) => {
+                    return (
+                        <BracketRound key={index} matchupList={item} seeds={roundByRound[index]} roundNumber={index + 1} clickCallback={advance}
+                        />
+                    )
+                })}
                 <div className="round-container">
-                {
-                    matchupList.map((item,index) => { 
-                        var x = seeds.get(item.at(0))
-                        var y = seeds.get(item.at(1))
-                        return (
-                            <div key={x.name + "vs" + y.name}className="matchup-container">
-                                <div key={x.name + x.rank} className="row card item-container">
-                                    <div>{x.rank + 1}.{x.name}</div>
-                                    <div className="controls">
-                                        <div onClick={() => console.log("click")}>
-                                        <i className="fa-solid fa-square-caret-right"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div key={y.name + y.rank} className="row card item-container">
-                                    <div>{y.rank + 1}.{y.name}</div>
-                                    <div className="controls">
-                                        <div onClick={() => console.log("click")}>
-                                        <i className="fa-solid fa-square-caret-right"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                    )})
-                }
+                    <div className="item-container card row">
+                        {winner ?? RankableDefaultString}
+                        <div className="controls">
+                        <i className="fa-solid fa-trophy"></i>
+                    </div>
+                    </div>
                 </div>
             </div>
         </div>
