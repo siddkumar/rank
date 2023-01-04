@@ -1,4 +1,3 @@
-import { getAuth } from "firebase/auth";
 import React, { useState } from "react";
 import {
   DragDropContext,
@@ -7,12 +6,12 @@ import {
   DropResult,
 } from "react-beautiful-dnd";
 import RankableItem from "../../models/RankableItem";
-import { PostNewRank } from "../../services/ranksService";
 import { RankableRow } from "./rankableRow";
 
 export interface ListRankerProps {
   rankableList: RankableItem[];
   templateId: string;
+  onSave: (rankableStrings: string[]) => void;
 }
 
 function ListRanker(props: ListRankerProps) {
@@ -20,18 +19,6 @@ function ListRanker(props: ListRankerProps) {
     return rankableItem.name;
   });
   const [blobList, setBloblist] = useState(defaultList);
-
-  function save(blobList: string[]) {
-    const auth = getAuth();
-    const user = auth.currentUser;
-    if (user) {
-      PostNewRank(blobList, props.templateId, user.email ?? "").then(
-        (response) => console.log("saved")
-      );
-    } else {
-      console.log("error, not signed in"); // TODO surface
-    }
-  }
 
   return (
     <>
@@ -71,7 +58,7 @@ function ListRanker(props: ListRankerProps) {
           )}
         </Droppable>
       </DragDropContext>
-      <button className="button-styles" onClick={() => save(blobList)}>
+      <button className="button-styles" onClick={() => props.onSave(blobList)}>
         Save
       </button>
     </>

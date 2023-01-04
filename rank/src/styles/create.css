@@ -13,6 +13,7 @@
   font-size: larger;
   margin-top: 1rem;
   margin-bottom: 1rem;
+  font-family: "Roboto Slab", sans-serif;
   color: #160f29;
 }
 
@@ -25,21 +26,14 @@ input {
   padding: 0.5rem;
 }
 
-ul,
-li {
-  color: #160f29;
-  list-style-type: circle;
-}
-
 .button-styles {
   font-size: 1rem;
-  font-weight: 600;
   line-height: 3;
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
   padding-left: 1rem;
   padding-right: 1rem;
-  font-family: "Courier New";
+  font-family: "Open Sans", sans-serif;
 }
 
 .done-button {
@@ -55,9 +49,8 @@ li {
   color: #160f29;
   cursor: pointer;
   display: inline-block;
-  font-family: "Courier", sans-serif;
-  font-weight: 600;
-  font-size: 1rem;
+  font-family: "Roboto Slab", sans-serif;
+  font-weight: 500;
   margin: 1rem;
   text-decoration: none;
   user-select: none;

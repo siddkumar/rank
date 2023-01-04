@@ -10,7 +10,12 @@ export interface BracketRoundProps {
 
 function BracketRound(props: BracketRoundProps) {
   return (
-    <div className="round-container">
+    <div
+      className={
+        "round-container " +
+        (props.roundNumber % 2 === 0 ? "bg-even" : "bg-odd")
+      }
+    >
       {props.matchupList.map((item, index) => {
         var x = props.seeds.get(item.at(0));
         var y = props.seeds.get(item.at(1));
@@ -22,32 +27,26 @@ function BracketRound(props: BracketRoundProps) {
           >
             <div
               key={x.name + x.rank + "." + props.roundNumber}
-              className="row card item-container"
+              className="row card item-container pointer"
+              onClick={() =>
+                props.clickCallback(psuedoSeed, x, props.roundNumber - 1)
+              }
             >
               <div>{getNiceString(x.name, x.rank)}</div>
               <div className="controls">
-                <div
-                  onClick={() =>
-                    props.clickCallback(psuedoSeed, x, props.roundNumber - 1)
-                  }
-                >
-                  <i className="fa-solid fa-square-caret-right"></i>
-                </div>
+                <i className="fa-solid fa-square-caret-right"></i>
               </div>
             </div>
             <div
               key={y.name + y.rank + props.roundNumber}
-              className="row card item-container"
+              className="row card item-container pointer"
+              onClick={() =>
+                props.clickCallback(psuedoSeed, y, props.roundNumber - 1)
+              }
             >
               <div>{getNiceString(y.name, y.rank)}</div>
               <div className="controls">
-                <div
-                  onClick={() =>
-                    props.clickCallback(psuedoSeed, y, props.roundNumber - 1)
-                  }
-                >
-                  <i className="fa-solid fa-square-caret-right"></i>
-                </div>
+                <i className="fa-solid fa-square-caret-right"></i>
               </div>
             </div>
           </div>

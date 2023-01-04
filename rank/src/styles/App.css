@@ -102,6 +102,8 @@
 
 .item-container {
   text-align: center;
+  border: 1px dotted #160f29;
+  padding: 0.5rem 0.5rem;
 }
 
 .list-container {
@@ -109,11 +111,6 @@
   font-size: 1rem;
 
   flex-direction: column;
-}
-
-.item-container {
-  border: 1px dotted #160f29;
-  padding: 0.5rem 0.5rem;
 }
 
 .row {
@@ -130,4 +127,12 @@ i {
   margin-left: 1rem;
   cursor: pointer;
   color: #246a73;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.no-pointer {
+  cursor: default;
 }

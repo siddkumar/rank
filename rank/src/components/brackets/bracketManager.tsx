@@ -4,13 +4,13 @@ import "../../styles/bracket.css";
 import BracketRound from "./bracketRound";
 
 export interface BracketManagerProps {
-  blobs: RankableItem[];
+  bracketItems: RankableItem[];
 }
 
 function BracketManager(props: BracketManagerProps) {
   const seeds = new Map();
   var maxLen = 0;
-  props.blobs.forEach((item, index) => {
+  props.bracketItems.forEach((item, index) => {
     seeds.set(index + 1, item);
     if (item.name.length > maxLen) {
       maxLen = item.name.length;
@@ -19,8 +19,9 @@ function BracketManager(props: BracketManagerProps) {
 
   var seedsPerRound = [seeds];
 
-  const numItems = props.blobs.length;
+  const numItems = props.bracketItems.length;
 
+  // Add Bye Items until nearest power of 2
   var exponent = 0;
   while (exponent < 10) {
     var total = 2 ** exponent;
@@ -33,6 +34,7 @@ function BracketManager(props: BracketManagerProps) {
     exponent++;
   }
 
+  // Create matchups for each round
   var rounds = [];
   for (var e = exponent; e > 0; e -= 1) {
     var round = [];
@@ -41,6 +43,7 @@ function BracketManager(props: BracketManagerProps) {
       round.push([psuedoSeeds.at(ps), psuedoSeeds.at(ps + 1)]);
     }
 
+    // Set Initial Bracket
     if (e !== exponent) {
       var s = new Map();
       for (var x = 0; x < psuedoSeeds.length; x += 1) {
@@ -87,6 +90,16 @@ function BracketManager(props: BracketManagerProps) {
     setRoundByRound(newRoundByRound);
   }
 
+  // advance byes
+  let r1 = rounds[0];
+  r1.forEach((item, index) => {
+    console.log(item);
+    if (roundByRound[0].get(item[1]).name === "BYE") {
+      console.log(item.at(0));
+      roundByRound[1].set(item[0], roundByRound[0].get(item[0]));
+    }
+  });
+
   return (
     <div>
       <div className="bracket-container">
@@ -114,6 +127,7 @@ function BracketManager(props: BracketManagerProps) {
   );
 }
 
+// Gets matchups for each round
 function seeding(numPlayers: number) {
   var rounds = Math.log(numPlayers) / Math.log(2) - 1;
   var pls = [1, 2];

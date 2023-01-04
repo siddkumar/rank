@@ -5,6 +5,8 @@ import BracketManager from "../../components/brackets/bracketManager";
 import RankableItem from "../../models/RankableItem";
 import { GetTemplateById } from "../../services/templatesService";
 import "../../styles/rank.css";
+import { getAuth } from "firebase/auth";
+import { PostNewRank } from "../../services/ranksService";
 
 export enum RankViews {
   LOADING = "loading",
@@ -15,7 +17,7 @@ export enum RankViews {
 
 function Rank() {
   const [view, setView] = useState(RankViews.LOADING);
-  const [blobs, setBlobs] = useState<RankableItem[]>([]);
+  const [ranking, setRanking] = useState<RankableItem[]>([]);
   const [templateName, setTemplateName] = useState("");
   const [searchParams] = useSearchParams();
   const templateId = searchParams.get("templateId");
@@ -23,11 +25,28 @@ function Rank() {
   useEffect(() => {
     setView(RankViews.LOADING);
     GetTemplateById(templateId ?? "").then(({ templateName, rankableList }) => {
-      setBlobs(rankableList);
+      setRanking(rankableList);
       setTemplateName(templateName);
       setView(RankViews.RANKING);
     });
   }, [templateId]);
+
+  function save(rankableList: string[]) {
+    setRanking(
+      rankableList.map<RankableItem>((item, index) => {
+        return { name: item, rank: index };
+      })
+    );
+    const auth = getAuth();
+    const user = auth.currentUser;
+    if (user && templateId) {
+      PostNewRank(rankableList, templateId, user.email ?? "").then((response) =>
+        console.log("saved")
+      );
+    } else {
+      console.log("error, not signed in"); // TODO surface
+    }
+  }
 
   function loadingView() {
     return (
@@ -55,8 +74,9 @@ function Rank() {
           </div>
         </div>
         <ListRanker
-          rankableList={blobs}
+          rankableList={ranking}
           templateId={templateId ?? "og-template"}
+          onSave={save}
         />
       </div>
     );
@@ -81,7 +101,7 @@ function Rank() {
             </div>
           </div>
         </div>
-        <BracketManager blobs={[...blobs]} />
+        <BracketManager bracketItems={[...ranking]} />
       </div>
     );
   }
