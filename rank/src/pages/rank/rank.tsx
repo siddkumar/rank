@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import BlobManager from "../../components/blobs/blobManager";
-import BracketManager from "../../components/blobs/bracketManager";
+import ListRanker from "../../components/ranker/listRanker";
+import BracketManager from "../../components/brackets/bracketManager";
 import RankableItem from "../../models/RankableItem";
 import { GetTemplateById } from "../../services/templatesService";
 import "../../styles/rank.css";
@@ -10,7 +10,7 @@ export enum RankViews {
   LOADING = "loading",
   RANKING = "ranking",
   SAVING = "saving",
-  BRACKET = "bracket"
+  BRACKET = "bracket",
 }
 
 function Rank() {
@@ -22,12 +22,12 @@ function Rank() {
 
   useEffect(() => {
     setView(RankViews.LOADING);
-    GetTemplateById(templateId ?? "").then(({ templateName, bloblist }) => {
-      setBlobs(bloblist);
+    GetTemplateById(templateId ?? "").then(({ templateName, rankableList }) => {
+      setBlobs(rankableList);
       setTemplateName(templateName);
       setView(RankViews.RANKING);
     });
-  }, []);
+  }, [templateId]);
 
   function loadingView() {
     return (
@@ -40,14 +40,24 @@ function Rank() {
   function rankingView() {
     return (
       <div className="rank-page-layout">
-        <div className="main-title row">{templateName}
-        <div className="bracket-button">
-          <div onClick={() => {setView(RankViews.BRACKET)}}><i className="fa-solid fa-network-wired tooltip">
-            <span className="tooltiptext">bracketify</span>
-            </i></div>
+        <div className="main-title row">
+          {templateName}
+          <div className="bracket-button">
+            <div
+              onClick={() => {
+                setView(RankViews.BRACKET);
+              }}
+            >
+              <i className="fa-solid fa-network-wired tooltip">
+                <span className="tooltiptext">bracketify</span>
+              </i>
+            </div>
+          </div>
         </div>
-        </div>
-        <BlobManager blobs={blobs} templateId={templateId ?? "og-template"} />
+        <ListRanker
+          rankableList={blobs}
+          templateId={templateId ?? "og-template"}
+        />
       </div>
     );
   }
@@ -57,16 +67,23 @@ function Rank() {
   function bracketView() {
     return (
       <div className="rank-page-layout">
-        <div className="main-title row">{templateName}
-        <div className="bracket-button">
-          <div onClick={() => {setView(RankViews.RANKING)}}><i className="fa-solid fa-list tooltip">
-            <span className="tooltiptext">rank</span>
-            </i></div>
-        </div>
+        <div className="main-title row">
+          {templateName}
+          <div className="bracket-button">
+            <div
+              onClick={() => {
+                setView(RankViews.RANKING);
+              }}
+            >
+              <i className="fa-solid fa-list tooltip">
+                <span className="tooltiptext">rank</span>
+              </i>
+            </div>
+          </div>
         </div>
         <BracketManager blobs={[...blobs]} />
       </div>
-    )
+    );
   }
 
   return (

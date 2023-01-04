@@ -20,23 +20,23 @@ export async function GetTemplateById(templateId: string) {
     headers: { "Content-Type": "application/json" },
   };
 
-  var bloblist: RankableItem[] = [];
+  var rankableList: RankableItem[] = [];
   var templateName: string = "";
 
   await fetch(prefix + "/templates?id=" + templateId, requestOptions)
     .then((response) => response.json())
     .then((data) => {
       var templateResponse = data as GetTemplateResponse;
-      templateResponse.items.map((item, i) => {
-        bloblist.push({
+      rankableList = templateResponse.items.map<RankableItem>((item, i) => {
+        return {
           name: item,
           rank: i,
-        } as RankableItem);
+        };
       });
       templateName = templateResponse.name;
     });
 
-  return { templateName, bloblist };
+  return { templateName, rankableList };
 }
 
 export async function GetTemplatesList() {
@@ -51,8 +51,8 @@ export async function GetTemplatesList() {
     .then((response) => response.json())
     .then((data) => {
       var templateResponse = data as GetTemplateResponse[];
-      templateResponse.map((template, t) => {
-        stubList.push({ id: template.id, name: template.name });
+      stubList = templateResponse.map<ExistingTemplateStub>((template, t) => {
+        return { id: template.id, name: template.name };
       });
     });
 

@@ -1,6 +1,6 @@
 import { getAuth } from "firebase/auth";
 import React, { useState } from "react";
-import { TemplateEditor } from "../../components/templateEditor";
+import { TemplateEditor } from "../../components/templates/templateEditor";
 import {
   ParseLinkTables,
   ParseLinkTemplate,

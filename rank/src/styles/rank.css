@@ -14,9 +14,8 @@
 }
 
 .bracket-button {
-  font-size:medium;
+  font-size: medium;
   display: flex;
-
 }
 
 .bracket-button i {
@@ -37,11 +36,11 @@
   border-radius: 6px;
   position: absolute;
   z-index: 1;
-  min-width:fit-content;
+  min-width: fit-content;
   padding: 0.5rem 0.5rem;
   font-size: small;
   font-family: "Open Sans", sans-serif;
-  
+
   /* Fade in tooltip - takes 1 second to go from 0% to 100% opac: */
   opacity: 0;
   transition: opacity 1s;

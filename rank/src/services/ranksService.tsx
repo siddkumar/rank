@@ -23,11 +23,11 @@ export async function GetRankById(id: string) {
     .then((response) => response.json())
     .then((data) => {
       var rankResponse = data as GetRankResponse;
-      rankResponse.ranking.map((item, i) => {
-        bloblist.push({
+      bloblist = rankResponse.ranking.map<RankableItem>((item, i) => {
+        return {
           name: item,
           rank: i,
-        } as RankableItem);
+        };
       });
       rankName = rankResponse.name;
       templateId = rankResponse.templateId;

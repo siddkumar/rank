@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import AuthWidget from "../../components/authWidget";
+import AuthWidget from "../../components/auth/authWidget";
 import "firebaseui/dist/firebaseui.css";
 import "../../styles/home.css";
 import { getAuth, onAuthStateChanged } from "firebase/auth";

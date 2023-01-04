@@ -8,15 +8,16 @@ import {
 } from "react-beautiful-dnd";
 import RankableItem from "../../models/RankableItem";
 import { PostNewRank } from "../../services/ranksService";
+import { RankableRow } from "./rankableRow";
 
-export interface BlobManagerProps {
-  blobs: RankableItem[];
+export interface ListRankerProps {
+  rankableList: RankableItem[];
   templateId: string;
 }
 
-function BlobManager(props: BlobManagerProps) {
-  const defaultList = props.blobs.map((blob) => {
-    return blob.name;
+function ListRanker(props: ListRankerProps) {
+  const defaultList = props.rankableList.map((rankableItem) => {
+    return rankableItem.name;
   });
   const [blobList, setBloblist] = useState(defaultList);
 
@@ -52,39 +53,14 @@ function BlobManager(props: BlobManagerProps) {
                         {...provided.dragHandleProps}
                         {...provided.draggableProps}
                       >
-                        <div>
-                          <b>{index + 1}</b>. {item}
-                        </div>
-                        <div className="controls">
-                          <div
-                            onClick={(e) => {
-                              moveItem(index, blobList.length);
-                            }}
-                          >
-                            <i className="fa-solid fa-angles-down"></i>
-                          </div>
-                          <div
-                            onClick={(e) => {
-                              moveItem(index, index + 1);
-                            }}
-                          >
-                            <i className="fa-solid fa-angle-down"></i>
-                          </div>
-                          <div
-                            onClick={(e) => {
-                              moveItem(index, index - 1);
-                            }}
-                          >
-                            <i className="fa-solid fa-angle-up"></i>
-                          </div>
-                          <div
-                            onClick={(e) => {
-                              moveItem(index, 0);
-                            }}
-                          >
-                            <i className="fa-solid fa-angles-up"></i>
-                          </div>
-                        </div>
+                        <RankableRow
+                          index={index}
+                          item={item}
+                          onDown={() => moveItem(index, index + 1)}
+                          onUp={() => moveItem(index, index - 1)}
+                          onTop={() => moveItem(index, 0)}
+                          onBotton={() => moveItem(index, blobList.length)}
+                        />
                       </div>
                     </>
                   )}
@@ -119,15 +95,6 @@ function BlobManager(props: BlobManagerProps) {
     // Update State
     setBloblist(updatedList);
   }
-
-  function getBlobs(blobs: RankableItem[]) {
-    blobs.sort((a, b) => {
-      return a.rank - b.rank;
-    });
-    return blobs.map((blob, index) => {
-      return <li>{blob.name}</li>;
-    });
-  }
 }
 
-export default BlobManager;
+export default ListRanker;

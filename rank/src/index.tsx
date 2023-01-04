@@ -4,7 +4,7 @@ import "./styles/index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import { BrowserRouter } from "react-router-dom";
-import AuthSetUp from "./components/authSetUp";
+import AuthSetUp from "./components/auth/authSetUp";
 
 ReactDOM.render(
   <React.StrictMode>

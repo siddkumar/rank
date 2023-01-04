@@ -23,7 +23,7 @@ function MyStuff() {
   });
 
   function renderMyStuff() {
-    if (!hasRequestedTemplates && stubs.length == 0 && existingUser) {
+    if (!hasRequestedTemplates && stubs.length === 0 && existingUser) {
       const requestOptions = {
         method: "GET",
         headers: { "Content-Type": "application/json" },
@@ -39,9 +39,8 @@ function MyStuff() {
         .then((response) => response.json())
         .then((data) => {
           var response = data as ExistingTemplateStub[];
-          var stublist: ExistingTemplateStub[] = [];
-          response.map((template, _t) => {
-            stublist.push({ id: template.id, name: template.name });
+          var stublist = response.map<ExistingTemplateStub>((template, _t) => {
+            return { id: template.id, name: template.name };
           });
           setStubs(stublist);
         });
@@ -54,9 +53,8 @@ function MyStuff() {
         .then((response) => response.json())
         .then((data) => {
           var response = data as ExistingRankStub[];
-          var stublist: ExistingRankStub[] = [];
-          response.map((template, _t) => {
-            stublist.push({ id: template.id, name: template.name });
+          var stublist = response.map<ExistingRankStub>((template, _t) => {
+            return { id: template.id, name: template.name };
           });
           setRanks(stublist);
         });

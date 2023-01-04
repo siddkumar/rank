@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import { RankViews } from "./rank";
 import "../../styles/rank.css";
 import { useSearchParams } from "react-router-dom";
-import BlobManager from "../../components/blobs/blobManager";
 import RankableItem from "../../models/RankableItem";
 import { GetRankById } from "../../services/ranksService";
+import ListRanker from "../../components/ranker/listRanker";
 
 function RankEdit() {
   const [view, setView] = useState(RankViews.LOADING);
@@ -22,7 +22,7 @@ function RankEdit() {
       setTemplateId(templateId);
       setView(RankViews.RANKING);
     });
-  }, []);
+  }, [id]);
 
   function loadingView() {
     return (
@@ -36,7 +36,10 @@ function RankEdit() {
     return (
       <div className="rank-page-layout">
         <div className="main-title">{rankName}</div>
-        <BlobManager blobs={ranking} templateId={templateId ?? "og-template"} />
+        <ListRanker
+          rankableList={ranking}
+          templateId={templateId ?? "og-template"}
+        />
       </div>
     );
   }
