@@ -3,3 +3,4 @@ node_modules
 rank-backend/env
 .prettierignore
 .prettierrc.json
+venv/

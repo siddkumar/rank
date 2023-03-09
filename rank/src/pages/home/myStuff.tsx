@@ -1,78 +1,45 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import "firebaseui/dist/firebaseui.css";
 import "../../styles/myStuff.css";
-import { getAuth, onAuthStateChanged, User } from "firebase/auth";
-import { ExistingTemplateStub } from "../../components/templates/templates";
+import { getAuth } from "firebase/auth";
 import {
   RanksList,
   TemplatesList,
 } from "../../components/templates/templatesList";
-import { ExistingRankStub } from "../rank/ranks";
+import { observer } from "mobx-react";
+import { StoreContext } from "../../App";
+
+enum MyStuffViews {
+  SignIn = "SignIn",
+  Waiting = "Waiting",
+  Loaded = "Loaded"
+}
 
 function MyStuff() {
   const auth = getAuth();
-  const [existingUser, setUser] = useState<User | null>(null);
-  const [stubs, setStubs] = useState<ExistingTemplateStub[]>([]);
-  const [hasRequestedTemplates, setHasRequestedTemplates] = useState(false);
-  const [ranks, setRanks] = useState<ExistingRankStub[]>([]);
+  const store = useContext(StoreContext);
+  const [view, setView] = useState<MyStuffViews>(MyStuffViews.SignIn);
 
-  onAuthStateChanged(auth, (user) => {
-    if (user && !existingUser) {
-      setUser(user);
-    }
-  });
+  function signOut() {
+    setView(MyStuffViews.SignIn)
+    store.setLogInInfo(false, "", "");
+    auth.signOut();
+  }
 
   function renderMyStuff() {
-    if (!hasRequestedTemplates && stubs.length === 0 && existingUser) {
-      const requestOptions = {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-      };
-
-      // get templates
-      setHasRequestedTemplates(true);
-      fetch(
-        "https://rank-backend.vercel.app/templates?email=" +
-          existingUser?.email,
-        requestOptions
-      )
-        .then((response) => response.json())
-        .then((data) => {
-          var response = data as ExistingTemplateStub[];
-          var stublist = response.map<ExistingTemplateStub>((template, _t) => {
-            return { id: template.id, name: template.name };
-          });
-          setStubs(stublist);
-        });
-
-      // get ranks
-      fetch(
-        "https://rank-backend.vercel.app/ranks?email=" + existingUser?.email,
-        requestOptions
-      )
-        .then((response) => response.json())
-        .then((data) => {
-          var response = data as ExistingRankStub[];
-          var stublist = response.map<ExistingRankStub>((template, _t) => {
-            return { id: template.id, name: template.name };
-          });
-          setRanks(stublist);
-        });
-    }
-
     return (
       <>
         <div className="myStuffContainer">
           <div className="container">
             <div className="stuff-subtitle">Your Templates</div>
-            <TemplatesList stubs={stubs} />
+            <TemplatesList stubs={store.getTemplates()} />
           </div>
           <div className="container">
             <div className="stuff-subtitle">Your Ranks</div>
-            <RanksList stubs={ranks} />
+            <RanksList stubs={store.getRanks()} />
           </div>
         </div>
-        <button className="button-styles" onClick={() => auth.signOut()}>
+        <button className="button-styles" onClick={() => signOut()}>
           Sign Out
         </button>
       </>
@@ -97,12 +64,13 @@ function MyStuff() {
     <>
       <div className="home-page-layout">
         <div className="main-title">
-          Hello {existingUser?.displayName ?? existingUser?.email} !
+          Hello {store.getDisplayName() ?? store.getUserEmail()} !
         </div>
-        {existingUser ? renderMyStuff() : renderPleaseSignIn()}
+        {view === MyStuffViews.SignIn && renderPleaseSignIn()}
+        {view === MyStuffViews.Loaded && renderMyStuff()}
       </div>
     </>
   );
 }
 
-export default MyStuff;
+export default observer(MyStuff);

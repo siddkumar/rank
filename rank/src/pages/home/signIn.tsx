@@ -1,24 +1,14 @@
-import React, { useEffect, useState } from "react";
-import AuthWidget from "../../components/auth/authWidget";
+import React, { useContext } from "react";
 import "firebaseui/dist/firebaseui.css";
 import "../../styles/home.css";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { AuthWidget2 } from "../../components/auth/authWidget2";
+import { StoreContext } from "../../App";
 
 function SignIn() {
-  const auth = getAuth();
-  const [user, setUser] = useState(auth.currentUser);
-  const [forceHide, setForceHide] = useState(false);
+  
+  
+  const authInfo = useContext(StoreContext);
 
-  useEffect(() => {
-    if (!user) {
-      AuthWidget({});
-    }
-  }, [user, forceHide]);
-
-  onAuthStateChanged(auth, (user) => {
-    setUser(user);
-    setForceHide(user != null);
-  });
 
   return (
     <>
@@ -28,7 +18,7 @@ function SignIn() {
           Sign In to access more features, like saving!
         </div>
       </div>
-      <div id="firebaseui-auth-container"></div>
+      {authInfo.getIsLoggedIn() ? <></> : <AuthWidget2></AuthWidget2>}
     </>
   );
 }

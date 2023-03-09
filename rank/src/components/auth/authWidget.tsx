@@ -3,6 +3,7 @@ import "firebase/compat/firestore";
 import "firebase/compat/auth";
 import { auth } from "firebaseui";
 import { getAuth } from "firebase/auth";
+import { CreateUser } from "../../services/userService";
 
 interface Profile {
   email: string;
@@ -46,19 +47,12 @@ function AuthWidget(props: AuthWidgetProps) {
           const email =
             authResult.additionalUserInfo.profile.email ??
             getAuth().currentUser?.email;
-          const requestOptions = {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              emailAddress: email,
-            }),
-          };
-
-          fetch("https://rank-backend.vercel.app/users/create", requestOptions)
-            .then((response) => response.json())
-            .then((_data) => window.location.assign("/mystuff"));
+          CreateUser(email);
           return false;
+        } else {
         }
+
+
         return true;
       },
     },
