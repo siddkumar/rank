@@ -10,6 +10,5 @@ How to run backend:
 1. Set Up a virtual environment See (https://docs.python.org/3/library/venv.html)
 2. Make sure pip (and python) are already installed / up-to-date
 3. pip install -r requirements.txt
-4. export FLASK_APP=index.py
-5. export FLASK_DEBUG=true
-6. flask run
+4. cd ./rank-backend
+5. flask --app .\index.py --debug run

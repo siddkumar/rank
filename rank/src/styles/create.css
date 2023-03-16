@@ -83,3 +83,31 @@ input {
   color: #246a73;
   text-decoration: none;
 }
+
+.auth-widget-wrapper {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+  border-radius: 5px;
+  background-color: white;
+  padding: 1rem;
+  margin: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.auth-inputRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+input[type="text"],
+input[type="password"] {
+  width: 100%;
+  padding: 1rem 1rem;
+  margin: 0.5rem 1rem;
+  display: flex;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}

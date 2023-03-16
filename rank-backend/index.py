@@ -127,10 +127,12 @@ def usersCreate():
             u'emailAddress': emailAddress,
         }
 
+        print("hi")
         newUser = usersdb.document()
         newUser.set(data)
         response = jsonify(
             {"success": True, "userId": newUser.id}, 200)
+        print(response)
         return response
     except Exception as e:
         return f"An Error Occured: {e}"

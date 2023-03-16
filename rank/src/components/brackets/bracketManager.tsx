@@ -93,9 +93,7 @@ function BracketManager(props: BracketManagerProps) {
   // advance byes
   let r1 = rounds[0];
   r1.forEach((item, index) => {
-    console.log(item);
     if (roundByRound[0].get(item[1]).name === "BYE") {
-      console.log(item.at(0));
       roundByRound[1].set(item[0], roundByRound[0].get(item[0]));
     }
   });
