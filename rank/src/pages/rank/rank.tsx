@@ -68,7 +68,7 @@ function Rank() {
               }}
             >
               <i className="fa-solid fa-network-wired tooltip">
-                <span className="tooltiptext">bracketify</span>
+                <div className="tooltiptext">bracketify</div>
               </i>
             </div>
           </div>
@@ -96,7 +96,7 @@ function Rank() {
               }}
             >
               <i className="fa-solid fa-list tooltip">
-                <span className="tooltiptext">rank</span>
+                <div className="tooltiptext">rank</div>
               </i>
             </div>
           </div>

@@ -1,39 +1,37 @@
+import { doc, getDoc, getFirestore } from "@firebase/firestore";
 import RankableItem from "../models/RankableItem";
 import { getPrefix } from "./servicesConfig";
 
 const prefix = getPrefix();
 
-interface GetRankResponse {
-  ranking: string[];
-  name: string;
-  templateId: string;
-}
-
 export async function GetRankById(id: string) {
-  const requestOptions = {
-    method: "GET",
-    headers: { "Content-Type": "application/json" },
-  };
-
+  console.log("requesting");
+  const db = getFirestore();
+  const docRef = doc(db, "ranks", id);
+  const docSnap = await getDoc(docRef);
   var bloblist: RankableItem[] = [];
   var templateId = "";
   var rankName = "";
 
-  await fetch(prefix + "/ranks?id=" + id, requestOptions)
-    .then((response) => response.json())
-    .then((data) => {
-      var rankResponse = data as GetRankResponse;
-      bloblist = rankResponse.ranking.map<RankableItem>((item, i) => {
-        return {
-          name: item,
-          rank: i,
-        };
-      });
-      rankName = rankResponse.name;
-      templateId = rankResponse.templateId;
+  if (docSnap.exists()) {
+    var rankDoc = docSnap.data();
+    bloblist = (rankDoc.ranking as string[]).map<RankableItem>((item, i) => {
+      return { name: item, rank: i };
     });
-
+    templateId = rankDoc.templateId as string;
+    rankName = rankDoc.name as string;
+  } else {
+    console.log("uh oh");
+  }
   return { bloblist, templateId, rankName };
+}
+
+export async function PostNewRankFast(
+  ranking: string[],
+  templateId: string,
+  userEmail: string
+) {
+  // todo
 }
 
 export async function PostNewRank(
