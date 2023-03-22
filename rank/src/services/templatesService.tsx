@@ -1,60 +1,51 @@
+import {
+  collection,
+  getFirestore,
+  query,
+  where,
+  getDocs,
+  doc,
+  getDoc,
+} from "@firebase/firestore";
 import { ExistingTemplateStub } from "../components/templates/templates";
 import RankableItem from "../models/RankableItem";
 import { getPrefix } from "./servicesConfig";
 
-interface GetTemplateResponse {
-  success: boolean;
-  createdBy: string;
-  items: string[];
-  name: string;
-  origin: string;
-  sourceUrl: string;
-  id: string;
-}
-
 const prefix = getPrefix();
 
 export async function GetTemplateById(templateId: string) {
-  const requestOptions = {
-    method: "GET",
-    headers: { "Content-Type": "application/json" },
-  };
-
+  console.log("requesting");
+  const db = getFirestore();
+  const docRef = doc(db, "templates", templateId);
   var rankableList: RankableItem[] = [];
   var templateName: string = "";
 
-  await fetch(prefix + "/templates?id=" + templateId, requestOptions)
-    .then((response) => response.json())
-    .then((data) => {
-      var templateResponse = data as GetTemplateResponse;
-      rankableList = templateResponse.items.map<RankableItem>((item, i) => {
-        return {
-          name: item,
-          rank: i,
-        };
-      });
-      templateName = templateResponse.name;
-    });
+  const docSnap = await getDoc(docRef);
 
+  if (docSnap.exists()) {
+    var templateDoc = docSnap.data();
+    rankableList = (templateDoc.items as string[]).map<RankableItem>(
+      (item, i) => {
+        return { name: item, rank: i };
+      }
+    );
+    templateName = templateDoc.name;
+  } else {
+    console.log("uh oh");
+  }
   return { templateName, rankableList };
 }
 
 export async function GetTemplatesList() {
-  const requestOptions = {
-    method: "GET",
-    headers: { "Content-Type": "application/json" },
-  };
-
+  console.log("requesting");
+  const db = getFirestore();
+  const q = query(collection(db, "templates"), where("featured", "==", true));
+  const qs = await getDocs(q);
   var stubList: ExistingTemplateStub[] = [];
 
-  await fetch(prefix + "/templates", requestOptions)
-    .then((response) => response.json())
-    .then((data) => {
-      var templateResponse = data as GetTemplateResponse[];
-      stubList = templateResponse.map<ExistingTemplateStub>((template, t) => {
-        return { id: template.id, name: template.name };
-      });
-    });
+  qs.forEach((doc) => {
+    stubList.push({ id: doc.id, name: doc.data().name });
+  });
 
   return stubList;
 }

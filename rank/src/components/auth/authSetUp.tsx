@@ -18,7 +18,7 @@ function AuthSetUp() {
     appId: "1:700667428854:web:c2900ac750c02c5e6a51d7",
   };
 
-  const app = initializeApp(firebaseConfig);
+  initializeApp(firebaseConfig);
   return <></>;
 }
 

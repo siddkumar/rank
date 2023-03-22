@@ -64,56 +64,6 @@ def templatesCreate():
         return f"An Error Occured:{e}"
 
 
-@app.route("/templates", methods=["GET"])
-def templatesRead():
-    try:
-        templateId = request.args.get('id')
-        email = request.args.get('email')
-        if (templateId):
-            template = templatesdb.document(templateId).get().to_dict()
-            # remove duplicates
-            items = template['items']
-            filtered = []
-            [filtered.append(x) for x in items if x not in filtered]
-            data = {
-                u'createdBy': 'og-user',
-                u'items': filtered,
-                u'name': template['name'],
-                u'origin': template['origin'],
-                u'sourceUrl': template['sourceUrl']
-            }
-            return jsonify(data), 200
-        elif(email):
-            usersMatchEmail = usersdb.where(u'emailAddress', u'==', email)
-            user = usersMatchEmail.get()
-            r = []
-            for u in user:
-                templates = templatesdb.where(u'createdBy', u'==', u.id).get()
-                for temp in templates:
-                    t = temp.to_dict()
-                    data = {
-                        u'name': t['name'],
-                        u'id': temp.id
-                    }
-                    r.append(data)
-
-            return json.dumps(r), 200
-        else:
-            # Get Featured Templates
-            r = []
-            templates = templatesdb.where(u'featured', u'==', True).get()
-            for temp in templates:
-                t = temp.to_dict()
-                data = {
-                    u'name': t['name'],
-                    u'id': temp.id
-                }
-                r.append(data)
-            return json.dumps(r), 200
-    except Exception as e:
-        return f"An Error Occured: {e}"
-
-
 @app.route("/users/create", methods=['POST'])
 def usersCreate():
     try:

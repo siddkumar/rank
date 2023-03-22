@@ -13,8 +13,7 @@ import {
 export async function GetTemplatesForUser(
   email: string
 ): Promise<ExistingTemplateStub[]> {
-
-  var userId = await GetUserIdForEmail(email)
+  var userId = await GetUserIdForEmail(email);
   return await GetTemplatesForUserId(userId);
 }
 
@@ -52,22 +51,18 @@ export async function GetRanksForUserId(userId: string) {
 export async function GetRanksForUser(
   email: string
 ): Promise<ExistingRankStub[]> {
-  var userId = await GetUserIdForEmail(email)
+  var userId = await GetUserIdForEmail(email);
   return await GetRanksForUserId(userId);
 }
 
-export async function GetUserIdForEmail(
-  email: string
-) {
+export async function GetUserIdForEmail(email: string) {
   const db = getFirestore();
-  const q = query(collection(db, "users"), where("emailAddress", "==", email))
+  const q = query(collection(db, "users"), where("emailAddress", "==", email));
   const qs = await getDocs(q);
-  if (qs.size > 0){
+  if (qs.size > 0) {
     return qs.docs.at(0)!.id;
-  }
-  else
-  {
-    return "uh oh"
+  } else {
+    return "uh oh";
   }
 }
 
