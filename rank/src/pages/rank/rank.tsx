@@ -6,7 +6,7 @@ import RankableItem from "../../models/RankableItem";
 import { GetTemplateById } from "../../services/templatesService";
 import "../../styles/rank.css";
 import { getAuth } from "firebase/auth";
-import { PostNewRank } from "../../services/ranksService";
+import { PostNewRankFast } from "../../services/ranksService";
 
 export enum RankViews {
   LOADING = "loading",
@@ -40,7 +40,7 @@ function Rank() {
     const auth = getAuth();
     const user = auth.currentUser;
     if (user && templateId) {
-      PostNewRank(rankableList, templateId, user.email ?? "").then((response) =>
+      PostNewRankFast(rankableList, templateId, user.email ?? "", templateName).then((response) =>
         console.log("saved")
       );
     } else {

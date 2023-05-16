@@ -87,35 +87,6 @@ def usersCreate():
     except Exception as e:
         return f"An Error Occured: {e}"
 
-@app.route("/ranks/create", methods=['POST'])
-def ranksCreate():
-    try:
-        emailAddress = request.json['emailAddress']
-        templateId = request.json['templateId']
-        ranking = request.json['ranking']
-
-        usersMatchEmail = usersdb.where(u'emailAddress', u'==', emailAddress)
-
-        user = usersMatchEmail.get()
-
-        for u in user:
-            template = templatesdb.document(templateId).get()
-
-            data = {
-                u'rankedBy': u.id,
-                u'templateId': template.id,
-                u'ranking': ranking,
-                u'name': template.to_dict()['name']
-            }
-
-            newRanking = rankdb.document()
-            newRanking.set(data)
-
-            response = jsonify({"success": True, "rankId": newRanking.id}, 200)
-            return response
-    except Exception as e:
-        return f"An Error Occured"
-
 
 @app.route("/parser/parseLink", methods=['POST'])
 def parse():

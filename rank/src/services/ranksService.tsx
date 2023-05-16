@@ -1,8 +1,14 @@
-import { doc, getDoc, getFirestore } from "@firebase/firestore";
 import RankableItem from "../models/RankableItem";
-import { getPrefix } from "./servicesConfig";
 
-const prefix = getPrefix();
+import {
+  addDoc,
+  collection,
+  doc,
+  getDoc,
+  getFirestore,
+} from "firebase/firestore";
+import { GetUserIdForEmail } from "./userService";
+
 
 export async function GetRankById(id: string) {
   console.log("requesting");
@@ -29,26 +35,17 @@ export async function GetRankById(id: string) {
 export async function PostNewRankFast(
   ranking: string[],
   templateId: string,
-  userEmail: string
+  userEmail: string,
+  rankName: string
 ) {
-  // todo
-}
-
-export async function PostNewRank(
-  ranking: string[],
-  templateId: string,
-  userEmail: string
-) {
-  const requestOptions = {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      emailAddress: userEmail,
-      ranking: ranking,
+  const db = getFirestore();
+  var userId = await GetUserIdForEmail(userEmail);
+  await addDoc(
+    collection(db, "ranks"), {
+      name: rankName,
+      rankedBy: userId,
       templateId: templateId,
-    }),
-  };
-  await fetch(prefix + "/ranks/create", requestOptions);
-
-  return;
+      ranking: ranking
+    }
+  )
 }

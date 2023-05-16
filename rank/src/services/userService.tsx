@@ -69,6 +69,6 @@ export async function GetUserIdForEmail(email: string) {
 export async function CreateUser(email: string): Promise<void> {
   const db = getFirestore();
   await addDoc(collection(db, "users"), {
-    email,
+    emailAddress: email
   });
 }
