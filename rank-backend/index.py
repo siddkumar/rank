@@ -87,7 +87,6 @@ def usersCreate():
     except Exception as e:
         return f"An Error Occured: {e}"
 
-
 @app.route("/parser/parseLink", methods=['POST'])
 def parse():
     try:

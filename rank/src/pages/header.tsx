@@ -14,13 +14,23 @@ function Header(props: HeaderProps) {
 
   return (
     <div className="app-header">
-      <div className="header-left">
-        <img src={logo} alt="logo" className="header-logo" />
-        <p className="header-title">rank anything</p>
-      </div>
-      <div className="header-right">
-        <a href="/">create</a>
-        {user ? <a href="/mystuff">saved</a> : <a href="/signIn">Sign In</a>}
+      <div className="header-container">
+        <div className="header-left">
+          <a href="/">
+            <img src={logo} alt="logo" className="header-logo" />
+          </a>
+          <a href="/">
+            <h1 className="header-title">rank anything</h1>
+          </a>
+          <nav className="header-right">
+            <a href="/">create</a>
+            {user ? (
+              <a href="/mystuff">saved</a>
+            ) : (
+              <a href="/signIn">Sign In</a>
+            )}
+          </nav>
+        </div>
       </div>
     </div>
   );

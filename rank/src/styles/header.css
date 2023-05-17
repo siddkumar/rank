@@ -1,14 +1,11 @@
 .app-header {
-  background-color: #160f29;
+  /* background-color: #160f29; */
   display: flex;
-  flex-direction: row;
+  flex-wrap: wrap;
   align-items: center;
-  justify-content: space-between;
-  font-size: calc(10px + 2vmin);
   font-family: "Caveat", cursive;
-  color: white;
-  padding-left: 8rem;
-  padding-right: 8rem;
+  color: #160f29;
+  padding: 20px;
 }
 
 .header-logo {
@@ -16,18 +13,36 @@
   padding-right: 0.5rem;
 }
 
-.header-left,
-.header-right {
-  align-items: center;
+.header-container {
+  max-width: 960px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.header-left {
   display: flex;
+  align-items: center;
+  flex: 1;
+}
+
+.header-right {
+  display: flex;
+  flex: 1;
+  justify-content: flex-end;
+  margin: 0;
+  padding: 0;
+}
+
+.header-left a {
+  text-decoration: none;
+  color: #160f29;
 }
 
 .header-right a {
-  color: white;
-  font-family: "Open Sans", sans-serif;
-  font-size: 1rem;
+  color: #160f29;
   text-transform: uppercase;
   padding-left: 0.5rem;
   padding-right: 0.5rem;
   text-decoration: none;
+  font-size: large;
 }

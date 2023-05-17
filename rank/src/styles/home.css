@@ -1,7 +1,19 @@
+.home-title {
+  font-size: xx-large;
+  color: #160f29;
+  text-align: left;
+  width: 100%;
+  margin-bottom: 1rem;
+  font-family: "Roboto Slab", sans-serif;
+}
+
 .main-subtitle {
   font-size: larger;
   margin-top: 1rem;
   margin-bottom: 1rem;
+  width: 100%;
+  font-family: "Roboto Slab", sans-serif;
+  text-align: left;
 }
 
 .home-page-layout {
@@ -10,7 +22,12 @@
   align-items: flex-start;
   justify-content: center;
   font-family: "Open Sans", sans-serif;
-  align-items: center;
+  align-items: stretch;
   flex-wrap: wrap;
-  flex-direction: column;
+}
+
+.main-container {
+  align-items: start;
+  text-align: right;
+  flex-wrap: wrap;
 }

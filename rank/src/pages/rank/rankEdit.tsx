@@ -42,9 +42,12 @@ function RankEdit() {
     const auth = getAuth();
     const user = auth.currentUser;
     if (user) {
-      PostNewRankFast(rankableList, templateId, user.email ?? "", rankName).then((response) =>
-        console.log("saved")
-      );
+      PostNewRankFast(
+        rankableList,
+        templateId,
+        user.email ?? "",
+        rankName
+      ).then((response) => console.log("saved"));
     } else {
       console.log("error, not signed in"); // TODO surface
     }

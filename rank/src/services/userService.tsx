@@ -62,13 +62,22 @@ export async function GetUserIdForEmail(email: string) {
   if (qs.size > 0) {
     return qs.docs.at(0)!.id;
   } else {
-    return "uh oh";
+    return "DNE";
   }
 }
 
 export async function CreateUser(email: string): Promise<void> {
   const db = getFirestore();
+
+  const q = query(collection(db, "users"), where("emailAddress", "==", email));
+  const qs = await getDocs(q);
+
+  if (qs.size > 0) {
+    console.log("User already exists");
+    return;
+  }
+
   await addDoc(collection(db, "users"), {
-    emailAddress: email
+    emailAddress: email,
   });
 }

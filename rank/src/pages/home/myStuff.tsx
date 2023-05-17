@@ -90,7 +90,7 @@ function MyStuff() {
 
   return (
     <>
-      <div className="home-page-layout">
+      <div className="myStuff-page-layout">
         <div className="main-title">Hello {hello} !</div>
         {view === MyStuffViews.SignIn && renderPleaseSignIn()}
         {view === MyStuffViews.Loaded && renderMyStuff()}

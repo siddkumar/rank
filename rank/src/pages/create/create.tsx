@@ -4,8 +4,13 @@ import "../../styles/create.css";
 function Create() {
   return (
     <div className="home-page-layout">
-      <div className="main-title">Let's start ranking!</div>
-      <div className="main-subtitle">To start, you'll need a template..</div>
+      <div className="card container main-container">
+        <div className="home-title">Welcome to "rank anything"!</div>
+        <div className="main-subtitle">
+          Here, you can rank, well, anything.{" "}
+        </div>
+        <div className="main-subtitle">To start, you'll need a template..</div>
+      </div>
       <div className="choices-container">
         <div className="card container">
           <div className="main-subtitle">

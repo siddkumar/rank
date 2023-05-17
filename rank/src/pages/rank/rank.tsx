@@ -40,9 +40,12 @@ function Rank() {
     const auth = getAuth();
     const user = auth.currentUser;
     if (user && templateId) {
-      PostNewRankFast(rankableList, templateId, user.email ?? "", templateName).then((response) =>
-        console.log("saved")
-      );
+      PostNewRankFast(
+        rankableList,
+        templateId,
+        user.email ?? "",
+        templateName
+      ).then((response) => console.log("saved"));
     } else {
       console.log("error, not signed in"); // TODO surface
     }

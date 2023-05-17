@@ -10,6 +10,7 @@ import { CreateFromLink } from "./pages/create/fromLink";
 import MyStuff from "./pages/home/myStuff";
 import SignIn from "./pages/home/signIn";
 import RankEdit from "./pages/rank/rankEdit";
+import Footer from "./pages/footer";
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
         <Route path="rank/" element={<Rank />}></Route>
         <Route path="rank/edit" element={<RankEdit />}></Route>
       </Routes>
+      <Footer />
     </div>
   );
 }

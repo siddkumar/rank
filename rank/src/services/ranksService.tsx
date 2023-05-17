@@ -9,7 +9,6 @@ import {
 } from "firebase/firestore";
 import { GetUserIdForEmail } from "./userService";
 
-
 export async function GetRankById(id: string) {
   console.log("requesting");
   const db = getFirestore();
@@ -40,12 +39,10 @@ export async function PostNewRankFast(
 ) {
   const db = getFirestore();
   var userId = await GetUserIdForEmail(userEmail);
-  await addDoc(
-    collection(db, "ranks"), {
-      name: rankName,
-      rankedBy: userId,
-      templateId: templateId,
-      ranking: ranking
-    }
-  )
+  await addDoc(collection(db, "ranks"), {
+    name: rankName,
+    rankedBy: userId,
+    templateId: templateId,
+    ranking: ranking,
+  });
 }
