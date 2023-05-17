@@ -6,7 +6,7 @@ import RankableItem from "../../models/RankableItem";
 import { GetTemplateById } from "../../services/templatesService";
 import "../../styles/rank.css";
 import { getAuth } from "firebase/auth";
-import { PostNewRank } from "../../services/ranksService";
+import { PostNewRankFast } from "../../services/ranksService";
 
 export enum RankViews {
   LOADING = "loading",
@@ -40,9 +40,12 @@ function Rank() {
     const auth = getAuth();
     const user = auth.currentUser;
     if (user && templateId) {
-      PostNewRank(rankableList, templateId, user.email ?? "").then((response) =>
-        console.log("saved")
-      );
+      PostNewRankFast(
+        rankableList,
+        templateId,
+        user.email ?? "",
+        templateName
+      ).then((response) => console.log("saved"));
     } else {
       console.log("error, not signed in"); // TODO surface
     }
@@ -68,7 +71,7 @@ function Rank() {
               }}
             >
               <i className="fa-solid fa-network-wired tooltip">
-                <span className="tooltiptext">bracketify</span>
+                <div className="tooltiptext">bracketify</div>
               </i>
             </div>
           </div>
@@ -96,7 +99,7 @@ function Rank() {
               }}
             >
               <i className="fa-solid fa-list tooltip">
-                <span className="tooltiptext">rank</span>
+                <div className="tooltiptext">rank</div>
               </i>
             </div>
           </div>

@@ -1,56 +1,83 @@
 import { ExistingTemplateStub } from "../components/templates/templates";
 import { ExistingRankStub } from "../pages/rank/ranks";
-import { getPrefix } from "./servicesConfig";
-import { addDoc, collection, getFirestore } from "firebase/firestore";
 
-const prefix = getPrefix();
+import {
+  addDoc,
+  collection,
+  getDocs,
+  getFirestore,
+  query,
+  where,
+} from "firebase/firestore";
 
 export async function GetTemplatesForUser(
   email: string
 ): Promise<ExistingTemplateStub[]> {
-  let retVal: ExistingTemplateStub[] | PromiseLike<ExistingTemplateStub[]> = [];
-  const requestOptions = {
-    method: "GET",
-    headers: { "Content-Type": "application/json" },
-  };
+  var userId = await GetUserIdForEmail(email);
+  return await GetTemplatesForUserId(userId);
+}
 
-  await fetch(prefix + "/templates?email=" + email, requestOptions)
-    .then((response) => response.json())
-    .then((data) => {
-      var response = data as ExistingTemplateStub[];
-      var stublist = response.map<ExistingTemplateStub>((template, _t) => {
-        return { id: template.id, name: template.name };
-      });
-      retVal = stublist;
-    });
+export async function GetTemplatesForUserId(userId: string) {
+  console.log("requesting");
+  const db = getFirestore();
+  const q = query(
+    collection(db, "templates"),
+    where("createdBy", "==", userId)
+  );
+  const qs = await getDocs(q);
 
-  return retVal;
+  var stubList = [] as ExistingTemplateStub[];
+  qs.forEach((doc) => {
+    var template = doc.data();
+    stubList.push({ id: doc.id, name: template.name });
+  });
+  return stubList;
+}
+
+export async function GetRanksForUserId(userId: string) {
+  console.log("requesting");
+  const db = getFirestore();
+  const q = query(collection(db, "ranks"), where("rankedBy", "==", userId));
+  const qs = await getDocs(q);
+
+  var stubList = [] as ExistingRankStub[];
+  qs.forEach((doc) => {
+    var rank = doc.data();
+    stubList.push({ id: doc.id, name: rank.name });
+  });
+  return stubList;
 }
 
 export async function GetRanksForUser(
   email: string
 ): Promise<ExistingRankStub[]> {
-  let retVal: ExistingRankStub[] | PromiseLike<ExistingRankStub[]> = [];
-  const requestOptions = {
-    method: "GET",
-    headers: { "Content-Type": "application/json" },
-  };
+  var userId = await GetUserIdForEmail(email);
+  return await GetRanksForUserId(userId);
+}
 
-  await fetch(prefix + "/ranks?email=" + email, requestOptions)
-    .then((response) => response.json())
-    .then((data) => {
-      var response = data as ExistingRankStub[];
-      var stublist = response.map<ExistingRankStub>((template, _t) => {
-        return { id: template.id, name: template.name };
-      });
-      retVal = stublist;
-    });
-  return retVal;
+export async function GetUserIdForEmail(email: string) {
+  const db = getFirestore();
+  const q = query(collection(db, "users"), where("emailAddress", "==", email));
+  const qs = await getDocs(q);
+  if (qs.size > 0) {
+    return qs.docs.at(0)!.id;
+  } else {
+    return "DNE";
+  }
 }
 
 export async function CreateUser(email: string): Promise<void> {
   const db = getFirestore();
+
+  const q = query(collection(db, "users"), where("emailAddress", "==", email));
+  const qs = await getDocs(q);
+
+  if (qs.size > 0) {
+    console.log("User already exists");
+    return;
+  }
+
   await addDoc(collection(db, "users"), {
-    email,
+    emailAddress: email,
   });
 }

@@ -3,7 +3,7 @@ import { RankViews } from "./rank";
 import "../../styles/rank.css";
 import { useSearchParams } from "react-router-dom";
 import RankableItem from "../../models/RankableItem";
-import { GetRankById, PostNewRank } from "../../services/ranksService";
+import { GetRankById, PostNewRankFast } from "../../services/ranksService";
 import ListRanker from "../../components/ranker/listRanker";
 import { getAuth } from "firebase/auth";
 
@@ -42,9 +42,12 @@ function RankEdit() {
     const auth = getAuth();
     const user = auth.currentUser;
     if (user) {
-      PostNewRank(rankableList, templateId, user.email ?? "").then((response) =>
-        console.log("saved")
-      );
+      PostNewRankFast(
+        rankableList,
+        templateId,
+        user.email ?? "",
+        rankName
+      ).then((response) => console.log("saved"));
     } else {
       console.log("error, not signed in"); // TODO surface
     }
