@@ -6,6 +6,7 @@ import {
   doc,
   getDoc,
   getFirestore,
+  setDoc,
 } from "firebase/firestore";
 import { GetUserIdForEmail } from "./userService";
 
@@ -31,7 +32,8 @@ export async function GetRankById(id: string) {
   return { bloblist, templateId, rankName };
 }
 
-export async function PostNewRankFast(
+export async function UpdateRank(
+  rankId: string,
   ranking: string[],
   templateId: string,
   userEmail: string,
@@ -39,10 +41,28 @@ export async function PostNewRankFast(
 ) {
   const db = getFirestore();
   var userId = await GetUserIdForEmail(userEmail);
-  await addDoc(collection(db, "ranks"), {
+
+  await setDoc(doc(db, "ranks", rankId), {
     name: rankName,
     rankedBy: userId,
     templateId: templateId,
     ranking: ranking,
   });
+}
+
+export async function PostNewRank(
+  ranking: string[],
+  templateId: string,
+  userEmail: string,
+  rankName: string
+): Promise<string> {
+  const db = getFirestore();
+  var userId = await GetUserIdForEmail(userEmail);
+  var res = await addDoc(collection(db, "ranks"), {
+    name: rankName,
+    rankedBy: userId,
+    templateId: templateId,
+    ranking: ranking,
+  });
+  return res.id;
 }

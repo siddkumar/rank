@@ -6,32 +6,38 @@ import RankableItem from "../../models/RankableItem";
 import { GetTemplateById } from "../../services/templatesService";
 import "../../styles/rank.css";
 import { getAuth } from "firebase/auth";
-import { PostNewRankFast } from "../../services/ranksService";
+import { PostNewRank } from "../../services/ranksService";
+import RankTitle from "../../components/ranker/rankTitle";
 
 export enum RankViews {
   LOADING = "loading",
   RANKING = "ranking",
   SAVING = "saving",
   BRACKET = "bracket",
+  READY = "ready",
 }
 
 function Rank() {
   const [view, setView] = useState(RankViews.LOADING);
   const [ranking, setRanking] = useState<RankableItem[]>([]);
   const [templateName, setTemplateName] = useState("");
+  const [rankName, setRankName] = useState("");
   const [searchParams] = useSearchParams();
   const templateId = searchParams.get("templateId");
+  const [rankId, setRankId] = useState("");
 
   useEffect(() => {
     setView(RankViews.LOADING);
     GetTemplateById(templateId ?? "").then(({ templateName, rankableList }) => {
       setRanking(rankableList);
       setTemplateName(templateName);
+      setRankName(templateName);
       setView(RankViews.RANKING);
     });
   }, [templateId]);
 
   function save(rankableList: string[]) {
+    setView(RankViews.SAVING);
     setRanking(
       rankableList.map<RankableItem>((item, index) => {
         return { name: item, rank: index };
@@ -40,12 +46,12 @@ function Rank() {
     const auth = getAuth();
     const user = auth.currentUser;
     if (user && templateId) {
-      PostNewRankFast(
-        rankableList,
-        templateId,
-        user.email ?? "",
-        templateName
-      ).then((response) => console.log("saved"));
+      PostNewRank(rankableList, templateId, user.email ?? "", rankName).then(
+        (response) => {
+          setRankId(response);
+          setView(RankViews.READY);
+        }
+      );
     } else {
       console.log("error, not signed in"); // TODO surface
     }
@@ -62,17 +68,21 @@ function Rank() {
   function rankingView() {
     return (
       <div className="rank-page-layout">
-        <div className="main-title row">
-          {templateName}
-          <div className="bracket-button">
-            <div
-              onClick={() => {
-                setView(RankViews.BRACKET);
-              }}
-            >
-              <i className="fa-solid fa-network-wired tooltip">
-                <div className="tooltiptext">bracketify</div>
-              </i>
+        <div className="rank-title">
+          <RankTitle defaultTitle={rankName} onChange={(s) => setRankName(s)} />
+          <div>
+            <div>Template: {templateName}</div>
+            <div className="bracket-button">
+              <div>Switch to Bracket: </div>
+              <div
+                onClick={() => {
+                  setView(RankViews.BRACKET);
+                }}
+              >
+                <i className="fa-solid fa-network-wired tooltip">
+                  <div className="tooltiptext">bracketify</div>
+                </i>
+              </div>
             </div>
           </div>
         </div>
@@ -85,7 +95,23 @@ function Rank() {
     );
   }
 
-  function savingView() {}
+  function savingView() {
+    <div className="rank-page-layout">
+      <div className="main-title"> Saving...</div>
+    </div>;
+  }
+
+  function readyView() {
+    return (
+      <div className="create-page-layout">
+        <div className="main-title">Your Ranking is Saved!</div>
+        <br></br>
+        <a href={"/rank/edit?id=" + rankId}>
+          <button className="button-styles w-100">Edit</button>
+        </a>
+      </div>
+    );
+  }
 
   function bracketView() {
     return (
@@ -115,6 +141,7 @@ function Rank() {
       {view === RankViews.RANKING && rankingView()}
       {view === RankViews.SAVING && savingView()}
       {view === RankViews.BRACKET && bracketView()}
+      {view === RankViews.READY && readyView()}
     </>
   );
 }

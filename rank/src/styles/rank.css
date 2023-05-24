@@ -10,6 +10,20 @@
   margin-right: auto;
 }
 
+.rank-title {
+  align-items: center;
+  font-family: "Caveat";
+  color: #160f29;
+
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+  border-radius: 5px;
+  background-color: white;
+
+  margin-bottom: 1rem;
+  padding: 1rem 1rem;
+}
+
 .main-subtitle {
   font-size: larger;
   margin-top: 1rem;
@@ -52,4 +66,24 @@
 .tooltip:hover .tooltiptext {
   visibility: visible;
   opacity: 1;
+}
+
+.button-wrapper {
+  width: 49%;
+}
+
+.list-ranker-button-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.w-100 {
+  width: 100%;
+}
+
+.icon-override {
+  margin-left: 0.25rem;
+  color: #160f29;
+  font-size: x-small;
 }
