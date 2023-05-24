@@ -31,18 +31,29 @@ export async function GetRankById(id: string) {
   return { bloblist, templateId, rankName };
 }
 
-export async function PostNewRankFast(
-  ranking: string[],
+export async function UpdateRank(
+  rankId: string,
+  ranking: string [],
   templateId: string,
   userEmail: string,
   rankName: string
 ) {
+  
+}
+
+export async function PostNewRank(
+  ranking: string[],
+  templateId: string,
+  userEmail: string,
+  rankName: string
+) : Promise<string> {
   const db = getFirestore();
   var userId = await GetUserIdForEmail(userEmail);
-  await addDoc(collection(db, "ranks"), {
+  var res = await addDoc(collection(db, "ranks"), {
     name: rankName,
     rankedBy: userId,
     templateId: templateId,
     ranking: ranking,
   });
+  return res.id
 }

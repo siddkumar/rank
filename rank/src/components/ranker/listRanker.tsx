@@ -12,6 +12,7 @@ export interface ListRankerProps {
   rankableList: RankableItem[];
   templateId: string;
   onSave: (rankableStrings: string[]) => void;
+  onSaveAs: (rankableStrings: string[]) => void;
 }
 
 function ListRanker(props: ListRankerProps) {
@@ -58,9 +59,18 @@ function ListRanker(props: ListRankerProps) {
           )}
         </Droppable>
       </DragDropContext>
-      <button className="button-styles" onClick={() => props.onSave(blobList)}>
-        Save
-      </button>
+      <div className="list-ranker-button-row">
+        <div className="button-wrapper">
+          <button className="button-styles w-100" onClick={() => props.onSave(blobList)}>
+            Save
+          </button>
+        </div>
+        <div className="button-wrapper">
+          <button className="button-styles w-100" onClick={() => props.onSaveAs(blobList)}>
+            Save As
+          </button>
+        </div>
+      </div>
     </>
   );
 

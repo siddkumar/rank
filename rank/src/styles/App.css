@@ -13,13 +13,17 @@
 
 /* CSS */
 .button-styles {
-  background: linear-gradient(to bottom right, #246a73, #368f8b);
-  border: 0;
+  /* background: linear-gradient(to bottom right, #246a73, #368f8b); */
+  /* color: #ffffff; */
+  /* border: 0; */
+  background: white;
+  color: #160f29;
+  border-color: #ddbea8;
+  border: 1;
   border-radius: 12px;
-  color: #ffffff;
   cursor: pointer;
   display: inline-block;
-  font-family: "Open Sans", sans-serif;
+  /* font-family: "Open Sans", sans-serif; */
   outline: transparent;
   text-align: center;
   text-decoration: none;

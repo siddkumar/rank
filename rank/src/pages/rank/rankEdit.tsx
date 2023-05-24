@@ -3,7 +3,7 @@ import { RankViews } from "./rank";
 import "../../styles/rank.css";
 import { useSearchParams } from "react-router-dom";
 import RankableItem from "../../models/RankableItem";
-import { GetRankById, PostNewRankFast } from "../../services/ranksService";
+import { GetRankById, PostNewRank } from "../../services/ranksService";
 import ListRanker from "../../components/ranker/listRanker";
 import { getAuth } from "firebase/auth";
 
@@ -42,7 +42,7 @@ function RankEdit() {
     const auth = getAuth();
     const user = auth.currentUser;
     if (user) {
-      PostNewRankFast(
+      PostNewRank(
         rankableList,
         templateId,
         user.email ?? "",
@@ -56,11 +56,19 @@ function RankEdit() {
   function rankingView() {
     return (
       <div className="rank-page-layout">
-        <div className="main-title">{rankName}</div>
+        <div className="rank-title">
+        <div className=" row">
+              Ranking Name:
+              <input type="text" value={rankName} onChange={(e)=> setRankName(e.target.value)}>
+              </input>
+        </div>
+        <div><a href={"/rank?templateId=" + templateId}>Template<i className="icon-override fa-regular fa-share-from-square"></i></a></div>
+        </div>
         <ListRanker
           rankableList={ranking}
           templateId={templateId ?? "og-template"}
           onSave={save}
+          onSaveAs={save}
         />
       </div>
     );
