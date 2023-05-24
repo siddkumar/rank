@@ -3,9 +3,14 @@ import { RankViews } from "./rank";
 import "../../styles/rank.css";
 import { useSearchParams } from "react-router-dom";
 import RankableItem from "../../models/RankableItem";
-import { GetRankById, PostNewRank } from "../../services/ranksService";
+import {
+  GetRankById,
+  PostNewRank,
+  UpdateRank,
+} from "../../services/ranksService";
 import ListRanker from "../../components/ranker/listRanker";
 import { getAuth } from "firebase/auth";
+import RankTitle from "../../components/ranker/rankTitle";
 
 function RankEdit() {
   const [view, setView] = useState(RankViews.LOADING);
@@ -42,6 +47,25 @@ function RankEdit() {
     const auth = getAuth();
     const user = auth.currentUser;
     if (user) {
+      if (id) {
+        UpdateRank(id, rankableList, templateId, user.email ?? "", rankName);
+      } else {
+        console.log("error, ranking DNE, save as first");
+      }
+    } else {
+      console.log("error, not signed in"); // TODO surface
+    }
+  }
+
+  function saveAs(rankableList: string[]) {
+    setRanking(
+      rankableList.map<RankableItem>((item, index) => {
+        return { name: item, rank: index + 1 };
+      })
+    );
+    const auth = getAuth();
+    const user = auth.currentUser;
+    if (user) {
       PostNewRank(rankableList, templateId, user.email ?? "", rankName).then(
         (response) => console.log("saved")
       );
@@ -50,18 +74,15 @@ function RankEdit() {
     }
   }
 
+  function onRankNameChange(s: string) {
+    setRankName(s);
+  }
+
   function rankingView() {
     return (
       <div className="rank-page-layout">
         <div className="rank-title">
-          <div className=" row">
-            Ranking Name:
-            <input
-              type="text"
-              value={rankName}
-              onChange={(e) => setRankName(e.target.value)}
-            ></input>
-          </div>
+          <RankTitle defaultTitle={rankName} onChange={onRankNameChange} />
           <div>
             <a href={"/rank?templateId=" + templateId}>
               Template
@@ -73,7 +94,7 @@ function RankEdit() {
           rankableList={ranking}
           templateId={templateId ?? "og-template"}
           onSave={save}
-          onSaveAs={save}
+          onSaveAs={saveAs}
         />
       </div>
     );

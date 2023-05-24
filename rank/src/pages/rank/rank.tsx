@@ -7,6 +7,7 @@ import { GetTemplateById } from "../../services/templatesService";
 import "../../styles/rank.css";
 import { getAuth } from "firebase/auth";
 import { PostNewRank } from "../../services/ranksService";
+import RankTitle from "../../components/ranker/rankTitle";
 
 export enum RankViews {
   LOADING = "loading",
@@ -68,14 +69,7 @@ function Rank() {
     return (
       <div className="rank-page-layout">
         <div className="rank-title">
-          <div className=" row">
-            Ranking Name:
-            <input
-              type="text"
-              value={rankName}
-              onChange={(e) => setRankName(e.target.value)}
-            ></input>
-          </div>
+          <RankTitle defaultTitle={rankName} onChange={(s) => setRankName(s)} />
           <div>
             <div>Template: {templateName}</div>
             <div className="bracket-button">
@@ -96,7 +90,6 @@ function Rank() {
           rankableList={ranking}
           templateId={templateId ?? "og-template"}
           onSave={save}
-          onSaveAs={save}
         />
       </div>
     );
@@ -114,7 +107,7 @@ function Rank() {
         <div className="main-title">Your Ranking is Saved!</div>
         <br></br>
         <a href={"/rank/edit?id=" + rankId}>
-          <button className="button-styles">Edit</button>
+          <button className="button-styles w-100">Edit</button>
         </a>
       </div>
     );

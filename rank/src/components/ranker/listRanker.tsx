@@ -12,7 +12,7 @@ export interface ListRankerProps {
   rankableList: RankableItem[];
   templateId: string;
   onSave: (rankableStrings: string[]) => void;
-  onSaveAs: (rankableStrings: string[]) => void;
+  onSaveAs?: (rankableStrings: string[]) => void;
 }
 
 function ListRanker(props: ListRankerProps) {
@@ -60,7 +60,7 @@ function ListRanker(props: ListRankerProps) {
         </Droppable>
       </DragDropContext>
       <div className="list-ranker-button-row">
-        <div className="button-wrapper">
+        <div className={props.onSaveAs ? "button-wrapper" : "w-100"}>
           <button
             className="button-styles w-100"
             onClick={() => props.onSave(blobList)}
@@ -68,14 +68,22 @@ function ListRanker(props: ListRankerProps) {
             Save
           </button>
         </div>
-        <div className="button-wrapper">
-          <button
-            className="button-styles w-100"
-            onClick={() => props.onSaveAs(blobList)}
-          >
-            Save As
-          </button>
-        </div>
+        {props.onSaveAs && (
+          <div className="button-wrapper">
+            <button
+              className="button-styles w-100"
+              onClick={() => {
+                if (props.onSaveAs) {
+                  props.onSaveAs(blobList);
+                } else {
+                  console.log("error, save as func not provided");
+                }
+              }}
+            >
+              Save As
+            </button>
+          </div>
+        )}
       </div>
     </>
   );

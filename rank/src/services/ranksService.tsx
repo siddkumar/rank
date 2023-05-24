@@ -6,6 +6,7 @@ import {
   doc,
   getDoc,
   getFirestore,
+  setDoc,
 } from "firebase/firestore";
 import { GetUserIdForEmail } from "./userService";
 
@@ -37,7 +38,17 @@ export async function UpdateRank(
   templateId: string,
   userEmail: string,
   rankName: string
-) {}
+) {
+  const db = getFirestore();
+  var userId = await GetUserIdForEmail(userEmail);
+
+  await setDoc(doc(db, "ranks", rankId), {
+    name: rankName,
+    rankedBy: userId,
+    templateId: templateId,
+    ranking: ranking,
+  });
+}
 
 export async function PostNewRank(
   ranking: string[],
