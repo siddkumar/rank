@@ -13,7 +13,7 @@ export enum RankViews {
   RANKING = "ranking",
   SAVING = "saving",
   BRACKET = "bracket",
-  READY = "ready"
+  READY = "ready",
 }
 
 function Rank() {
@@ -30,13 +30,13 @@ function Rank() {
     GetTemplateById(templateId ?? "").then(({ templateName, rankableList }) => {
       setRanking(rankableList);
       setTemplateName(templateName);
-      setRankName(templateName)
+      setRankName(templateName);
       setView(RankViews.RANKING);
     });
   }, [templateId]);
 
   function save(rankableList: string[]) {
-    setView(RankViews.SAVING)
+    setView(RankViews.SAVING);
     setRanking(
       rankableList.map<RankableItem>((item, index) => {
         return { name: item, rank: index };
@@ -45,21 +45,15 @@ function Rank() {
     const auth = getAuth();
     const user = auth.currentUser;
     if (user && templateId) {
-      PostNewRank(
-        rankableList,
-        templateId,
-        user.email ?? "",
-        rankName
-      ).then((response) => {
-        setRankId(response);
-        setView(RankViews.READY)
-      }
+      PostNewRank(rankableList, templateId, user.email ?? "", rankName).then(
+        (response) => {
+          setRankId(response);
+          setView(RankViews.READY);
+        }
       );
-      
     } else {
       console.log("error, not signed in"); // TODO surface
     }
-    
   }
 
   function loadingView() {
@@ -73,28 +67,30 @@ function Rank() {
   function rankingView() {
     return (
       <div className="rank-page-layout">
-        
         <div className="rank-title">
           <div className=" row">
-              Ranking Name:
-              <input type="text" value={rankName} onChange={(e)=> setRankName(e.target.value)}>
-              </input>
+            Ranking Name:
+            <input
+              type="text"
+              value={rankName}
+              onChange={(e) => setRankName(e.target.value)}
+            ></input>
           </div>
           <div>
-          <div>Template: {templateName}</div>
-          <div className="bracket-button">
-            <div>Switch to Bracket: </div>
-            <div
-              onClick={() => {
-                setView(RankViews.BRACKET);
-              }}
-            >
-              <i className="fa-solid fa-network-wired tooltip">
-                <div className="tooltiptext">bracketify</div>
-              </i>
+            <div>Template: {templateName}</div>
+            <div className="bracket-button">
+              <div>Switch to Bracket: </div>
+              <div
+                onClick={() => {
+                  setView(RankViews.BRACKET);
+                }}
+              >
+                <i className="fa-solid fa-network-wired tooltip">
+                  <div className="tooltiptext">bracketify</div>
+                </i>
+              </div>
             </div>
           </div>
-        </div>
         </div>
         <ListRanker
           rankableList={ranking}
@@ -109,7 +105,7 @@ function Rank() {
   function savingView() {
     <div className="rank-page-layout">
       <div className="main-title"> Saving...</div>
-    </div>
+    </div>;
   }
 
   function readyView() {

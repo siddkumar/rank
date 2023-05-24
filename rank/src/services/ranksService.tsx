@@ -33,20 +33,18 @@ export async function GetRankById(id: string) {
 
 export async function UpdateRank(
   rankId: string,
-  ranking: string [],
+  ranking: string[],
   templateId: string,
   userEmail: string,
   rankName: string
-) {
-  
-}
+) {}
 
 export async function PostNewRank(
   ranking: string[],
   templateId: string,
   userEmail: string,
   rankName: string
-) : Promise<string> {
+): Promise<string> {
   const db = getFirestore();
   var userId = await GetUserIdForEmail(userEmail);
   var res = await addDoc(collection(db, "ranks"), {
@@ -55,5 +53,5 @@ export async function PostNewRank(
     templateId: templateId,
     ranking: ranking,
   });
-  return res.id
+  return res.id;
 }

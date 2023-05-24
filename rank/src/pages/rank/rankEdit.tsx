@@ -42,12 +42,9 @@ function RankEdit() {
     const auth = getAuth();
     const user = auth.currentUser;
     if (user) {
-      PostNewRank(
-        rankableList,
-        templateId,
-        user.email ?? "",
-        rankName
-      ).then((response) => console.log("saved"));
+      PostNewRank(rankableList, templateId, user.email ?? "", rankName).then(
+        (response) => console.log("saved")
+      );
     } else {
       console.log("error, not signed in"); // TODO surface
     }
@@ -57,12 +54,20 @@ function RankEdit() {
     return (
       <div className="rank-page-layout">
         <div className="rank-title">
-        <div className=" row">
-              Ranking Name:
-              <input type="text" value={rankName} onChange={(e)=> setRankName(e.target.value)}>
-              </input>
-        </div>
-        <div><a href={"/rank?templateId=" + templateId}>Template<i className="icon-override fa-regular fa-share-from-square"></i></a></div>
+          <div className=" row">
+            Ranking Name:
+            <input
+              type="text"
+              value={rankName}
+              onChange={(e) => setRankName(e.target.value)}
+            ></input>
+          </div>
+          <div>
+            <a href={"/rank?templateId=" + templateId}>
+              Template
+              <i className="icon-override fa-regular fa-share-from-square"></i>
+            </a>
+          </div>
         </div>
         <ListRanker
           rankableList={ranking}

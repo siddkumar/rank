@@ -61,12 +61,18 @@ function ListRanker(props: ListRankerProps) {
       </DragDropContext>
       <div className="list-ranker-button-row">
         <div className="button-wrapper">
-          <button className="button-styles w-100" onClick={() => props.onSave(blobList)}>
+          <button
+            className="button-styles w-100"
+            onClick={() => props.onSave(blobList)}
+          >
             Save
           </button>
         </div>
         <div className="button-wrapper">
-          <button className="button-styles w-100" onClick={() => props.onSaveAs(blobList)}>
+          <button
+            className="button-styles w-100"
+            onClick={() => props.onSaveAs(blobList)}
+          >
             Save As
           </button>
         </div>
