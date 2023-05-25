@@ -18,7 +18,6 @@
 
 .home-page-layout {
   display: flex;
-  padding-top: 3rem;
   align-items: flex-start;
   justify-content: center;
   font-family: "Open Sans", sans-serif;

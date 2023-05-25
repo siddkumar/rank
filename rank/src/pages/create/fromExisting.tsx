@@ -12,10 +12,10 @@ function CreateFromExisting() {
   }, []);
 
   return (
-    <div className="create-page-layout">
-      <div className="main-title">
-        <i className="fa-solid fa-medal"></i> Featured Templates
-        <i className="fa-solid fa-medal"></i>{" "}
+    <div>
+      <div className="main-subtitle">
+        <i className="fa-solid fa-medal no-left no-pointer"></i> Featured
+        Templates{" "}
       </div>
       <TemplatesList stubs={stubs} />
     </div>

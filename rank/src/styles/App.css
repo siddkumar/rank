@@ -122,6 +122,10 @@ i {
   color: #246a73;
 }
 
+.no-left {
+  margin-left: 0rem !important;
+}
+
 .pointer {
   cursor: pointer;
 }

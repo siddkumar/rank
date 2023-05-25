@@ -1,5 +1,5 @@
 import { getAuth } from "firebase/auth";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { TemplateEditor } from "../../components/templates/templateEditor";
 import {
   ParseLinkTables,
@@ -8,6 +8,7 @@ import {
 } from "../../services/parserService";
 import { PostNewTemplate } from "../../services/templatesService";
 import "../../styles/create.css";
+import { useSearchParams } from "react-router-dom";
 
 export enum FromLinkViews {
   ENTER = "enter",
@@ -29,6 +30,19 @@ export function CreateFromLink() {
   });
   const [chosenTableName, setChosenTableName] = useState("");
   const [templateId, setTemplateId] = useState("");
+  const [searchParams] = useSearchParams();
+
+  useEffect(() => {
+    const link = searchParams.get("link");
+    if (link) {
+      setView(FromLinkViews.WAITING);
+      PostParseLink(link).then((tables) => {
+        setTables(tables);
+        setView(FromLinkViews.PICKTABLE);
+        setWikiLink(link);
+      });
+    }
+  }, []);
 
   const onChangeWikiLink = (event: {
     target: { value: React.SetStateAction<string> };
