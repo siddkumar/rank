@@ -1,91 +1,14 @@
 # Required Imports
-import firebase_admin
-import os
 import re
 import requests
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-from firebase_admin import credentials, firestore
 from bs4 import BeautifulSoup
-import json
 
 # Initialize Flask App
 app = Flask(__name__)
 cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
-
-if not os.path.isfile("./key.json"):
-    print("could not find credentials file")
-
-cred = credentials.Certificate("./key.json")
-firebase_admin.initialize_app(cred, {
-    'databaseURL': 'https://rank-db-a0fb9.firebaseio.com'
-})
-db = firestore.client()
-
-rankdb = db.collection('ranks')
-usersdb = db.collection('users')
-templatesdb = db.collection('templates')
-
-
-@app.route("/templates/createFromScratch", methods=['POST'])
-def templatesCreate():
-    try:
-        name = request.json['name']
-        items = request.json['items']
-        email = request.json['email']
-
-        userId = "og-user"
-
-        if (email):
-            usersMatchEmail = usersdb.where(u'emailAddress', u'==', email)
-            user = usersMatchEmail.get()
-            for u in user:
-                userId = u.id
-
-        # remove duplicates
-        filtered = []
-        [filtered.append(x) for x in items if x not in filtered]
-
-        data = {
-            u'createdBy': userId,
-            u'items': filtered,
-            u'name': name,
-            u'origin': 'scratch',
-            u'sourceUrl': ""
-        }
-
-        newTemplate = templatesdb.document()
-        newTemplate.set(data)
-        response = jsonify(
-            {"success": True, "templateId": newTemplate.id}, 200)
-        return response
-    except Exception as e:
-        return f"An Error Occured:{e}"
-
-
-@app.route("/users/create", methods=['POST'])
-def usersCreate():
-    try:
-        emailAddress = request.json['emailAddress']
-
-        docs = usersdb.where(u'emailAddress', u'==', emailAddress).stream()
-        for doc in docs:
-            return f"An Error Occured: User with that email already exists"
-
-        data = {
-            u'emailAddress': emailAddress,
-        }
-
-        print("hi")
-        newUser = usersdb.document()
-        newUser.set(data)
-        response = jsonify(
-            {"success": True, "userId": newUser.id}, 200)
-        print(response)
-        return response
-    except Exception as e:
-        return f"An Error Occured: {e}"
 
 @app.route("/parser/parseLink", methods=['POST'])
 def parse():

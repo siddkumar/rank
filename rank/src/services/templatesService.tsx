@@ -9,9 +9,7 @@ import {
 } from "@firebase/firestore";
 import { ExistingTemplateStub } from "../components/templates/templates";
 import RankableItem from "../models/RankableItem";
-import { getPrefix } from "./servicesConfig";
-
-const prefix = getPrefix();
+import { addDoc } from "firebase/firestore";
 
 export async function GetTemplateById(templateId: string) {
   console.log("requesting");
@@ -50,33 +48,20 @@ export async function GetTemplatesList() {
   return stubList;
 }
 
-interface CreateFromScratchPostResponse {
-  success: boolean;
-  templateId: string;
-}
-
 export async function PostNewTemplate(
   templateName: string,
   items: string[],
   userEmail?: string
 ) {
-  const requestOptions = {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      name: templateName,
-      items: items,
-      email: userEmail,
-    }),
-  };
+  console.log("requesting")
+  const db = getFirestore();
+  const uniqueArray = Array.from(new Set(items));
 
-  var templateId = "";
+  var response = await addDoc(collection(db, "templates"), {
+    createdBy: userEmail,
+    items: uniqueArray,
+    name: templateName,
+  });
 
-  await fetch(prefix + "/templates/createFromScratch", requestOptions)
-    .then((response) => response.json())
-    .then((data) => {
-      templateId = (data[0] as CreateFromScratchPostResponse).templateId;
-    });
-
-  return templateId;
+  return response.id
 }

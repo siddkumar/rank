@@ -31,14 +31,13 @@ function Create() {
           <button className="button-styles">Create From Scratch</button>
         </a>
         <div className="main-subtitle">
-          <i className="no-pointer no-left fa-brands fa-wikipedia-w"></i> Create
-          from a wikipedia article
+          <i className="no-pointer no-left fa-brands fa-wikipedia-w"></i> Import List from Wikipedia 
         </div>
         <form onSubmit={handleSubmit}>
           <input
             type="text"
             value={wikiLink}
-            placeholder="Paste link here"
+            placeholder="Paste url of wikipedia page that contains a table"
             onChange={(e) => setWikiLink(e.target.value)}
           />
           <button className="button-styles">Submit</button>

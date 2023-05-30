@@ -1,5 +1,8 @@
 # rank
 
+Adding Firebase Config
+1. Create .env file
+
 Setting Up FrontEnd (rank)
 
 1. npm install
