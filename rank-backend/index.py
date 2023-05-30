@@ -7,7 +7,6 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 from firebase_admin import credentials, firestore
 from bs4 import BeautifulSoup
-import json
 
 # Initialize Flask App
 app = Flask(__name__)
