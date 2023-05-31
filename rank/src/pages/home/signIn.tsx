@@ -10,9 +10,7 @@ function SignIn() {
   const [forceHide, setForceHide] = useState(false);
 
   useEffect(() => {
-    if (!user) {
       AuthWidget({});
-    }
   }, [user, forceHide]);
 
   onAuthStateChanged(auth, (user) => {
