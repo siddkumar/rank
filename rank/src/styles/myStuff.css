@@ -1,6 +1,5 @@
 .myStuff-page-layout {
   display: flex;
-  padding-top: 3rem;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
@@ -8,12 +7,19 @@
 }
 
 .stuff-subtitle {
-  font-size: larger;
   margin-bottom: 1rem;
-  margin-right: 1rem;
-  margin-left: 1rem;
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  font-family: "Caveat", cursive;
+  color: #160f29;
+  font-size: x-large;
+
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+  border-radius: 5px;
+  background-color: #f9f9fb;
+
+  padding: 1rem 1rem;
 }
 
 .myStuffContainer {

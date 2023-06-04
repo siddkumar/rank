@@ -1,6 +1,5 @@
 .create-page-layout {
   display: flex;
-  padding-top: 3rem;
   justify-content: center;
   align-items: stretch;
   flex-wrap: wrap;
@@ -36,7 +35,6 @@ input {
 }
 
 .done-button {
-  /* background-image: linear-gradient(144deg, #160f29, #246a73 50%, #368f8b); */
   width: 100%;
 }
 

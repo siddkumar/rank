@@ -9,14 +9,14 @@ interface TemplateEditorProps {
 export function TemplateEditor(props: TemplateEditorProps) {
   const [templateName, setTemplateName] = useState(props.initialName);
   const [items, setItems] = useState(props.initialItems);
-  const [cursorMover, setCursorMover] = useState(0)
+  const [cursorMover, setCursorMover] = useState(0);
 
   useEffect(() => {
     var elem = document.getElementById(cursorMover + "-key");
     if (elem) {
       elem.focus();
     }
-  }, [cursorMover])
+  }, [cursorMover]);
 
   const onChangeTemplateName = (event: {
     target: { value: React.SetStateAction<string> };
@@ -36,25 +36,25 @@ export function TemplateEditor(props: TemplateEditorProps) {
   };
 
   const handleKeyDown = (e: any, i: number, item: string) => {
-    if (e.key === 'Enter') {
+    if (e.key === "Enter") {
       e.preventDefault();
       addItem();
     }
-    if (e.key === 'ArrowUp') {
+    if (e.key === "ArrowUp") {
       e.preventDefault();
-      setCursorMover(Math.max(i -1, 0))
+      setCursorMover(Math.max(i - 1, 0));
     }
-    
-    if (e.key === 'ArrowDown') {
+
+    if (e.key === "ArrowDown") {
       e.preventDefault();
-      setCursorMover(Math.min(i+1, items.length))
+      setCursorMover(Math.min(i + 1, items.length));
     }
 
     if (e.key === "Backspace" && item.length === 0) {
       e.preventDefault();
       removeItem(i);
     }
-  }
+  };
 
   const addItem = () => {
     setItems([...items, ""]);
@@ -63,10 +63,10 @@ export function TemplateEditor(props: TemplateEditorProps) {
 
   const removeItem = (position: number) => {
     if (items.length === 1) {
-      return
+      return;
     }
     setItems([...items.slice(0, position), ...items.slice(position + 1)]);
-    setCursorMover(Math.max(0, position -1));
+    setCursorMover(Math.max(0, position - 1));
   };
 
   return (
@@ -77,7 +77,7 @@ export function TemplateEditor(props: TemplateEditorProps) {
       {items.map((item, i) => (
         <div key={i + "div-key"} className="row">
           <input
-            id = {i+"-key"}
+            id={i + "-key"}
             key={i + "-key"}
             placeholder={"Type and Enter"}
             type="text"

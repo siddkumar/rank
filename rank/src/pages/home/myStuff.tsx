@@ -22,7 +22,6 @@ enum MyStuffViews {
 function MyStuff() {
   const auth = getAuth();
   const [existingUser, setUser] = useState<User | null>(null);
-  const [hello, setHello] = useState("");
   const [stubs, setStubs] = useState<ExistingTemplateStub[]>([]);
   const [hasRequestedTemplates, setHasRequestedTemplates] = useState(false);
   const [ranks, setRanks] = useState<ExistingRankStub[]>([]);
@@ -36,7 +35,6 @@ function MyStuff() {
   });
 
   function signMeOut(auth: Auth) {
-    setHello("");
     setView(MyStuffViews.SignIn);
     setStubs([]);
     setRanks([]);
@@ -52,7 +50,6 @@ function MyStuff() {
       // get ranks
       GetRanksForUser(existingUser.email!).then((res) => setRanks(res));
       setView(MyStuffViews.Loaded);
-      setHello(existingUser.displayName ?? "");
     }
 
     return (
@@ -81,9 +78,6 @@ function MyStuff() {
           This page is where you can see your saved rankings and templates, but
           you must sign in to do so.
         </div>
-        <a className="button-styles" href={"/signIn"}>
-          Sign In
-        </a>
       </>
     );
   }
@@ -91,7 +85,6 @@ function MyStuff() {
   return (
     <>
       <div className="myStuff-page-layout">
-        <div className="main-title">Hello {hello} !</div>
         {view === MyStuffViews.SignIn && renderPleaseSignIn()}
         {view === MyStuffViews.Loaded && renderMyStuff()}
       </div>

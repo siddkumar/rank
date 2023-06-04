@@ -7,7 +7,6 @@ import CreateFromScratch from "./pages/create/fromScratch";
 import Rank from "./pages/rank/rank";
 import { CreateFromLink } from "./pages/create/fromLink";
 import MyStuff from "./pages/home/myStuff";
-import SignIn from "./pages/home/signIn";
 import RankEdit from "./pages/rank/rankEdit";
 import Footer from "./pages/footer";
 
@@ -17,7 +16,6 @@ function App() {
       <Header />
       <Routes>
         <Route path="myStuff" element={<MyStuff />}></Route>
-        <Route path="signIn" element={<SignIn />}></Route>
         <Route path="/" element={<Create />}></Route>
         <Route
           path="create/fromScratch"
