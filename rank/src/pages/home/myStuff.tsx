@@ -31,10 +31,14 @@ function MyStuff() {
     if (!hasRequestedTemplates && stubs.length === 0 && existingUser) {
       // get templates
       setHasRequestedTemplates(true);
-      GetTemplatesForUser(existingUser.email!).then((res) => setStubs(res));
+      GetTemplatesForUser(existingUser.email!).then((res) =>
+        setStubs(res.sort((a, b) => a.name.localeCompare(b.name)))
+      );
 
       // get ranks
-      GetRanksForUser(existingUser.email!).then((res) => setRanks(res));
+      GetRanksForUser(existingUser.email!).then((res) =>
+        setRanks(res.sort((a, b) => a.name.localeCompare(b.name)))
+      );
       setView(MyStuffViews.Loaded);
     }
   }, [existingUser, hasRequestedTemplates, stubs.length]);
