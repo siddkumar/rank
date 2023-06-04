@@ -1,6 +1,5 @@
 import { ExistingTemplateStub } from "../components/templates/templates";
 import { ExistingRankStub } from "../pages/rank/ranks";
-
 import {
   addDoc,
   collection,
@@ -13,6 +12,7 @@ import {
 export async function GetTemplatesForUser(
   email: string
 ): Promise<ExistingTemplateStub[]> {
+  console.log("requesting");
   var userId = await GetUserIdForEmail(email);
   return await GetTemplatesForUserId(userId);
 }
@@ -56,6 +56,7 @@ export async function GetRanksForUser(
 }
 
 export async function GetUserIdForEmail(email: string) {
+  console.log("requesting");
   const db = getFirestore();
   const q = query(collection(db, "users"), where("emailAddress", "==", email));
   const qs = await getDocs(q);
@@ -68,7 +69,6 @@ export async function GetUserIdForEmail(email: string) {
 
 export async function CreateUser(email: string): Promise<void> {
   const db = getFirestore();
-
   const q = query(collection(db, "users"), where("emailAddress", "==", email));
   const qs = await getDocs(q);
 

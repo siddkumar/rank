@@ -8,7 +8,7 @@ import {
 } from "../../services/parserService";
 import { PostNewTemplate } from "../../services/templatesService";
 import "../../styles/create.css";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 export enum FromLinkViews {
   ENTER = "enter",
@@ -16,7 +16,6 @@ export enum FromLinkViews {
   PICKTABLE = "pickTable",
   PICKLIST = "pickList",
   EDITOR = "templateEditor",
-  READY = "ready",
 }
 
 export function CreateFromLink() {
@@ -29,8 +28,8 @@ export function CreateFromLink() {
     templateName: "",
   });
   const [chosenTableName, setChosenTableName] = useState("");
-  const [templateId, setTemplateId] = useState("");
   const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const link = searchParams.get("link");
@@ -58,14 +57,11 @@ export function CreateFromLink() {
     });
   };
 
-  const submitTemplate = (templateName: string, items: string[]) => {
+  const submitTemplate = async (templateName: string, items: string[]) => {
     setView(FromLinkViews.WAITING);
     var email = getAuth().currentUser?.email ?? undefined;
-    PostNewTemplate(templateName, items, email).then((newId) => {
-      console.log(newId);
-      setTemplateId(newId);
-      setView(FromLinkViews.READY);
-    });
+    var id = await PostNewTemplate(templateName, items, email ?? "undefined");
+    navigate("/rank?templateId=" + id);
   };
 
   function enterLinkView() {
@@ -89,7 +85,7 @@ export function CreateFromLink() {
     return (
       <>
         <div className="main-title">We found these tables...</div>
-        <div className="main-subtitle">please select one to continue</div>
+        <div className="main-title">please select one to continue</div>
         <div className="potential-template-wrapper card container">
           {tables.map((table, t) => {
             return (
@@ -124,7 +120,9 @@ export function CreateFromLink() {
     return (
       <>
         <div className="main-title">We found these potential templates ...</div>
-        <div className="main-subtitle">please select one to continue</div>
+        <div className="main-title card container">
+          please select one to continue
+        </div>
         <div className="potential-template-wrapper card container">
           {templates.map((template, _t) => {
             return (
@@ -192,25 +190,12 @@ export function CreateFromLink() {
     );
   }
 
-  function readyView() {
-    return (
-      <div className="create-page-layout">
-        <div className="main-title">Your Template is Ready!</div>
-        <br></br>
-        <a href={"/rank?templateId=" + templateId}>
-          <button className="button-styles done-button">let's rank!</button>
-        </a>
-      </div>
-    );
-  }
-
   return (
     <div className="rank-page-layout">
       {view === FromLinkViews.ENTER && enterLinkView()}
       {view === FromLinkViews.PICKTABLE && pickTableView()}
       {view === FromLinkViews.PICKLIST && pickTemplateView()}
       {view === FromLinkViews.EDITOR && templateEditorView()}
-      {view === FromLinkViews.READY && readyView()}
       {view === FromLinkViews.WAITING && waitingView()}
     </div>
   );

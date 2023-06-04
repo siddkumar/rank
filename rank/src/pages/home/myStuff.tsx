@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "firebaseui/dist/firebaseui.css";
 import "../../styles/myStuff.css";
 import { Auth, getAuth, onAuthStateChanged, User } from "firebase/auth";
@@ -27,6 +27,22 @@ function MyStuff() {
   const [ranks, setRanks] = useState<ExistingRankStub[]>([]);
   const [view, setView] = useState<MyStuffViews>(MyStuffViews.SignIn);
 
+  useEffect(() => {
+    if (!hasRequestedTemplates && stubs.length === 0 && existingUser) {
+      // get templates
+      setHasRequestedTemplates(true);
+      GetTemplatesForUser(existingUser.email!).then((res) =>
+        setStubs(res.sort((a, b) => a.name.localeCompare(b.name)))
+      );
+
+      // get ranks
+      GetRanksForUser(existingUser.email!).then((res) =>
+        setRanks(res.sort((a, b) => a.name.localeCompare(b.name)))
+      );
+      setView(MyStuffViews.Loaded);
+    }
+  }, [existingUser, hasRequestedTemplates, stubs.length]);
+
   onAuthStateChanged(auth, (user) => {
     if (user && !existingUser) {
       setView(MyStuffViews.Loaded);
@@ -34,24 +50,7 @@ function MyStuff() {
     }
   });
 
-  function signMeOut(auth: Auth) {
-    setView(MyStuffViews.SignIn);
-    setStubs([]);
-    setRanks([]);
-    auth.signOut();
-  }
-
   function renderMyStuff() {
-    if (!hasRequestedTemplates && stubs.length === 0 && existingUser) {
-      // get templates
-      setHasRequestedTemplates(true);
-      GetTemplatesForUser(existingUser.email!).then((res) => setStubs(res));
-
-      // get ranks
-      GetRanksForUser(existingUser.email!).then((res) => setRanks(res));
-      setView(MyStuffViews.Loaded);
-    }
-
     return (
       <>
         <div className="myStuffContainer">
@@ -64,9 +63,6 @@ function MyStuff() {
             <RanksList stubs={ranks} />
           </div>
         </div>
-        <button className="button-styles" onClick={(e) => signMeOut(auth)}>
-          Sign Out
-        </button>
       </>
     );
   }
@@ -74,9 +70,13 @@ function MyStuff() {
   function renderPleaseSignIn() {
     return (
       <>
-        <div className="main-subtitle">
-          This page is where you can see your saved rankings and templates, but
-          you must sign in to do so.
+        <div className="myStuffContainer">
+          <div className="container card">
+            <div className="main-subtitle">
+              This page is where you can see your saved rankings and templates,
+              but you must sign in to do so.
+            </div>
+          </div>
         </div>
       </>
     );

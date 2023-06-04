@@ -51,7 +51,7 @@ export async function GetTemplatesList() {
 export async function PostNewTemplate(
   templateName: string,
   items: string[],
-  userEmail?: string
+  userEmail: string
 ) {
   console.log("requesting");
   const db = getFirestore();

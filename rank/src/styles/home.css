@@ -1,6 +1,5 @@
 .home-title {
   font-size: xx-large;
-  color: #160f29;
   text-align: left;
   width: 100%;
   margin-bottom: 1rem;
@@ -18,11 +17,17 @@
 
 .home-page-layout {
   display: flex;
-  align-items: flex-start;
+  align-items: stretch;
   justify-content: center;
   font-family: "Open Sans", sans-serif;
-  align-items: stretch;
   flex-wrap: wrap;
+  max-width: 960px;
+  margin: 0 auto; /* Center the container horizontally */
+}
+
+.home-page-layout > * {
+  flex-grow: 1;
+  max-width: 50%; /* Each component takes 50% width */
 }
 
 .main-container {
