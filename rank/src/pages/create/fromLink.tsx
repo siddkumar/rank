@@ -61,11 +61,12 @@ export function CreateFromLink() {
   const submitTemplate = (templateName: string, items: string[]) => {
     setView(FromLinkViews.WAITING);
     var email = getAuth().currentUser?.email ?? undefined;
-    PostNewTemplate(templateName, items, email).then((newId) => {
-      console.log(newId);
-      setTemplateId(newId);
-      setView(FromLinkViews.READY);
-    });
+    PostNewTemplate(templateName, items, email ?? "test@example.com").then(
+      (newId) => {
+        setTemplateId(newId);
+        setView(FromLinkViews.READY);
+      }
+    );
   };
 
   function enterLinkView() {

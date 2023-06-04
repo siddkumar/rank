@@ -24,6 +24,17 @@ input {
   width: 20rem;
 }
 
+textarea {
+  width: 100%;
+  font-family: "Open Sans", sans-serif;
+  padding: 1rem;
+  margin: 1rem 1rem 1rem 0rem;
+  display: flex;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
 .button-styles {
   font-size: 1rem;
   line-height: 3;
@@ -107,4 +118,10 @@ input[type="password"] {
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
+}
+
+.backButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

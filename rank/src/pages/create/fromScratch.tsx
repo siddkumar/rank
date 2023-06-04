@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { TemplateEditor } from "../../components/templates/templateEditor";
 import { PostNewTemplate } from "../../services/templatesService";
 import "../../styles/create.css";
+import { useNavigate } from "react-router-dom";
 
 export enum CreateFromScratchViews {
   CREATE = "create",
@@ -10,20 +11,21 @@ export enum CreateFromScratchViews {
   READY = "ready",
 }
 
-function CreateFromScratch() {
-  const [view, setView] = useState(CreateFromScratchViews.CREATE);
-  const [templateId, setTemplateId] = useState("");
+export interface CreateFromScratchProps {
+  initialName: string;
+  initialItems: string[];
+}
 
-  const submitTemplate = (templateName: string, items: string[]) => {
+function CreateFromScratch(props: CreateFromScratchProps) {
+  const [view, setView] = useState(CreateFromScratchViews.CREATE);
+  const navigate = useNavigate();
+
+  const submitTemplate = async (templateName: string, items: string[]) => {
     setView(CreateFromScratchViews.SAVING);
 
     var email = getAuth().currentUser?.email;
-
-    PostNewTemplate(templateName, items, email ?? undefined).then((newId) =>
-      setTemplateId(newId)
-    );
-
-    setView(CreateFromScratchViews.READY);
+    var id = await PostNewTemplate(templateName, items, email ?? "undefined");
+    navigate("/rank?templateId=" + id);
   };
 
   function createView() {
@@ -33,8 +35,8 @@ function CreateFromScratch() {
         <br></br>
         <div className="card container">
           <TemplateEditor
-            initialName={""}
-            initialItems={[""]}
+            initialName={props.initialName}
+            initialItems={props.initialItems}
             onSubmit={submitTemplate}
           />
         </div>
@@ -55,11 +57,6 @@ function CreateFromScratch() {
       <div className="create-page-layout">
         <div>
           <div className="main-title">Your Template is Ready!</div>
-        </div>
-        <div>
-          <a href={"/rank?templateId=" + templateId}>
-            <button className="button-styles">let's rank</button>
-          </a>
         </div>
       </div>
     );
