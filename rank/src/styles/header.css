@@ -3,7 +3,6 @@
   flex-wrap: wrap;
   align-items: center;
   font-family: "Caveat", cursive;
-  color: #160f29;
   padding: 20px;
 }
 
@@ -43,7 +42,7 @@ footer {
 
 .header-left a {
   text-decoration: none;
-  color: #160f29;
+  color: #191970   ;
 }
 
 .header-right .caveat-large {
@@ -52,7 +51,6 @@ footer {
 }
 
 .header-right a {
-  color: #160f29;
   padding-left: 0.5rem;
   padding-right: 0.5rem;
   text-decoration: none;

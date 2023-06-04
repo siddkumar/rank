@@ -14,12 +14,10 @@
   margin-top: 1rem;
   margin-bottom: 1rem;
   font-family: "Roboto Slab", sans-serif;
-  color: #160f29;
 }
 
 input {
   font-size: 1rem;
-  color: #160f29;
   font-family: "Open Sans", sans-serif;
   width: 20rem;
 }
@@ -33,6 +31,7 @@ textarea {
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
+  resize: none;
 }
 
 .button-styles {
@@ -51,10 +50,9 @@ textarea {
 
 .add-remove-button {
   background-color: #fbeee0;
-  border: 2px solid #246a73;
+  border: 2px solid #488e98;
   border-radius: 30px;
-  box-shadow: #246a73 4px 4px 0 0;
-  color: #160f29;
+  box-shadow: #488e98 4px 4px 0 0;
   cursor: pointer;
   display: inline-block;
   font-family: "Roboto Slab", sans-serif;
@@ -88,7 +86,7 @@ textarea {
 }
 
 .template-link {
-  color: #246a73;
+  color: #488e98;
   text-decoration: none;
 }
 

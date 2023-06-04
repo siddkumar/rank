@@ -15,7 +15,7 @@ function CreateFromExisting() {
     <div>
       <div className="main-subtitle">
         <i className="fa-solid fa-medal no-left no-pointer"></i> Featured
-        Templates{" "}
+        Templates
       </div>
       <TemplatesList stubs={stubs} />
     </div>

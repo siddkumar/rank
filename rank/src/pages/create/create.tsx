@@ -19,7 +19,9 @@ function Create() {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    navigate("/create/fromLink?link=" + wikiLink);
+    const params = new URLSearchParams();
+    params.set("link", wikiLink);
+    navigate("/create/fromLink?" + params.toString());
   };
 
   function fromScratchForm() {
@@ -38,7 +40,7 @@ function Create() {
             onChange={(e) => setTextArea(e.target.value)}
           ></textarea>
           <button
-            onClick={(_e) => setView(HomeViews.SCRATCH)}
+            onClick={() => setView(HomeViews.SCRATCH)}
             className="button-styles"
           >
             Parse
@@ -82,7 +84,7 @@ function Create() {
         </div>
         <div className="choices-container card container">
           <div className="home-title">
-            Build your Own Template
+            Build Your Own Template
             <i className="no-pointer fa-solid fa-file-circle-plus"></i>
           </div>
           {fromScratchForm()}
