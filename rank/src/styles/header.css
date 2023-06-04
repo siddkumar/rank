@@ -1,5 +1,4 @@
 .app-header {
-  /* background-color: #160f29; */
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -17,6 +16,15 @@
   max-width: 960px;
   width: 100%;
   margin: 0 auto;
+}
+
+footer {
+  display: flex;
+  align-items: center;
+  max-width: 960px;
+  width: 100%;
+  margin: 4rem auto;
+  font-family: "Caveat", cursive;
 }
 
 .header-left {
@@ -38,11 +46,16 @@
   color: #160f29;
 }
 
+.header-right .caveat-large {
+  font-family: "Caveat", cursive;
+  font-size: large;
+}
+
 .header-right a {
   color: #160f29;
-  text-transform: uppercase;
   padding-left: 0.5rem;
   padding-right: 0.5rem;
   text-decoration: none;
+  font-family: "Caveat", cursive;
   font-size: large;
 }

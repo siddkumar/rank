@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "../../styles/create.css";
+import "../../styles/home.css";
 import CreateFromExisting from "./fromExisting";
 import { useNavigate } from "react-router-dom";
 
@@ -31,7 +32,8 @@ function Create() {
           <button className="button-styles">Create From Scratch</button>
         </a>
         <div className="main-subtitle">
-          <i className="no-pointer no-left fa-brands fa-wikipedia-w"></i> Import List from Wikipedia 
+          <i className="no-pointer no-left fa-brands fa-wikipedia-w"></i> Import
+          List from Wikipedia
         </div>
         <form onSubmit={handleSubmit}>
           <input

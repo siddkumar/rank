@@ -53,7 +53,7 @@ export async function PostNewTemplate(
   items: string[],
   userEmail?: string
 ) {
-  console.log("requesting")
+  console.log("requesting");
   const db = getFirestore();
   const uniqueArray = Array.from(new Set(items));
 
@@ -63,5 +63,5 @@ export async function PostNewTemplate(
     name: templateName,
   });
 
-  return response.id
+  return response.id;
 }

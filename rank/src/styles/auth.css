@@ -1,0 +1,30 @@
+.auth-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent overlay */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999; /* Make sure it's above other elements */
+}
+
+.auth-container {
+  background-color: #fff; /* Container background color */
+  padding: 20px;
+  border-radius: 8px;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.close-auth {
+  width: 80%;
+}
+
+.auth-title {
+  text-align: center;
+  font-size: x-large;
+}
