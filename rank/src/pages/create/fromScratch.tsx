@@ -1,9 +1,9 @@
-import { getAuth } from "firebase/auth";
 import React, { useState } from "react";
 import { TemplateEditor } from "../../components/templates/templateEditor";
 import { PostNewTemplate } from "../../services/templatesService";
 import "../../styles/create.css";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../components/auth/authProvider";
 
 export enum CreateFromScratchViews {
   CREATE = "create",
@@ -19,11 +19,12 @@ export interface CreateFromScratchProps {
 function CreateFromScratch(props: CreateFromScratchProps) {
   const [view, setView] = useState(CreateFromScratchViews.CREATE);
   const navigate = useNavigate();
+  const auth = useAuth();
 
   const submitTemplate = async (templateName: string, items: string[]) => {
     setView(CreateFromScratchViews.SAVING);
 
-    var email = getAuth().currentUser?.email;
+    var email = auth.email;
     var id = await PostNewTemplate(templateName, items, email ?? "undefined");
     navigate("/rank?templateId=" + id);
   };

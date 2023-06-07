@@ -67,17 +67,20 @@ export async function GetUserIdForEmail(email: string) {
   }
 }
 
-export async function CreateUser(email: string): Promise<void> {
+export async function CreateUser(email: string): Promise<string> {
+  console.log("requesting");
   const db = getFirestore();
   const q = query(collection(db, "users"), where("emailAddress", "==", email));
   const qs = await getDocs(q);
 
   if (qs.size > 0) {
     console.log("User already exists");
-    return;
+    return "User already exists";
   }
 
-  await addDoc(collection(db, "users"), {
+  var res = await addDoc(collection(db, "users"), {
     emailAddress: email,
   });
+
+  return res.id;
 }

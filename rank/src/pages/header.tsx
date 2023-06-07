@@ -1,43 +1,52 @@
-import { onAuthStateChanged } from "firebase/auth";
 import React, { useState } from "react";
 import logo from "../resources/logo.png";
-import { CreateUser } from "../services/userService";
+import { CreateUser, GetUserIdForEmail } from "../services/userService";
 import firebase from "firebase/compat/app";
 import "firebase/compat/firestore";
 import "firebase/compat/auth";
-import { getAuth } from "firebase/auth";
 import { AuthResult } from "../components/auth/authWidget";
 import "../styles/auth.css";
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../components/auth/authProvider";
 
 export interface HeaderProps {}
 
 function Header(props: HeaderProps) {
-  const myAuth = getAuth();
-  const [user, setUser] = useState(myAuth.currentUser);
+  const auth = useAuth();
   const [showAuth, setShowAuth] = useState(false);
   const navigate = useNavigate();
 
-  onAuthStateChanged(myAuth, (user) => {
-    setUser(user);
-  });
+  async function signInWithCredential(authResult: AuthResult) {
+    var id = "";
+    if (authResult.additionalUserInfo.isNewUser) {
+      const email = authResult.additionalUserInfo.profile.email;
+      id = await CreateUser(email);
+    } else {
+      id = await GetUserIdForEmail(authResult.additionalUserInfo.profile.email);
+    }
+    console.log("signing in");
+    auth.saveUserId(id);
+    auth.saveEmail(authResult.additionalUserInfo.profile.email);
+    auth.saveName(authResult.additionalUserInfo.profile.name);
+    setShowAuth(false);
+    return true;
+  }
 
-  var uiConfig = {
+  const SignInSuccessWithAuthResult = (
+    authResult: AuthResult,
+    redirectUrl?: string | undefined
+  ) => {
+    signInWithCredential(authResult).then();
+    return true;
+  };
+
+  const uiConfig = {
     callbacks: {
-      signInSuccessWithAuthResult: function (
+      signInSuccessWithAuthResult: (
         authResult: AuthResult,
-        _redirectUrl: string
-      ) {
-        if (authResult.additionalUserInfo.isNewUser) {
-          const email =
-            authResult.additionalUserInfo.profile.email ??
-            getAuth().currentUser?.email;
-          CreateUser(email);
-        }
-        setShowAuth(false);
-        return true;
-      },
+        redirectUrl?: string
+      ) => SignInSuccessWithAuthResult(authResult, redirectUrl),
     },
     // Will use popup for IDP Providers sign-in flow instead of the default, redirect.
     signInFlow: "popup",
@@ -61,7 +70,7 @@ function Header(props: HeaderProps) {
         <button
           className="button-styles caveat-large"
           onClick={() => {
-            myAuth.signOut();
+            auth.signOut();
             navigate("/");
           }}
         >
@@ -103,7 +112,7 @@ function Header(props: HeaderProps) {
             <h1 className="header-title">rank anything</h1>
           </a>
           <nav className="header-right">
-            {user ? (
+            {auth.id && auth.id.length > 0 ? (
               userView()
             ) : (
               <button

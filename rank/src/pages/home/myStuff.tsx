@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "firebaseui/dist/firebaseui.css";
 import "../../styles/myStuff.css";
-import { Auth, getAuth, onAuthStateChanged, User } from "firebase/auth";
+import { getAuth, onAuthStateChanged, User } from "firebase/auth";
 import { ExistingTemplateStub } from "../../components/templates/templates";
 import {
   RanksList,
