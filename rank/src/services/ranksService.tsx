@@ -38,6 +38,7 @@ export async function UpdateRank(
   userId: string,
   rankName: string
 ) {
+  console.log("requesting")
   await setDoc(doc(db, "ranks", rankId), {
     name: rankName,
     rankedBy: userId,
@@ -53,6 +54,7 @@ export async function PostNewRank(
   userId: string,
   rankName: string
 ): Promise<string> {
+  console.log("requesting")
   var res = await addDoc(collection(db, "ranks"), {
     name: rankName,
     rankedBy: userId,

@@ -17,6 +17,7 @@ interface ParseLinkResponse {
 const prefix = getPrefix();
 
 export async function PostParseLink(wikiLink: string) {
+  console.log("requesting")
   const requestOptions = {
     method: "POST",
     headers: { "Content-Type": "application/json" },
