@@ -5,9 +5,10 @@ import BracketManager from "../../components/brackets/bracketManager";
 import RankableItem from "../../models/RankableItem";
 import { GetTemplateById } from "../../services/templatesService";
 import "../../styles/rank.css";
-import { getAuth } from "firebase/auth";
 import { PostNewRank } from "../../services/ranksService";
 import RankTitle from "../../components/ranker/rankTitle";
+import { useAuth } from "../../components/auth/authProvider";
+import { useDB } from "../../services/dbProvider";
 
 export enum RankViews {
   LOADING = "loading",
@@ -25,15 +26,19 @@ function Rank() {
   const [searchParams] = useSearchParams();
   const templateId = searchParams.get("templateId");
   const [rankId, setRankId] = useState("");
+  const auth = useAuth();
+  const db = useDB().db;
 
   useEffect(() => {
     setView(RankViews.LOADING);
-    GetTemplateById(templateId ?? "").then(({ templateName, rankableList }) => {
-      setRanking(rankableList);
-      setTemplateName(templateName);
-      setRankName(templateName);
-      setView(RankViews.RANKING);
-    });
+    GetTemplateById(db!, templateId ?? "").then(
+      ({ templateName, rankableList }) => {
+        setRanking(rankableList);
+        setTemplateName(templateName);
+        setRankName(templateName);
+        setView(RankViews.RANKING);
+      }
+    );
   }, []);
 
   function save(rankableList: string[]) {
@@ -43,10 +48,8 @@ function Rank() {
         return { name: item, rank: index };
       })
     );
-    const auth = getAuth();
-    const user = auth.currentUser;
-    if (user && templateId) {
-      PostNewRank(rankableList, templateId, user.email ?? "", rankName).then(
+    if (auth.id && templateId) {
+      PostNewRank(db!, rankableList, templateId, auth.id ?? "", rankName).then(
         (response) => {
           setRankId(response);
           setView(RankViews.READY);

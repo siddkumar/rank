@@ -1,4 +1,3 @@
-import { getAuth } from "firebase/auth";
 import React, { useEffect, useState } from "react";
 import { TemplateEditor } from "../../components/templates/templateEditor";
 import {
@@ -9,6 +8,8 @@ import {
 import { PostNewTemplate } from "../../services/templatesService";
 import "../../styles/create.css";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import { useAuth } from "../../components/auth/authProvider";
+import { useDB } from "../../services/dbProvider";
 
 export enum FromLinkViews {
   ENTER = "enter",
@@ -30,6 +31,8 @@ export function CreateFromLink() {
   const [chosenTableName, setChosenTableName] = useState("");
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
+  const auth = useAuth();
+  const db = useDB().db;
 
   useEffect(() => {
     const link = searchParams.get("link");
@@ -59,8 +62,13 @@ export function CreateFromLink() {
 
   const submitTemplate = async (templateName: string, items: string[]) => {
     setView(FromLinkViews.WAITING);
-    var email = getAuth().currentUser?.email ?? undefined;
-    var id = await PostNewTemplate(templateName, items, email ?? "undefined");
+    var email = auth.email ?? undefined;
+    var id = await PostNewTemplate(
+      db!,
+      templateName,
+      items,
+      email ?? "undefined"
+    );
     navigate("/rank?templateId=" + id);
   };
 

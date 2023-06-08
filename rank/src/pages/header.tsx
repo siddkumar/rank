@@ -9,6 +9,7 @@ import "../styles/auth.css";
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../components/auth/authProvider";
+import { useDB } from "../services/dbProvider";
 
 export interface HeaderProps {}
 
@@ -16,14 +17,18 @@ function Header(props: HeaderProps) {
   const auth = useAuth();
   const [showAuth, setShowAuth] = useState(false);
   const navigate = useNavigate();
+  const db = useDB().db;
 
   async function signInWithCredential(authResult: AuthResult) {
     var id = "";
     if (authResult.additionalUserInfo.isNewUser) {
       const email = authResult.additionalUserInfo.profile.email;
-      id = await CreateUser(email);
+      id = await CreateUser(db!, email);
     } else {
-      id = await GetUserIdForEmail(authResult.additionalUserInfo.profile.email);
+      id = await GetUserIdForEmail(
+        db!,
+        authResult.additionalUserInfo.profile.email
+      );
     }
     console.log("signing in");
     auth.saveUserId(id);

@@ -19,7 +19,10 @@ function ListRanker(props: ListRankerProps) {
   const defaultList = props.rankableList.map((rankableItem) => {
     return rankableItem.name;
   });
-  const [blobList, setBloblist] = useState(defaultList);
+  const uniqueList: string[] = defaultList.filter((value, index, array) => {
+    return array.indexOf(value) === index;
+  });
+  const [blobList, setBloblist] = useState(uniqueList);
 
   return (
     <>
@@ -32,7 +35,7 @@ function ListRanker(props: ListRankerProps) {
               ref={provided.innerRef}
             >
               {blobList.map((item, index) => (
-                <Draggable key={item + index} draggableId={item} index={index}>
+                <Draggable key={item} draggableId={item} index={index}>
                   {(provided) => (
                     <>
                       <div

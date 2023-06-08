@@ -9,8 +9,9 @@ import {
   UpdateRank,
 } from "../../services/ranksService";
 import ListRanker from "../../components/ranker/listRanker";
-import { getAuth } from "firebase/auth";
 import RankTitle from "../../components/ranker/rankTitle";
+import { useAuth } from "../../components/auth/authProvider";
+import { useDB } from "../../services/dbProvider";
 
 function RankEdit() {
   const [view, setView] = useState(RankViews.LOADING);
@@ -19,10 +20,12 @@ function RankEdit() {
   const [ranking, setRanking] = useState<RankableItem[]>([]);
   const [rankName, setRankName] = useState("");
   const [templateId, setTemplateId] = useState("");
+  const auth = useAuth();
+  const db = useDB().db;
 
   useEffect(() => {
     setView(RankViews.LOADING);
-    GetRankById(id ?? "").then(({ bloblist, templateId, rankName }) => {
+    GetRankById(db!, id ?? "").then(({ bloblist, templateId, rankName }) => {
       setRanking(bloblist);
       setRankName(rankName);
       setTemplateId(templateId);
@@ -44,11 +47,10 @@ function RankEdit() {
         return { name: item, rank: index + 1 };
       })
     );
-    const auth = getAuth();
-    const user = auth.currentUser;
-    if (user) {
+
+    if (auth.id) {
       if (id) {
-        UpdateRank(id, rankableList, templateId, user.email ?? "", rankName);
+        UpdateRank(db!, id, rankableList, templateId, auth.id ?? "", rankName);
       } else {
         console.log("error, ranking DNE, save as first");
       }
@@ -63,10 +65,8 @@ function RankEdit() {
         return { name: item, rank: index + 1 };
       })
     );
-    const auth = getAuth();
-    const user = auth.currentUser;
-    if (user) {
-      PostNewRank(rankableList, templateId, user.email ?? "", rankName).then(
+    if (auth.id) {
+      PostNewRank(db!, rankableList, templateId, auth.id ?? "", rankName).then(
         (response) => console.log("saved")
       );
     } else {

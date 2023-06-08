@@ -1,25 +1,16 @@
 import { ExistingTemplateStub } from "../components/templates/templates";
 import { ExistingRankStub } from "../pages/rank/ranks";
 import {
+  Firestore,
   addDoc,
   collection,
   getDocs,
-  getFirestore,
   query,
   where,
 } from "firebase/firestore";
 
-export async function GetTemplatesForUser(
-  email: string
-): Promise<ExistingTemplateStub[]> {
+export async function GetTemplatesForUserId(db: Firestore, userId: string) {
   console.log("requesting");
-  var userId = await GetUserIdForEmail(email);
-  return await GetTemplatesForUserId(userId);
-}
-
-export async function GetTemplatesForUserId(userId: string) {
-  console.log("requesting");
-  const db = getFirestore();
   const q = query(
     collection(db, "templates"),
     where("createdBy", "==", userId)
@@ -34,9 +25,8 @@ export async function GetTemplatesForUserId(userId: string) {
   return stubList;
 }
 
-export async function GetRanksForUserId(userId: string) {
+export async function GetRanksForUserId(db: Firestore, userId: string) {
   console.log("requesting");
-  const db = getFirestore();
   const q = query(collection(db, "ranks"), where("rankedBy", "==", userId));
   const qs = await getDocs(q);
 
@@ -48,16 +38,8 @@ export async function GetRanksForUserId(userId: string) {
   return stubList;
 }
 
-export async function GetRanksForUser(
-  email: string
-): Promise<ExistingRankStub[]> {
-  var userId = await GetUserIdForEmail(email);
-  return await GetRanksForUserId(userId);
-}
-
-export async function GetUserIdForEmail(email: string) {
+export async function GetUserIdForEmail(db: Firestore, email: string) {
   console.log("requesting");
-  const db = getFirestore();
   const q = query(collection(db, "users"), where("emailAddress", "==", email));
   const qs = await getDocs(q);
   if (qs.size > 0) {
@@ -67,9 +49,11 @@ export async function GetUserIdForEmail(email: string) {
   }
 }
 
-export async function CreateUser(email: string): Promise<string> {
+export async function CreateUser(
+  db: Firestore,
+  email: string
+): Promise<string> {
   console.log("requesting");
-  const db = getFirestore();
   const q = query(collection(db, "users"), where("emailAddress", "==", email));
   const qs = await getDocs(q);
 
