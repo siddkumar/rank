@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "firebaseui/dist/firebaseui.css";
 import "../../styles/myStuff.css";
-import { Auth, getAuth, onAuthStateChanged, User } from "firebase/auth";
 import { ExistingTemplateStub } from "../../components/templates/templates";
 import {
   RanksList,
@@ -9,9 +8,11 @@ import {
 } from "../../components/templates/templatesList";
 import { ExistingRankStub } from "../rank/ranks";
 import {
-  GetRanksForUser,
-  GetTemplatesForUser,
+  GetRanksForUserId,
+  GetTemplatesForUserId,
 } from "../../services/userService";
+import { useAuth } from "../../components/auth/authProvider";
+import { useDB } from "../../services/dbProvider";
 
 enum MyStuffViews {
   SignIn = "SignIn",
@@ -20,35 +21,29 @@ enum MyStuffViews {
 }
 
 function MyStuff() {
-  const auth = getAuth();
-  const [existingUser, setUser] = useState<User | null>(null);
+  const auth = useAuth();
   const [stubs, setStubs] = useState<ExistingTemplateStub[]>([]);
   const [hasRequestedTemplates, setHasRequestedTemplates] = useState(false);
   const [ranks, setRanks] = useState<ExistingRankStub[]>([]);
   const [view, setView] = useState<MyStuffViews>(MyStuffViews.SignIn);
+  const db = useDB().db;
 
   useEffect(() => {
-    if (!hasRequestedTemplates && stubs.length === 0 && existingUser) {
+    if (!hasRequestedTemplates && stubs.length === 0 && auth.id) {
       // get templates
       setHasRequestedTemplates(true);
-      GetTemplatesForUser(existingUser.email!).then((res) =>
+      GetTemplatesForUserId(db!, auth.id!).then((res) =>
         setStubs(res.sort((a, b) => a.name.localeCompare(b.name)))
       );
 
       // get ranks
-      GetRanksForUser(existingUser.email!).then((res) =>
+      GetRanksForUserId(db!, auth.id!).then((res) =>
         setRanks(res.sort((a, b) => a.name.localeCompare(b.name)))
       );
-      setView(MyStuffViews.Loaded);
-    }
-  }, [existingUser, hasRequestedTemplates, stubs.length]);
 
-  onAuthStateChanged(auth, (user) => {
-    if (user && !existingUser) {
       setView(MyStuffViews.Loaded);
-      setUser(user);
     }
-  });
+  }, [auth.email, auth.id, db, hasRequestedTemplates, stubs.length]);
 
   function renderMyStuff() {
     return (

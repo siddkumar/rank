@@ -1,18 +1,16 @@
 import RankableItem from "../models/RankableItem";
 
 import {
+  Firestore,
   addDoc,
   collection,
   doc,
   getDoc,
-  getFirestore,
   setDoc,
 } from "firebase/firestore";
-import { GetUserIdForEmail } from "./userService";
 
-export async function GetRankById(id: string) {
+export async function GetRankById(db: Firestore, id: string) {
   console.log("requesting");
-  const db = getFirestore();
   const docRef = doc(db, "ranks", id);
   const docSnap = await getDoc(docRef);
   var bloblist: RankableItem[] = [];
@@ -33,15 +31,14 @@ export async function GetRankById(id: string) {
 }
 
 export async function UpdateRank(
+  db: Firestore,
   rankId: string,
   ranking: string[],
   templateId: string,
-  userEmail: string,
+  userId: string,
   rankName: string
 ) {
-  const db = getFirestore();
-  var userId = await GetUserIdForEmail(userEmail);
-
+  console.log("requesting");
   await setDoc(doc(db, "ranks", rankId), {
     name: rankName,
     rankedBy: userId,
@@ -51,13 +48,13 @@ export async function UpdateRank(
 }
 
 export async function PostNewRank(
+  db: Firestore,
   ranking: string[],
   templateId: string,
-  userEmail: string,
+  userId: string,
   rankName: string
 ): Promise<string> {
-  const db = getFirestore();
-  var userId = await GetUserIdForEmail(userEmail);
+  console.log("requesting");
   var res = await addDoc(collection(db, "ranks"), {
     name: rankName,
     rankedBy: userId,
