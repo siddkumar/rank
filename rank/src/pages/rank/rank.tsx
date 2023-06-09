@@ -39,7 +39,7 @@ function Rank() {
         setView(RankViews.RANKING);
       }
     );
-  }, []);
+  }, [db, templateId]);
 
   function save(rankableList: string[]) {
     setView(RankViews.SAVING);

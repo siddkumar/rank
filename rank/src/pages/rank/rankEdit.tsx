@@ -31,7 +31,7 @@ function RankEdit() {
       setTemplateId(templateId);
       setView(RankViews.RANKING);
     });
-  }, [id]);
+  }, [db, id]);
 
   function loadingView() {
     return (

@@ -44,7 +44,7 @@ export function CreateFromLink() {
         setWikiLink(link);
       });
     }
-  }, []);
+  }, [searchParams]);
 
   const onChangeWikiLink = (event: {
     target: { value: React.SetStateAction<string> };
