@@ -20,7 +20,6 @@ function Header(props: HeaderProps) {
   const db = useDB().db;
 
   async function signInWithCredential(authResult: AuthResult) {
-    console.log(authResult);
     var id = "";
     if (authResult.additionalUserInfo.isNewUser) {
       const email = authResult.additionalUserInfo.profile.email;
