@@ -4,6 +4,7 @@ import {
   Firestore,
   addDoc,
   collection,
+  deleteDoc,
   doc,
   getDoc,
   setDoc,
@@ -62,4 +63,12 @@ export async function PostNewRank(
     ranking: ranking,
   });
   return res.id;
+}
+
+export async function DeleteRank(
+  db: Firestore,
+  id : string
+) {
+  console.log("requesting");
+  await deleteDoc(doc(db, "ranks", id));
 }
