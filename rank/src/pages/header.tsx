@@ -20,6 +20,7 @@ function Header(props: HeaderProps) {
   const db = useDB().db;
 
   async function signInWithCredential(authResult: AuthResult) {
+    console.log(authResult);
     var id = "";
     if (authResult.additionalUserInfo.isNewUser) {
       const email = authResult.additionalUserInfo.profile.email;
@@ -53,12 +54,13 @@ function Header(props: HeaderProps) {
         redirectUrl?: string
       ) => SignInSuccessWithAuthResult(authResult, redirectUrl),
     },
+    
     // Will use popup for IDP Providers sign-in flow instead of the default, redirect.
     signInFlow: "popup",
     signInOptions: [
       // Leave the lines as is for the providers you want to offer your users.
       firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-      firebase.auth.EmailAuthProvider.PROVIDER_ID,
+      // firebase.auth.EmailAuthProvider.PROVIDER_ID,
     ],
   };
 
