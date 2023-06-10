@@ -20,7 +20,11 @@ export async function GetTemplatesForUserId(db: Firestore, userId: string) {
   var stubList = [] as ExistingTemplateStub[];
   qs.forEach((doc) => {
     var template = doc.data();
-    stubList.push({ id: doc.id, name: template.name });
+    stubList.push({
+      id: doc.id,
+      name: template.name,
+      images: template?.images ?? [],
+    });
   });
   return stubList;
 }

@@ -25,6 +25,15 @@ export function TemplatesList(props: TemplatesListProps) {
             href={"/rank?templateId=" + stub.id}
           >
             {stub.name}
+            {stub.images.length > 2 ? (
+              <div key={stub.id} className="controls">
+                <img src={stub.images[0]} alt={"i"} className="glyph-stub" />
+                <img src={stub.images[1]} alt={"i"} className="glyph-stub" />
+                <img src={stub.images[2]} alt={"i"} className="glyph-stub" />
+              </div>
+            ) : (
+              <></>
+            )}
           </a>
         );
       })}

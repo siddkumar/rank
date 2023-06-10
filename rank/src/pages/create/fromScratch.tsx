@@ -23,15 +23,19 @@ function CreateFromScratch(props: CreateFromScratchProps) {
   const auth = useAuth();
   const db = useDB().db;
 
-  const submitTemplate = async (templateName: string, items: string[]) => {
+  const submitTemplate = async (
+    templateName: string,
+    items: string[],
+    images?: string[]
+  ) => {
     setView(CreateFromScratchViews.SAVING);
 
-    var email = auth.email;
     var id = await PostNewTemplate(
       db!,
       templateName,
       items,
-      email ?? "undefined"
+      auth?.id ?? "unknownId",
+      images
     );
     navigate("/rank?templateId=" + id);
   };

@@ -43,7 +43,7 @@ export default function TemplateIconSetter(props: TemplateIconSetterProps) {
         onClick={(e) => {
           setView(TemplateIconSetterViews.TextInputBox);
         }}
-        className="fa-regular fa-image"
+        className="fa-regular fa-image no-left"
       ></i>
     );
   }
