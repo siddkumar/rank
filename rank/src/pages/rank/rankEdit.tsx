@@ -41,16 +41,18 @@ function RankEdit() {
     );
   }
 
-  function save(rankableList: string[]) {
-    setRanking(
-      rankableList.map<RankableItem>((item, index) => {
-        return { name: item, rank: index + 1 };
-      })
-    );
-
+  function save(rankableList: RankableItem[]) {
     if (auth.id) {
       if (id) {
-        UpdateRank(db!, id, rankableList, templateId, auth.id ?? "", rankName);
+        UpdateRank(
+          db!,
+          id,
+          rankableList.map((item) => item.name),
+          rankableList.map((item) => (item.imageUrl ? item.imageUrl : "")),
+          templateId,
+          auth.id ?? "",
+          rankName
+        );
       } else {
         console.log("error, ranking DNE, save as first");
       }
@@ -59,16 +61,16 @@ function RankEdit() {
     }
   }
 
-  function saveAs(rankableList: string[]) {
-    setRanking(
-      rankableList.map<RankableItem>((item, index) => {
-        return { name: item, rank: index + 1 };
-      })
-    );
+  function saveAs(rankableList: RankableItem[]) {
     if (auth.id) {
-      PostNewRank(db!, rankableList, templateId, auth.id ?? "", rankName).then(
-        (response) => console.log("saved")
-      );
+      PostNewRank(
+        db!,
+        rankableList.map((item) => item.name),
+        rankableList.map((item) => (item.imageUrl ? item.imageUrl : "")),
+        templateId,
+        auth.id ?? "",
+        rankName
+      ).then((response) => console.log("saved"));
     } else {
       console.log("error, not signed in"); // TODO surface
     }

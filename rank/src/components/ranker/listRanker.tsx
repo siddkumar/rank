@@ -11,18 +11,16 @@ import { RankableRow } from "./rankableRow";
 export interface ListRankerProps {
   rankableList: RankableItem[];
   templateId: string;
-  onSave: (rankableStrings: string[]) => void;
-  onSaveAs?: (rankableStrings: string[]) => void;
+  onSave: (rankableStrings: RankableItem[]) => void;
+  onSaveAs?: (rankableStrings: RankableItem[]) => void;
 }
 
 function ListRanker(props: ListRankerProps) {
-  const defaultList = props.rankableList.map((rankableItem) => {
-    return rankableItem.name;
-  });
-  const uniqueList: string[] = defaultList.filter((value, index, array) => {
-    return array.indexOf(value) === index;
-  });
-  const [blobList, setBloblist] = useState(uniqueList);
+  const defaultList = props.rankableList;
+  const uniqueList = defaultList.filter(
+    (obj, index, self) => index === self.findIndex((o) => o.name === obj.name)
+  );
+  const [blobList, setBloblist] = useState<RankableItem[]>(uniqueList);
 
   return (
     <>
@@ -35,7 +33,11 @@ function ListRanker(props: ListRankerProps) {
               ref={provided.innerRef}
             >
               {blobList.map((item, index) => (
-                <Draggable key={item} draggableId={item} index={index}>
+                <Draggable
+                  key={item.name}
+                  draggableId={item.name}
+                  index={index}
+                >
                   {(provided) => (
                     <>
                       <div
@@ -46,7 +48,8 @@ function ListRanker(props: ListRankerProps) {
                       >
                         <RankableRow
                           index={index}
-                          item={item}
+                          item={item.name}
+                          imageUrl={item.imageUrl}
                           onDown={() => moveItem(index, index + 1)}
                           onUp={() => moveItem(index, index - 1)}
                           onTop={() => moveItem(index, 0)}

@@ -14,7 +14,11 @@ export async function GetTemplateById(db: Firestore, templateId: string) {
     var templateDoc = docSnap.data();
     rankableList = (templateDoc.items as string[]).map<RankableItem>(
       (item, i) => {
-        return { name: item, rank: i };
+        return {
+          name: item,
+          rank: i,
+          imageUrl: templateDoc?.images ? templateDoc.images[i] : null,
+        };
       }
     );
     templateName = templateDoc.name;
@@ -26,10 +30,10 @@ export async function GetTemplateById(db: Firestore, templateId: string) {
 
 export async function GetTemplatesList() {
   const stubList: { id: string; name: string }[] = [
-    { id: "JfqDJOqlOHGl50Cpx7bs", name: "NBA Teams" },
-    { id: "Pr0cSbzqpNa7IQAOv3Rs", name: "Harry Potter Books" },
+    { id: "pesDeP9wt6ARYCtlz7u8", name: "Movie Musicals" },
+    { id: "euqt0Z2MFaXX4yC526aT", name: "Harry Potter Books" },
     { id: "WaLG70rtXb9HjxunAI4f", name: "States in US" },
-    { id: "i3Haj4404KFsRhqIKwx6", name: "Taylor Swift Studio Albums" },
+    { id: "Qtxrj5ioTxLjv32uBN5o", name: "Taylor Swift Albums" },
     {
       id: "qPQo68TrymdhKZMHwEs0",
       name: "Academy Award Nominees of the 2010's",
@@ -44,7 +48,8 @@ export async function PostNewTemplate(
   db: Firestore,
   templateName: string,
   items: string[],
-  userEmail: string
+  userEmail: string,
+  images?: string[]
 ) {
   console.log("requesting");
   const uniqueArray = Array.from(new Set(items));
@@ -53,6 +58,7 @@ export async function PostNewTemplate(
     createdBy: userEmail,
     items: uniqueArray,
     name: templateName,
+    images: images,
   });
 
   return response.id;

@@ -1,5 +1,6 @@
 # Required Imports
 import re
+from urllib.parse import urljoin
 import requests
 from flask import Flask, request, jsonify
 from flask_cors import CORS
@@ -9,6 +10,25 @@ from bs4 import BeautifulSoup
 app = Flask(__name__)
 cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
+
+@app.route("/parser/getImgUrl", methods=['GET'] )
+def getImgUrl(): 
+    url = request.args.get("url")
+    base_url = 'https://en.wikipedia.org'
+    full_url = urljoin(base_url, url)
+    response = requests.get(full_url)
+    soup = BeautifulSoup(response.text, 'html.parser')
+
+    thumbnail_urls = []
+    infobox = soup.find('table', class_='infobox')
+    if infobox:
+        thumbnail_img = infobox.find('img')
+        if thumbnail_img:
+            thumbnail_url = thumbnail_img['src']
+            thumbnail_urls.append(thumbnail_url)
+
+    return thumbnail_urls
+
 
 @app.route("/parser/parseLink", methods=['POST'])
 def parse():
@@ -26,7 +46,6 @@ def parse():
                 if(e.has_attr('class') and "wikitable" in e["class"]):
                     rows, numRows, numCols = pre_process_table(e)
                     cols = []
-
                     colNames = []
                     maxRow = 1
                     for j, cell in enumerate(rows[0].find_all(['td', 'th'])):
@@ -37,7 +56,8 @@ def parse():
                             colNames.append(clean_string(cell.text))
                             potentialTemplate = {
                                 u'templateName': clean_string(cell.text),
-                                u'templateItems': []
+                                u'templateItems': [],
+                                u'templateItemLinks': []
                             }
                             cols.append(potentialTemplate)
 
@@ -47,15 +67,21 @@ def parse():
                         column_span_starter = 0
                         for j, cell in enumerate(rows[r].find_all(['td', 'th'])):
                             rep_row, rep_col = get_spans(cell)
+                            aTag = cell.find('a')
+                            link = ""
+                            if (aTag):
+                                link = aTag.get('href')
+                            
                             row.append(
                                 {'rowSize': rep_row, 'colSize': rep_col, 'text': clean_string(
-                                    cell.text), 'colSpanStarter': column_span_starter}
+                                    cell.text), 'link': link, 'colSpanStarter': column_span_starter}
                             )
                             column_span_starter += rep_col
                         stuffs.append(row)
 
                     for c in range(numCols):
                         items = []
+                        images = []
                         r = 0
                         while r < len(stuffs):
                             if (len(stuffs[r]) == 0):
@@ -64,8 +90,10 @@ def parse():
                             i = stuffs[r]
                             popped = i.pop(0)
                             items.append(popped['text'])
+                            images.append(popped['link'])
                             r += popped['rowSize']
                         cols[c]['templateItems'] = items
+                        cols[c]['templateItemLinks'] = images
                     tableTuple = {
                         u'tableName': likelyTableName,
                         u'potentialTemplates': cols
@@ -82,6 +110,8 @@ def parse():
         return jsonify(data), 200
     except Exception as e:
         return f"An Error Occured:{e}"
+    
+
 
 
 def clean_string(s):
