@@ -38,7 +38,7 @@ export async function GetTemplatesList() {
       id: "qPQo68TrymdhKZMHwEs0",
       name: "Academy Award Nominees of the 2010's",
     },
-    { id: "PAV866AtMDBYOtmktbpp", name: "Men's Tenins Players (All Time)" },
+    { id: "PAV866AtMDBYOtmktbpp", name: "Men's Tennis Players (All Time)" },
   ];
 
   return stubList;
