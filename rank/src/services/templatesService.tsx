@@ -38,7 +38,7 @@ export async function GetTemplatesList() {
       id: "qPQo68TrymdhKZMHwEs0",
       name: "Academy Award Nominees of the 2010's",
     },
-    { id: "vhvJrQSalht2NWTIefng", name: "NFL Teams" },
+    { id: "PAV866AtMDBYOtmktbpp", name: "Men's Tenins Players (All Time)" },
   ];
 
   return stubList;
@@ -58,7 +58,7 @@ export async function PostNewTemplate(
     createdBy: userEmail,
     items: uniqueArray,
     name: templateName,
-    images: images,
+    images: images ?? [],
   });
 
   return response.id;

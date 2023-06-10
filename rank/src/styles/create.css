@@ -123,3 +123,7 @@ input[type="password"] {
   align-items: center;
   justify-content: center;
 }
+
+.template-item-text-input {
+  margin-left: 1rem;
+}

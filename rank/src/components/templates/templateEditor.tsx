@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { GetImgSrc } from "../../services/parserService";
+import TemplateIconSetter from "./templateIconSetter";
 
 interface TemplateEditorProps {
   initialName: string;
   initialItems: string[];
   onSubmit: (name: string, items: string[], images?: string[]) => void;
-
   initialHelperLinks?: string[];
 }
 
-interface ItemCandidate {
+export interface ItemCandidate {
   title: string;
   helper?: string;
   image: string;
@@ -87,32 +87,12 @@ export function TemplateEditor(props: TemplateEditorProps) {
     setCursorMover(Math.max(0, position - 1));
   };
 
-  function pullImage(item: ItemCandidate, index: number) {
-    GetImgSrc(item.helper!).then((s) => {
-      console.log(s);
-      setItems([
-        ...items.slice(0, index),
-        { title: item.title, image: s ?? "", helper: item.helper! },
-        ...items.slice(index + 1),
-      ]);
-    });
-  }
-
-  function MiniPic(item: ItemCandidate, index: number) {
-    if (item.image) {
-      return <img src={item.image} alt={"i"} className="glyph" />;
-    }
-
-    if (item.helper) {
-      return (
-        <i
-          onClick={(e) => pullImage(item, index)}
-          className="fa-solid fa-file-arrow-down"
-        ></i>
-      );
-    } else {
-      return <></>;
-    }
+  function saveImage(item: ItemCandidate, index: number, url: string) {
+    setItems([
+      ...items.slice(0, index),
+      { title: item.title, image: url ?? "", helper: item.helper! },
+      ...items.slice(index + 1),
+    ]);
   }
 
   async function pullImages() {
@@ -151,8 +131,7 @@ export function TemplateEditor(props: TemplateEditorProps) {
       {props.initialHelperLinks ? GetAllPics() : <></>}
       <div className="main-subtitle">Rankable Items:</div>
       {items.map((item, i) => (
-        <div key={i + "div-key"} className="row">
-          {MiniPic(item, i)}
+        <div key={i + "div-key"} className="row template-row">
           <input
             id={i + "-key"}
             key={i + "-key"}
@@ -162,8 +141,15 @@ export function TemplateEditor(props: TemplateEditorProps) {
             onChange={(e) => handleUserInputChange(e, i)}
             onKeyDown={(e) => handleKeyDown(e, i, item.title)}
           ></input>
+          <TemplateIconSetter
+            item={item}
+            index={i}
+            onSave={(s: string) => {
+              saveImage(item, i, s);
+            }}
+          />
           <div key={i + "-button-key"} onClick={(e) => removeItem(i)}>
-            <i className="fa-solid fa-trash icon-override"></i>
+            <i className="fa-solid fa-trash"></i>
           </div>
         </div>
       ))}
@@ -172,7 +158,7 @@ export function TemplateEditor(props: TemplateEditorProps) {
           props.onSubmit(
             templateName,
             items.map((i) => i.title),
-            items.map((i) => i.image)
+            items.map((i) => i.image ?? "")
           )
         }
         className="button-styles done-button"
