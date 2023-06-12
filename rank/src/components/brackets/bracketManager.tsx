@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import RankableItem, { RankableDefaultString } from "../../models/RankableItem";
 import "../../styles/bracket.css";
 import BracketRound from "./bracketRound";
@@ -64,7 +64,18 @@ function BracketManager(props: BracketManagerProps) {
   const [roundByRound, setRoundByRound] = useState(seedsPerRound);
   const [winner, setWinner] = useState<string | null>(null);
   const [mobileRoundView, setRoundView] = useState(0);
-  const [view, setView] = useState(BracketViews.DESKTOP);
+
+  const width = window.innerWidth;
+  var defaultView = BracketViews.TABLET;
+  if (width >= 1024) {
+    defaultView = BracketViews.DESKTOP;
+  } else if (width >= 768) {
+    defaultView = BracketViews.TABLET;
+  } else {
+    defaultView = BracketViews.MOBILE;
+  }
+
+  const [view, setView] = useState(defaultView);
 
   function advance(psuedoSeed: number, i: RankableItem, round: number) {
     if (round + 1 === roundByRound.length) {
@@ -114,10 +125,7 @@ function BracketManager(props: BracketManagerProps) {
   ) {
     return (
       <div className="bracket-container">
-        {rounds.map((item, index) => {
-          if (index < startIdx || index > endIdx) {
-            return <></>;
-          }
+        {rounds.slice(startIdx, endIdx + 1).map((item, index) => {
           return (
             <BracketRound
               key={index}
@@ -189,7 +197,7 @@ function BracketManager(props: BracketManagerProps) {
           rounds,
           currentRound - 1,
           currentRound + 1,
-          currentRound == rounds.length - 1
+          currentRound === rounds.length - 1
         )}
         <button
           className="next-button"
