@@ -61,11 +61,20 @@ export function RanksList(props: RanksListProps) {
         return (
           <div className="item-container card row" key={stub.id}>
             <a
-              className="template-link"
+              className="template-link row"
               key={stub.id}
               href={"/rank/edit?id=" + stub.id}
             >
-              {stub.name}
+              {stub.name}{" "}
+              {stub.images.length > 2 ? (
+              <div key={stub.id} className="controls-rank">
+                <img src={stub.images[0]} alt={"i"} className="glyph-stub" />
+                <img src={stub.images[1]} alt={"i"} className="glyph-stub" />
+                <img src={stub.images[2]} alt={"i"} className="glyph-stub" />
+              </div>
+            ) : (
+              <></>
+            )}
             </a>
             <i
               onClick={(e) => deleteRank(stub, i, db!)}

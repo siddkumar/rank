@@ -23,7 +23,6 @@ function MiniPic(url: string | null) {
 }
 
 export function RankableRow(props: RankableRowProps) {
-  console.log(props.imageUrl);
   return (
     <>
       <div className="rankable-row-left">
