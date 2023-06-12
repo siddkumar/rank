@@ -1,10 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import RankableItem, { RankableDefaultString } from "../../models/RankableItem";
 import "../../styles/bracket.css";
 import BracketRound from "./bracketRound";
 
 export interface BracketManagerProps {
   bracketItems: RankableItem[];
+}
+
+enum BracketViews {
+  MOBILE = "mobile",
+  TABLET = "tablet",
+  DESKTOP = "desktop",
 }
 
 function BracketManager(props: BracketManagerProps) {
@@ -57,6 +63,19 @@ function BracketManager(props: BracketManagerProps) {
 
   const [roundByRound, setRoundByRound] = useState(seedsPerRound);
   const [winner, setWinner] = useState<string | null>(null);
+  const [mobileRoundView, setRoundView] = useState(0);
+
+  const width = window.innerWidth;
+  var defaultView = BracketViews.TABLET;
+  if (width >= 1024) {
+    defaultView = BracketViews.DESKTOP;
+  } else if (width >= 768) {
+    defaultView = BracketViews.TABLET;
+  } else {
+    defaultView = BracketViews.MOBILE;
+  }
+
+  const [view, setView] = useState(defaultView);
 
   function advance(psuedoSeed: number, i: RankableItem, round: number) {
     if (round + 1 === roundByRound.length) {
@@ -98,10 +117,15 @@ function BracketManager(props: BracketManagerProps) {
     }
   });
 
-  return (
-    <div>
+  function renderDesktopView(
+    rounds: any[],
+    startIdx = 0,
+    endIdx = rounds.length,
+    showTrophy = true
+  ) {
+    return (
       <div className="bracket-container">
-        {rounds.map((item, index) => {
+        {rounds.slice(startIdx, endIdx + 1).map((item, index) => {
           return (
             <BracketRound
               key={index}
@@ -112,15 +136,103 @@ function BracketManager(props: BracketManagerProps) {
             />
           );
         })}
-        <div className="round-container">
-          <div className="item-container card row">
-            {winner ?? RankableDefaultString}
-            <div className="controls">
-              <i className="fa-solid fa-trophy"></i>
+        {showTrophy && (
+          <div className="round-container">
+            <div className="item-container card row">
+              {winner ?? RankableDefaultString}
+              <div className="controls">
+                <i className="fa-solid fa-trophy"></i>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  function renderMobileView(rounds: any[], currentRound: number) {
+    if (currentRound === rounds.length) {
+      return (
+        <div className="mobile-bracket-container">
+          <button
+            className="previous-button"
+            onClick={(e) => setRoundView(Math.max(currentRound - 1, 0))}
+          ></button>
+          <div className="round-container">
+            <div className="item-container card row">
+              {winner ?? RankableDefaultString}
+              <div className="controls">
+                <i className="fa-solid fa-trophy"></i>
+              </div>
             </div>
           </div>
         </div>
+      );
+    }
+    return (
+      <div className="mobile-bracket-container">
+        <button
+          className="previous-button"
+          onClick={(e) => setRoundView(Math.max(currentRound - 1, 0))}
+        ></button>
+        {renderDesktopView(rounds, currentRound, currentRound, false)}
+        <button
+          className="next-button"
+          onClick={(e) =>
+            setRoundView(Math.min(currentRound + 1, rounds.length))
+          }
+        ></button>
       </div>
+    );
+  }
+
+  function renderTabletView(rounds: any[], currentRound: number) {
+    return (
+      <div className="mobile-bracket-container">
+        <button
+          className="previous-button"
+          onClick={(e) => setRoundView(Math.max(currentRound - 1, 1))}
+        ></button>
+        {renderDesktopView(
+          rounds,
+          currentRound - 1,
+          currentRound + 1,
+          currentRound === rounds.length - 1
+        )}
+        <button
+          className="next-button"
+          onClick={(e) =>
+            setRoundView(Math.min(currentRound + 1, rounds.length - 1))
+          }
+        ></button>
+      </div>
+    );
+  }
+
+  return (
+    <div>
+      <div className="row card container caveat">
+        <div>
+          Switch View
+          <i
+            onClick={(e) => setView(BracketViews.DESKTOP)}
+            className="fa-solid fa-desktop"
+          ></i>
+          <i
+            onClick={(e) => setView(BracketViews.TABLET)}
+            className="fa-solid fa-tablet-screen-button"
+          ></i>
+          <i
+            onClick={(e) => setView(BracketViews.MOBILE)}
+            className="fa-solid fa-mobile-screen-button"
+          ></i>
+        </div>
+      </div>
+      {view === BracketViews.DESKTOP && renderDesktopView(rounds)}
+      {view === BracketViews.TABLET &&
+        renderTabletView(rounds, Math.max(mobileRoundView, 1))}
+      {view === BracketViews.MOBILE &&
+        renderMobileView(rounds, mobileRoundView)}
     </div>
   );
 }

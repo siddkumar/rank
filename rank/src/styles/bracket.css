@@ -10,6 +10,7 @@
   padding-right: 0.5rem;
   padding-left: 0.5rem;
   justify-content: space-around;
+  flex-grow: 1;
 }
 
 .bracket-container {
@@ -24,4 +25,51 @@
 
 .bg-odd {
   background-color: #eceff1;
+}
+
+.mobile-bracket-container {
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+}
+
+.previous-button,
+.next-button {
+  background: transparent;
+  border: none;
+  background-color: rgba(0, 0, 0, 0.1);
+  color: #888;
+  cursor: pointer;
+  transition: color 0.3s;
+  width: 3rem;
+  text-decoration: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.previous-button:hover,
+.next-button:hover {
+  color: #555;
+}
+
+.previous-button::before,
+.next-button::before {
+  content: "";
+  display: block;
+  width: 0;
+  height: 0;
+  border-style: solid;
+}
+
+.previous-button::before {
+  border-width: 8px 12px 8px 0;
+  border-color: transparent #888 transparent transparent;
+  margin-right: 5px;
+}
+
+.next-button::before {
+  border-width: 8px 0 8px 12px;
+  border-color: transparent transparent transparent #888;
+  margin-left: 5px;
 }

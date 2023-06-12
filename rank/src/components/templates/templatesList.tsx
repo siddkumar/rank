@@ -67,14 +67,14 @@ export function RanksList(props: RanksListProps) {
             >
               {stub.name}{" "}
               {stub.images.length > 2 ? (
-              <div key={stub.id} className="controls-rank">
-                <img src={stub.images[0]} alt={"i"} className="glyph-stub" />
-                <img src={stub.images[1]} alt={"i"} className="glyph-stub" />
-                <img src={stub.images[2]} alt={"i"} className="glyph-stub" />
-              </div>
-            ) : (
-              <></>
-            )}
+                <div key={stub.id} className="controls-rank">
+                  <img src={stub.images[0]} alt={"i"} className="glyph-stub" />
+                  <img src={stub.images[1]} alt={"i"} className="glyph-stub" />
+                  <img src={stub.images[2]} alt={"i"} className="glyph-stub" />
+                </div>
+              ) : (
+                <></>
+              )}
             </a>
             <i
               onClick={(e) => deleteRank(stub, i, db!)}
