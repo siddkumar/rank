@@ -7,6 +7,12 @@ export interface BracketManagerProps {
   bracketItems: RankableItem[];
 }
 
+enum BracketViews {
+  MOBILE = "mobile",
+  TABLET = "tablet",
+  DESKTOP = "desktop",
+}
+
 function BracketManager(props: BracketManagerProps) {
   const seeds = new Map();
   var maxLen = 0;
@@ -57,8 +63,8 @@ function BracketManager(props: BracketManagerProps) {
 
   const [roundByRound, setRoundByRound] = useState(seedsPerRound);
   const [winner, setWinner] = useState<string | null>(null);
-  const [mobileView, setViewToMobile] = useState(false);
   const [mobileRoundView, setRoundView] = useState(0);
+  const [view, setView] = useState(BracketViews.DESKTOP);
 
   function advance(psuedoSeed: number, i: RankableItem, round: number) {
     if (round + 1 === roundByRound.length) {
@@ -100,10 +106,18 @@ function BracketManager(props: BracketManagerProps) {
     }
   });
 
-  function renderDesktopView(rounds: any[]) {
+  function renderDesktopView(
+    rounds: any[],
+    startIdx = 0,
+    endIdx = rounds.length,
+    showTrophy = true
+  ) {
     return (
       <div className="bracket-container">
         {rounds.map((item, index) => {
+          if (index < startIdx || index > endIdx) {
+            return <></>;
+          }
           return (
             <BracketRound
               key={index}
@@ -114,14 +128,16 @@ function BracketManager(props: BracketManagerProps) {
             />
           );
         })}
-        <div className="round-container">
-          <div className="item-container card row">
-            {winner ?? RankableDefaultString}
-            <div className="controls">
-              <i className="fa-solid fa-trophy"></i>
+        {showTrophy && (
+          <div className="round-container">
+            <div className="item-container card row">
+              {winner ?? RankableDefaultString}
+              <div className="controls">
+                <i className="fa-solid fa-trophy"></i>
+              </div>
             </div>
           </div>
-        </div>
+        )}
       </div>
     );
   }
@@ -151,13 +167,7 @@ function BracketManager(props: BracketManagerProps) {
           className="previous-button"
           onClick={(e) => setRoundView(Math.max(currentRound - 1, 0))}
         ></button>
-        <BracketRound
-          key={currentRound}
-          matchupList={rounds[currentRound]}
-          seeds={roundByRound[currentRound]}
-          roundNumber={currentRound + 1}
-          clickCallback={advance}
-        />
+        {renderDesktopView(rounds, currentRound, currentRound, false)}
         <button
           className="next-button"
           onClick={(e) =>
@@ -168,30 +178,53 @@ function BracketManager(props: BracketManagerProps) {
     );
   }
 
+  function renderTabletView(rounds: any[], currentRound: number) {
+    return (
+      <div className="mobile-bracket-container">
+        <button
+          className="previous-button"
+          onClick={(e) => setRoundView(Math.max(currentRound - 1, 1))}
+        ></button>
+        {renderDesktopView(
+          rounds,
+          currentRound - 1,
+          currentRound + 1,
+          currentRound == rounds.length - 1
+        )}
+        <button
+          className="next-button"
+          onClick={(e) =>
+            setRoundView(Math.min(currentRound + 1, rounds.length - 1))
+          }
+        ></button>
+      </div>
+    );
+  }
+
   return (
     <div>
       <div className="row card container caveat">
-        {mobileView ? (
-          <div>
-            Switch to desktop view
-            <i
-              onClick={(e) => setViewToMobile(false)}
-              className="fa-solid fa-desktop"
-            ></i>{" "}
-          </div>
-        ) : (
-          <div>
-            Switch to mobile view
-            <i
-              onClick={(e) => setViewToMobile(true)}
-              className="fa-solid fa-mobile-screen-button"
-            ></i>{" "}
-          </div>
-        )}
+        <div>
+          Switch View
+          <i
+            onClick={(e) => setView(BracketViews.DESKTOP)}
+            className="fa-solid fa-desktop"
+          ></i>
+          <i
+            onClick={(e) => setView(BracketViews.TABLET)}
+            className="fa-solid fa-tablet-screen-button"
+          ></i>
+          <i
+            onClick={(e) => setView(BracketViews.MOBILE)}
+            className="fa-solid fa-mobile-screen-button"
+          ></i>
+        </div>
       </div>
-      {mobileView
-        ? renderMobileView(rounds, mobileRoundView)
-        : renderDesktopView(rounds)}
+      {view === BracketViews.DESKTOP && renderDesktopView(rounds)}
+      {view === BracketViews.TABLET &&
+        renderTabletView(rounds, Math.max(mobileRoundView, 1))}
+      {view === BracketViews.MOBILE &&
+        renderMobileView(rounds, mobileRoundView)}
     </div>
   );
 }
