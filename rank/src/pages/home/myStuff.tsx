@@ -49,11 +49,11 @@ function MyStuff() {
     return (
       <>
         <div className="myStuffContainer">
-          <div className="container">
+          <div className="stuff-container">
             <div className="stuff-subtitle">Your Templates</div>
             <TemplatesList stubs={stubs} />
           </div>
-          <div className="container">
+          <div className="stuff-container">
             <div className="stuff-subtitle">Your Ranks</div>
             <RanksList stubs={ranks} />
           </div>
