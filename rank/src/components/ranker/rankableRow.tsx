@@ -3,17 +3,30 @@ import React from "react";
 export interface RankableRowProps {
   index: number;
   item: string;
+  imageUrl: string | null;
   onDown: () => void;
   onUp: () => void;
   onTop: () => void;
   onBotton: () => void;
 }
 
+function MiniPic(url: string | null) {
+  return (
+    <>
+      {!url ? (
+        <div className=""></div>
+      ) : (
+        <img src={url} alt={"i"} className="glyph" />
+      )}
+    </>
+  );
+}
+
 export function RankableRow(props: RankableRowProps) {
   return (
     <>
-      <div>
-        <b>{props.index + 1}</b>. {props.item}
+      <div className="rankable-row-left">
+        <b>{props.index + 1}</b>. {MiniPic(props.imageUrl)} {props.item}
       </div>
       <div className="controls">
         <div onClick={props.onBotton}>

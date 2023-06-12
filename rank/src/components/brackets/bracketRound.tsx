@@ -8,6 +8,18 @@ export interface BracketRoundProps {
   clickCallback: (psuedoSeed: number, i: RankableItem, round: number) => void;
 }
 
+function MiniPic(url: string | null) {
+  return (
+    <>
+      {!url ? (
+        <div className=""></div>
+      ) : (
+        <img src={url} alt={"i"} className="glyph" />
+      )}
+    </>
+  );
+}
+
 function BracketRound(props: BracketRoundProps) {
   return (
     <div
@@ -32,6 +44,7 @@ function BracketRound(props: BracketRoundProps) {
                 props.clickCallback(psuedoSeed, x, props.roundNumber - 1)
               }
             >
+              {MiniPic(x?.imageUrl)}
               <div>{getNiceString(x.name, x.rank)}</div>
               <div className="controls">
                 <i className="fa-solid fa-square-caret-right"></i>
@@ -44,6 +57,7 @@ function BracketRound(props: BracketRoundProps) {
                 props.clickCallback(psuedoSeed, y, props.roundNumber - 1)
               }
             >
+              {MiniPic(y?.imageUrl)}
               <div>{getNiceString(y.name, y.rank)}</div>
               <div className="controls">
                 <i className="fa-solid fa-square-caret-right"></i>

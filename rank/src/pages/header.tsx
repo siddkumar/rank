@@ -53,7 +53,7 @@ function Header(props: HeaderProps) {
         redirectUrl?: string
       ) => SignInSuccessWithAuthResult(authResult, redirectUrl),
     },
-    
+
     // Will use popup for IDP Providers sign-in flow instead of the default, redirect.
     signInFlow: "popup",
     signInOptions: [

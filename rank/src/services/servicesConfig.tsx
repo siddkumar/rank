@@ -2,7 +2,7 @@ enum Modes {
   Local,
   Production,
 }
-export const GlobalMode: Modes = Modes.Production;
+export const GlobalMode: Modes = Modes.Local;
 
 export function getPrefix() {
   switch (GlobalMode) {

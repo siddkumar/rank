@@ -41,20 +41,21 @@ function Rank() {
     );
   }, [db, templateId]);
 
-  function save(rankableList: string[]) {
+  function save(rankableList: RankableItem[]) {
     setView(RankViews.SAVING);
-    setRanking(
-      rankableList.map<RankableItem>((item, index) => {
-        return { name: item, rank: index };
-      })
-    );
+    setRanking(rankableList);
     if (auth.id && templateId) {
-      PostNewRank(db!, rankableList, templateId, auth.id ?? "", rankName).then(
-        (response) => {
-          setRankId(response);
-          setView(RankViews.READY);
-        }
-      );
+      PostNewRank(
+        db!,
+        rankableList.map((item) => item.name),
+        rankableList.map((item) => (item.imageUrl ? item.imageUrl : "")),
+        templateId,
+        auth.id ?? "",
+        rankName
+      ).then((response) => {
+        setRankId(response);
+        setView(RankViews.READY);
+      });
     } else {
       console.log("error, not signed in"); // TODO surface
     }

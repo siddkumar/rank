@@ -77,6 +77,10 @@
   padding: 2rem 2rem;
 }
 
+.stuff-container {
+  padding: 2rem 2rem;
+}
+
 .item-container {
   text-align: center;
   border: 1px dotted #160f29;
@@ -98,6 +102,11 @@
 
 .controls {
   display: flex;
+}
+
+.controls-rank {
+  display: flex;
+  padding-left: 1rem;
 }
 
 i {

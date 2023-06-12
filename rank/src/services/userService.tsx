@@ -20,7 +20,11 @@ export async function GetTemplatesForUserId(db: Firestore, userId: string) {
   var stubList = [] as ExistingTemplateStub[];
   qs.forEach((doc) => {
     var template = doc.data();
-    stubList.push({ id: doc.id, name: template.name });
+    stubList.push({
+      id: doc.id,
+      name: template.name,
+      images: template?.images ?? [],
+    });
   });
   return stubList;
 }
@@ -33,7 +37,7 @@ export async function GetRanksForUserId(db: Firestore, userId: string) {
   var stubList = [] as ExistingRankStub[];
   qs.forEach((doc) => {
     var rank = doc.data();
-    stubList.push({ id: doc.id, name: rank.name });
+    stubList.push({ id: doc.id, name: rank.name, images: rank?.images ?? [] });
   });
   return stubList;
 }

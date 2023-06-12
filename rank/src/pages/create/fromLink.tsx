@@ -60,14 +60,18 @@ export function CreateFromLink() {
     });
   };
 
-  const submitTemplate = async (templateName: string, items: string[]) => {
+  const submitTemplate = async (
+    templateName: string,
+    items: string[],
+    images?: string[]
+  ) => {
     setView(FromLinkViews.WAITING);
-    var email = auth.email ?? undefined;
     var id = await PostNewTemplate(
       db!,
       templateName,
       items,
-      email ?? "undefined"
+      auth.id ?? "unknown",
+      images
     );
     navigate("/rank?templateId=" + id);
   };
@@ -169,6 +173,7 @@ export function CreateFromLink() {
             initialName={chosenTableName + " - " + chosenTemplate.templateName}
             initialItems={chosenTemplate.templateItems}
             onSubmit={submitTemplate}
+            initialHelperLinks={chosenTemplate.templateItemLinks}
           />
         </div>
         <button
