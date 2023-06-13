@@ -125,7 +125,8 @@ function BracketManager(props: BracketManagerProps) {
   ) {
     return (
       <div className="bracket-container">
-        {rounds.slice(startIdx, endIdx + 1).map((item, index) => {
+        {rounds.slice(startIdx, endIdx + 1).map((item, i) => {
+          var index = i + startIdx;
           return (
             <BracketRound
               key={index}
