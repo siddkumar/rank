@@ -108,9 +108,7 @@ function Rank() {
       <div className="create-page-layout">
         <div className="main-title">Your Ranking is Saved!</div>
         <br></br>
-        <div className="button-styles w-100">
-          Share
-        </div>
+        <div className="button-styles w-100">Share</div>
         <a href={"/rank/edit?id=" + rankId}>
           <button className="button-styles w-100">Edit</button>
         </a>

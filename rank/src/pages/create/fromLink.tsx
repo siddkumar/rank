@@ -195,11 +195,11 @@ export function CreateFromLink() {
   function waitingView() {
     return (
       <div className="create-page-layout">
-        <div style={{ display: 'flex', alignItems: 'center' }}>
-        <div className="main-title">one sec...</div>
-        <div className="spinner">
-          <div></div>
-        </div>
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <div className="main-title">one sec...</div>
+          <div className="spinner">
+            <div></div>
+          </div>
         </div>
       </div>
     );
