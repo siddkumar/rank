@@ -23,38 +23,49 @@ enum MyStuffViews {
 function MyStuff() {
   const auth = useAuth();
   const [stubs, setStubs] = useState<ExistingTemplateStub[]>([]);
-  const [hasRequestedTemplates, setHasRequestedTemplates] = useState(false);
   const [ranks, setRanks] = useState<ExistingRankStub[]>([]);
   const [view, setView] = useState<MyStuffViews>(MyStuffViews.SignIn);
   const db = useDB().db;
 
   useEffect(() => {
-    if (!hasRequestedTemplates && stubs.length === 0 && auth.id) {
-      // get templates
-      setHasRequestedTemplates(true);
-      GetTemplatesForUserId(db!, auth.id!).then((res) =>
-        setStubs(res.sort((a, b) => a.name.localeCompare(b.name)))
-      );
-
-      // get ranks
-      GetRanksForUserId(db!, auth.id!).then((res) =>
-        setRanks(res.sort((a, b) => a.name.localeCompare(b.name)))
-      );
-
+    if (auth.id) {
       setView(MyStuffViews.Loaded);
     }
-  }, [auth.email, auth.id, db, hasRequestedTemplates, stubs.length]);
+  }, [auth.email, auth.id, db]);
+
+  function refreshTemplates() {
+    GetTemplatesForUserId(db!, auth.id!).then((res) =>
+      setStubs(res.sort((a, b) => a.name.localeCompare(b.name)))
+    );
+  }
+
+  function refreshRanks() {
+    GetRanksForUserId(db!, auth.id!).then((res) =>
+      setRanks(res.sort((a, b) => a.name.localeCompare(b.name)))
+    );
+  }
 
   function renderMyStuff() {
     return (
       <>
         <div className="myStuffContainer">
           <div className="stuff-container">
-            <div className="stuff-subtitle">Your Templates</div>
+            <div className="stuff-subtitle">
+              Your Templates{}
+              <i
+                onClick={(e) => refreshTemplates()}
+                className="icon-override fa-solid fa-rotate-right"
+              ></i>
+            </div>
             <TemplatesList stubs={stubs} />
           </div>
           <div className="stuff-container">
-            <div className="stuff-subtitle">Your Ranks</div>
+            <div className="stuff-subtitle">Your Ranks
+            <i
+                onClick={(e) => refreshRanks()}
+                className="icon-override fa-solid fa-rotate-right"
+              ></i>
+            </div>
             <RanksList stubs={ranks} />
           </div>
         </div>

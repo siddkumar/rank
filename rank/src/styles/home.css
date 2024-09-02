@@ -27,7 +27,6 @@
 
 .home-page-layout > * {
   flex-grow: 1;
-  max-width: 50%; /* Each component takes 50% width */
 }
 
 .main-container {

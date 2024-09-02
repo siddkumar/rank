@@ -44,7 +44,7 @@ function Rank() {
   function save(rankableList: RankableItem[]) {
     setView(RankViews.SAVING);
     setRanking(rankableList);
-    if (auth.id && templateId) {
+    if (templateId) {
       PostNewRank(
         db!,
         rankableList.map((item) => item.name),
@@ -56,8 +56,6 @@ function Rank() {
         setRankId(response);
         setView(RankViews.READY);
       });
-    } else {
-      console.log("error, not signed in"); // TODO surface
     }
   }
 
@@ -110,6 +108,7 @@ function Rank() {
       <div className="create-page-layout">
         <div className="main-title">Your Ranking is Saved!</div>
         <br></br>
+        <div className="button-styles w-100">Share</div>
         <a href={"/rank/edit?id=" + rankId}>
           <button className="button-styles w-100">Edit</button>
         </a>
