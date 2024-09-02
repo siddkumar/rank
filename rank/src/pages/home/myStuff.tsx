@@ -23,7 +23,6 @@ enum MyStuffViews {
 function MyStuff() {
   const auth = useAuth();
   const [stubs, setStubs] = useState<ExistingTemplateStub[]>([]);
-  const [hasRequestedTemplates, setHasRequestedTemplates] = useState(false);
   const [ranks, setRanks] = useState<ExistingRankStub[]>([]);
   const [view, setView] = useState<MyStuffViews>(MyStuffViews.SignIn);
   const db = useDB().db;
