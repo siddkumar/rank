@@ -1,8 +1,9 @@
+"use client"
+
 import React, { useState } from "react";
 import "../../styles/create.css";
 import "../../styles/home.css";
 import CreateFromExisting from "./fromExisting";
-import { useNavigate } from "react-router-dom";
 import CreateFromScratch from "./fromScratch";
 
 export enum HomeViews {
@@ -12,7 +13,8 @@ export enum HomeViews {
 
 function Create() {
   const [wikiLink, setWikiLink] = useState("");
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
+
   const [view, setView] = useState(HomeViews.HOME);
   const [scratchName, setScratchName] = useState("");
   const [textArea, setTextArea] = useState("");
@@ -21,7 +23,7 @@ function Create() {
     event.preventDefault();
     const params = new URLSearchParams();
     params.set("link", wikiLink);
-    navigate("/create/fromLink?" + params.toString());
+    // navigate("/create/fromLink?" + params.toString());
   };
 
   function fromScratchForm() {

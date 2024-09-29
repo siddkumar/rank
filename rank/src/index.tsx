@@ -3,7 +3,6 @@ import ReactDOM from "react-dom";
 import "./styles/index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
-import { BrowserRouter } from "react-router-dom";
 import { AuthProvider } from "./components/auth/authProvider";
 import { DbProvider } from "./services/dbProvider";
 
@@ -11,9 +10,7 @@ ReactDOM.render(
   <React.StrictMode>
     <AuthProvider>
       <DbProvider>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
+        <App />
       </DbProvider>
     </AuthProvider>
   </React.StrictMode>,

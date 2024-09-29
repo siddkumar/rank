@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useEffect, useState } from "react";
 import RankableItem, { RankableDefaultString } from "../../models/RankableItem";
 import "../../styles/bracket.css";

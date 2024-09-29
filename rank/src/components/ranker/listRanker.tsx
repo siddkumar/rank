@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from "react";
 import {
   DragDropContext,
@@ -7,10 +9,10 @@ import {
 } from "react-beautiful-dnd";
 import RankableItem from "../../models/RankableItem";
 import { RankableRow } from "./rankableRow";
+import styles from "./listRanker.module.css";
 
 export interface ListRankerProps {
   rankableList: RankableItem[];
-  templateId: string;
   onSave: (rankableStrings: RankableItem[]) => void;
   onSaveAs?: (rankableStrings: RankableItem[]) => void;
 }
@@ -28,7 +30,7 @@ function ListRanker(props: ListRankerProps) {
         <Droppable droppableId="list-container">
           {(provided) => (
             <div
-              className="list-container"
+              className={styles.listContainer}
               {...provided.droppableProps}
               ref={provided.innerRef}
             >
@@ -65,7 +67,7 @@ function ListRanker(props: ListRankerProps) {
           )}
         </Droppable>
       </DragDropContext>
-      <div className="list-ranker-button-row">
+      <div className={styles.listRankerButtonRow}>
         <div className={props.onSaveAs ? "button-wrapper" : "w-100"}>
           <button
             className="button-styles w-100"

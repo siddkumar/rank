@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from "react";
 
 export interface RankTitleProps {
@@ -10,7 +12,7 @@ export default function RankTitle(props: RankTitleProps) {
 
   function editorView() {
     return (
-      <div className=" row">
+      <div className="row">
         Ranking Name:
         <input
           type="text"
@@ -19,6 +21,7 @@ export default function RankTitle(props: RankTitleProps) {
         ></input>
         <i
           onClick={(e) => setEditView(false)}
+          aria-hidden
           className="icon-override fa-regular fa-floppy-disk"
         ></i>
       </div>
@@ -31,6 +34,7 @@ export default function RankTitle(props: RankTitleProps) {
         {props.defaultTitle}
         <i
           onClick={(e) => setEditView(true)}
+          aria-hidden
           className="icon-override fa-regular fa-pen-to-square"
         ></i>
       </h2>

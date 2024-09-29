@@ -15,7 +15,14 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react"
+    "jsx": "preserve",
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
   },
-  "include": ["src", "src/index.tsx"]
+  "include": ["src", "src/index.tsx", "./build/types/**/*.ts"],
+  "exclude": ["node_modules"]
 }

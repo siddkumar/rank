@@ -60,8 +60,9 @@ function MyStuff() {
             <TemplatesList stubs={stubs} />
           </div>
           <div className="stuff-container">
-            <div className="stuff-subtitle">Your Ranks
-            <i
+            <div className="stuff-subtitle">
+              Your Ranks
+              <i
                 onClick={(e) => refreshRanks()}
                 className="icon-override fa-solid fa-rotate-right"
               ></i>

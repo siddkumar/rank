@@ -1,10 +1,12 @@
+"use client" 
+
 import React, { useEffect, useState } from "react";
 import { ExistingTemplateStub } from "./templates";
-import "../../styles/create.css";
 import { ExistingRankStub } from "../../pages/rank/ranks";
 import { useDB } from "../../services/dbProvider";
 import { Firestore } from "@firebase/firestore";
-import { DeleteRank } from "../../services/ranksService";
+import { DeleteRank } from "../../lib/ranksService";
+import styles from "./templatesList.module.css"
 
 export interface TemplatesListProps {
   stubs: ExistingTemplateStub[];
@@ -22,14 +24,14 @@ export function TemplatesList(props: TemplatesListProps) {
           <a
             className="template-link item-container card row"
             key={stub.id}
-            href={"/rank?templateId=" + stub.id}
+            href={"/template/" + stub.id}
           >
             {stub.name}
             {stub.images.length > 2 ? (
               <div key={stub.id} className="controls">
-                <img src={stub.images[0]} alt={"i"} className="glyph-stub" />
-                <img src={stub.images[1]} alt={"i"} className="glyph-stub" />
-                <img src={stub.images[2]} alt={"i"} className="glyph-stub" />
+                <img src={stub.images[0]} alt={"i"} className={styles.glyphStub} />
+                <img src={stub.images[1]} alt={"i"} className={styles.glyphStub} />
+                <img src={stub.images[2]} alt={"i"} className={styles.glyphStub} />
               </div>
             ) : (
               <></>
@@ -68,9 +70,9 @@ export function RanksList(props: RanksListProps) {
               {stub.name}{" "}
               {stub.images.length > 2 ? (
                 <div key={stub.id} className="controls-rank">
-                  <img src={stub.images[0]} alt={"i"} className="glyph-stub" />
-                  <img src={stub.images[1]} alt={"i"} className="glyph-stub" />
-                  <img src={stub.images[2]} alt={"i"} className="glyph-stub" />
+                  <img src={stub.images[0]} alt={"i"} className={styles.glyphStub} />
+                  <img src={stub.images[1]} alt={"i"} className={styles.glyphStub} />
+                  <img src={stub.images[2]} alt={"i"} className={styles.glyphStub} />
                 </div>
               ) : (
                 <></>

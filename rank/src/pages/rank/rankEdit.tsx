@@ -1,13 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { RankViews } from "./rank";
 import "../../styles/rank.css";
-import { useSearchParams } from "react-router-dom";
 import RankableItem from "../../models/RankableItem";
-import {
-  GetRankById,
-  PostNewRank,
-  UpdateRank,
-} from "../../services/ranksService";
+import { GetRankById, PostNewRank, UpdateRank } from "../../lib/ranksService";
 import ListRanker from "../../components/ranker/listRanker";
 import RankTitle from "../../components/ranker/rankTitle";
 import { useAuth } from "../../components/auth/authProvider";
@@ -15,8 +10,9 @@ import { useDB } from "../../services/dbProvider";
 
 function RankEdit() {
   const [view, setView] = useState(RankViews.LOADING);
-  const [searchParams] = useSearchParams();
-  const id = searchParams.get("id");
+  // const [searchParams] = useSearchParams();
+  // const id = searchParams.get("id");
+  const id = "temp-id";
   const [ranking, setRanking] = useState<RankableItem[]>([]);
   const [rankName, setRankName] = useState("");
   const [templateId, setTemplateId] = useState("");

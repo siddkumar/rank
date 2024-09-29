@@ -1,8 +1,9 @@
 import { Firestore, collection, doc, getDoc } from "@firebase/firestore";
 import RankableItem from "../models/RankableItem";
 import { addDoc } from "firebase/firestore";
+import { db } from "./firebaseConfig";
 
-export async function GetTemplateById(db: Firestore, templateId: string) {
+export async function GetTemplateById(templateId: string) {
   console.log("requesting");
   const docRef = doc(db, "templates", templateId);
   var rankableList: RankableItem[] = [];

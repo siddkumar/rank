@@ -1,4 +1,8 @@
+"use client";
+
 import React from "react";
+
+import styles from "./rankableRow.module.css";
 
 export interface RankableRowProps {
   index: number;
@@ -16,7 +20,7 @@ function MiniPic(url: string | null) {
       {!url ? (
         <div className=""></div>
       ) : (
-        <img src={url} alt={"i"} className="glyph" />
+        <img src={url} alt={"i"} className={styles.glpyh} />
       )}
     </>
   );
@@ -25,10 +29,10 @@ function MiniPic(url: string | null) {
 export function RankableRow(props: RankableRowProps) {
   return (
     <>
-      <div className="rankable-row-left">
+      <div className={styles.rankableRowLeft}>
         <b>{props.index + 1}</b>. {MiniPic(props.imageUrl)} {props.item}
       </div>
-      <div className="controls">
+      <div className={styles.controls}>
         <div onClick={props.onBotton}>
           <i className="fa-solid fa-angles-down"></i>
         </div>

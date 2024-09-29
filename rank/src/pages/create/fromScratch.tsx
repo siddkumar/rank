@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { TemplateEditor } from "../../components/templates/templateEditor";
-import { PostNewTemplate } from "../../services/templatesService";
+import { PostNewTemplate } from "../../lib/templatesService";
 import "../../styles/create.css";
-import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../components/auth/authProvider";
 import { useDB } from "../../services/dbProvider";
+import { useRouter } from "next/router";
 
 export enum CreateFromScratchViews {
   CREATE = "create",
@@ -19,7 +19,7 @@ export interface CreateFromScratchProps {
 
 function CreateFromScratch(props: CreateFromScratchProps) {
   const [view, setView] = useState(CreateFromScratchViews.CREATE);
-  const navigate = useNavigate();
+  const router = useRouter();
   const auth = useAuth();
   const db = useDB().db;
 
@@ -37,7 +37,7 @@ function CreateFromScratch(props: CreateFromScratchProps) {
       auth?.id ?? "unknownId",
       images
     );
-    navigate("/rank?templateId=" + id);
+    router.push("/template/"+id)
   };
 
   function createView() {

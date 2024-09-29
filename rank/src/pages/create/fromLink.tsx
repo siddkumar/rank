@@ -5,9 +5,8 @@ import {
   ParseLinkTemplate,
   PostParseLink,
 } from "../../services/parserService";
-import { PostNewTemplate } from "../../services/templatesService";
+import { PostNewTemplate } from "../../lib/templatesService";
 import "../../styles/create.css";
-import { useNavigate, useSearchParams } from "react-router-dom";
 import { useAuth } from "../../components/auth/authProvider";
 import { useDB } from "../../services/dbProvider";
 
@@ -29,13 +28,14 @@ export function CreateFromLink() {
     templateName: "",
   });
   const [chosenTableName, setChosenTableName] = useState("");
-  const [searchParams] = useSearchParams();
-  const navigate = useNavigate();
+  // const [searchParams] = useSearchParams();
+  // const navigate = useNavigate();
   const auth = useAuth();
   const db = useDB().db;
 
   useEffect(() => {
-    const link = searchParams.get("link");
+    // const link = searchParams.get("link");
+    const link = "temp-link";
     if (link) {
       setView(FromLinkViews.WAITING);
       PostParseLink(link).then((tables) => {
@@ -44,7 +44,7 @@ export function CreateFromLink() {
         setWikiLink(link);
       });
     }
-  }, [searchParams]);
+  }, []);
 
   const onChangeWikiLink = (event: {
     target: { value: React.SetStateAction<string> };
@@ -73,7 +73,7 @@ export function CreateFromLink() {
       auth.id ?? "unknown",
       images
     );
-    navigate("/rank?templateId=" + id);
+    // navigate("/rank?templateId=" + id);
   };
 
   function enterLinkView() {

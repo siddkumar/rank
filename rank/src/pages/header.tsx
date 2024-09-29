@@ -6,8 +6,6 @@ import "firebase/compat/firestore";
 import "firebase/compat/auth";
 import { AuthResult } from "../components/auth/authWidget";
 import "../styles/auth.css";
-import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
-import { useNavigate } from "react-router-dom";
 import { useAuth } from "../components/auth/authProvider";
 import { useDB } from "../services/dbProvider";
 
@@ -16,7 +14,6 @@ export interface HeaderProps {}
 function Header(props: HeaderProps) {
   const auth = useAuth();
   const [showAuth, setShowAuth] = useState(false);
-  const navigate = useNavigate();
   const db = useDB().db;
 
   async function signInWithCredential(authResult: AuthResult) {
@@ -92,10 +89,7 @@ function Header(props: HeaderProps) {
       <div className="auth-overlay">
         <div className="auth-container">
           <div className="auth-title">Sign in or Sign Up</div>
-          <StyledFirebaseAuth
-            uiConfig={uiConfig}
-            firebaseAuth={firebase.auth()}
-          ></StyledFirebaseAuth>
+          ~~deleted ui component~~
           <button
             className="close-auth button-styles caveat-large"
             onClick={() => setShowAuth(false)}

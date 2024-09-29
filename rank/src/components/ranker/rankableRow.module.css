@@ -1,0 +1,21 @@
+.rankableRowLeft {
+  display: flex;
+  align-items: center;
+}
+
+.controls {
+  display: flex;
+}
+
+.glyph {
+  width: 2rem; /* Adjust the size as needed */
+  height: 2rem;
+  border-radius: 10%;
+  background-color: #e0e0e0;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

@@ -1,5 +1,8 @@
+"use client";
+
 import React from "react";
 import RankableItem, { RankableDefaultString } from "../../models/RankableItem";
+import styles from "./bracketRound.module.css";
 
 export interface BracketRoundProps {
   seeds: Map<number, any>;

@@ -1,0 +1,14 @@
+.round-container {
+  display: flex;
+  flex-direction: column;
+  padding-right: 0.5rem;
+  padding-left: 0.5rem;
+  justify-content: space-around;
+  flex-grow: 1;
+}
+
+i {
+  margin-left: 1rem;
+  cursor: pointer;
+  color: #488e98;
+}
