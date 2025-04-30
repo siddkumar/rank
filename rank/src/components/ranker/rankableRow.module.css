@@ -8,14 +8,26 @@
 }
 
 .glyph {
-  width: 2rem; /* Adjust the size as needed */
-  height: 2rem;
+  width: 5rem;
+  height: 5rem;
   border-radius: 10%;
   background-color: #e0e0e0;
-  margin-left: 0.5rem;
+  margin-left: 1rem;
   margin-right: 0.5rem;
 
   display: flex;
   align-items: center;
   justify-content: center;
+  object-fit: cover;
 }
+
+
+.glyphStub {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background-color: #e0e0e0;
+
+  display: flex;
+}
+

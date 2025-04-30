@@ -18,9 +18,9 @@ function MiniPic(url: string | null) {
   return (
     <>
       {!url ? (
-        <div className=""></div>
+        <div className={styles.glyphStub}></div>
       ) : (
-        <img src={url} alt={"i"} className={styles.glpyh} />
+        <img src={url} alt={"i"} className={styles.glyph} />
       )}
     </>
   );

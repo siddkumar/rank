@@ -11,6 +11,11 @@ const Bracket = async ({ params }: { params: { id: string } }) => {
     return <div>List not found</div>;
   }
 
+  if (x.bloblist.length <= 1 )
+  {
+    return <div>List not found</div>;
+  }
+
   return (
     <div className="rank-page-layout">
       <BracketManager bracketItems={[...x.bloblist]}></BracketManager>

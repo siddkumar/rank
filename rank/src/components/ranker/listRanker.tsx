@@ -43,7 +43,7 @@ function ListRanker(props: ListRankerProps) {
                   {(provided) => (
                     <>
                       <div
-                        className="item-container card row"
+                        className={styles.rankableRowWrapper}
                         ref={provided.innerRef}
                         {...provided.dragHandleProps}
                         {...provided.draggableProps}
@@ -70,16 +70,16 @@ function ListRanker(props: ListRankerProps) {
       <div className={styles.listRankerButtonRow}>
         <div className={props.onSaveAs ? "button-wrapper" : "w-100"}>
           <button
-            className="button-styles w-100"
+            className={styles.buttonStyles}
             onClick={() => props.onSave(blobList)}
           >
             Save
           </button>
         </div>
         {props.onSaveAs && (
-          <div className="button-wrapper">
+          <div className={styles.buttonStyles}>
             <button
-              className="button-styles w-100"
+              className={styles.buttonStyles}
               onClick={() => {
                 if (props.onSaveAs) {
                   props.onSaveAs(blobList);
