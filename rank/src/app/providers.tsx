@@ -1,18 +1,13 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import React from "react";
 import { AuthProvider } from "../components/auth/authProvider";
 import { DbProvider } from "../services/dbProvider";
 
-const App = dynamic(() => import("../App"), { ssr: false });
-
-export function ClientOnly() {
+export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <AuthProvider>
-      <DbProvider>
-        <App />
-      </DbProvider>
+      <DbProvider>{children}</DbProvider>
     </AuthProvider>
   );
 }

@@ -4,7 +4,7 @@ import { PostNewTemplate } from "../../lib/templatesService";
 import "../../styles/create.css";
 import { useAuth } from "../../components/auth/authProvider";
 import { useDB } from "../../services/dbProvider";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 export enum CreateFromScratchViews {
   CREATE = "create",

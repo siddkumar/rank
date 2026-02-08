@@ -24,26 +24,41 @@ function MyStuff() {
   const auth = useAuth();
   const [stubs, setStubs] = useState<ExistingTemplateStub[]>([]);
   const [ranks, setRanks] = useState<ExistingRankStub[]>([]);
-  const [view, setView] = useState<MyStuffViews>(MyStuffViews.SignIn);
+  const [view, setView] = useState<MyStuffViews>(MyStuffViews.Waiting);
   const db = useDB().db;
 
-  useEffect(() => {
-    if (auth.id) {
-      setView(MyStuffViews.Loaded);
+  const refreshTemplates = () => {
+    if (db && auth.id) {
+      GetTemplatesForUserId(db, auth.id).then((res) =>
+        setStubs(res.sort((a, b) => a.name.localeCompare(b.name)))
+      );
     }
-  }, [auth.email, auth.id, db]);
+  };
 
-  function refreshTemplates() {
-    GetTemplatesForUserId(db!, auth.id!).then((res) =>
-      setStubs(res.sort((a, b) => a.name.localeCompare(b.name)))
-    );
-  }
+  const refreshRanks = () => {
+    if (db && auth.id) {
+      GetRanksForUserId(db, auth.id).then((res) =>
+        setRanks(res.sort((a, b) => a.name.localeCompare(b.name)))
+      );
+    }
+  };
 
-  function refreshRanks() {
-    GetRanksForUserId(db!, auth.id!).then((res) =>
-      setRanks(res.sort((a, b) => a.name.localeCompare(b.name)))
-    );
-  }
+  useEffect(() => {
+    // Don't update view while auth is still loading from localStorage
+    if (auth.isLoading) {
+      setView(MyStuffViews.Waiting);
+      return;
+    }
+
+    if (auth.id && db) {
+      setView(MyStuffViews.Loaded);
+      // Automatically load templates and ranks when user is authenticated
+      refreshTemplates();
+      refreshRanks();
+    } else {
+      setView(MyStuffViews.SignIn);
+    }
+  }, [auth.id, auth.isLoading, db]);
 
   function renderMyStuff() {
     return (
@@ -92,6 +107,11 @@ function MyStuff() {
   return (
     <>
       <div className="myStuff-page-layout">
+        {view === MyStuffViews.Waiting && (
+          <div className="myStuffContainer">
+            <div className="main-subtitle">Loading...</div>
+          </div>
+        )}
         {view === MyStuffViews.SignIn && renderPleaseSignIn()}
         {view === MyStuffViews.Loaded && renderMyStuff()}
       </div>

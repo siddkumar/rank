@@ -11,7 +11,7 @@ const Template = async ({ params }: { params: { id: string } }) => {
     return <div>List not found</div>;
   }
 
-  return <RankView ranking={x.rankableList} rankName={x.templateName}></RankView>;
+  return <RankView ranking={x.rankableList} rankName={x.templateName} templateId={id}></RankView>;
 };
 
 export default Template;

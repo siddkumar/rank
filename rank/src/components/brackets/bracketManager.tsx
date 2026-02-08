@@ -2,8 +2,8 @@
 
 import React, { useEffect, useState } from "react";
 import RankableItem, { RankableDefaultString } from "../../models/RankableItem";
-import "../../styles/bracket.css";
 import BracketRound from "./bracketRound";
+import styles from "./bracketManager.module.css";
 
 export interface BracketManagerProps {
   bracketItems: RankableItem[];
@@ -67,7 +67,7 @@ function BracketManager(props: BracketManagerProps) {
   const [winner, setWinner] = useState<string | null>(null);
   const [mobileRoundView, setRoundView] = useState(0);
 
-  const width = window.innerWidth;
+  const width = 1024;
   var defaultView = BracketViews.TABLET;
   if (width >= 1024) {
     defaultView = BracketViews.DESKTOP;
@@ -126,7 +126,7 @@ function BracketManager(props: BracketManagerProps) {
     showTrophy = true
   ) {
     return (
-      <div className="bracket-container">
+      <div className={styles.bracketContainer}>
         {rounds.slice(startIdx, endIdx + 1).map((item, i) => {
           var index = i + startIdx;
           return (
@@ -140,10 +140,10 @@ function BracketManager(props: BracketManagerProps) {
           );
         })}
         {showTrophy && (
-          <div className="round-container">
-            <div className="item-container card row">
+          <div className={styles.roundContainer}>
+            <div className={styles.bracketItem}>
               {winner ?? RankableDefaultString}
-              <div className="controls">
+              <div className={styles.controls}>
                 <i className="fa-solid fa-trophy"></i>
               </div>
             </div>
@@ -156,15 +156,15 @@ function BracketManager(props: BracketManagerProps) {
   function renderMobileView(rounds: any[], currentRound: number) {
     if (currentRound === rounds.length) {
       return (
-        <div className="mobile-bracket-container">
+        <div className={styles.mobileBracketContainer}>
           <button
-            className="previous-button"
+            className={styles.previousButton}
             onClick={(e) => setRoundView(Math.max(currentRound - 1, 0))}
           ></button>
-          <div className="round-container">
-            <div className="item-container card row">
+          <div className={styles.roundContainer}>
+            <div className={styles.bracketItem}>
               {winner ?? RankableDefaultString}
-              <div className="controls">
+              <div className={styles.controls}>
                 <i className="fa-solid fa-trophy"></i>
               </div>
             </div>
@@ -173,14 +173,14 @@ function BracketManager(props: BracketManagerProps) {
       );
     }
     return (
-      <div className="mobile-bracket-container">
+      <div className={styles.mobileBracketContainer}>
         <button
-          className="previous-button"
+          className={styles.previousButton}
           onClick={(e) => setRoundView(Math.max(currentRound - 1, 0))}
         ></button>
         {renderDesktopView(rounds, currentRound, currentRound, false)}
         <button
-          className="next-button"
+          className={styles.nextButton}
           onClick={(e) =>
             setRoundView(Math.min(currentRound + 1, rounds.length))
           }
@@ -191,9 +191,9 @@ function BracketManager(props: BracketManagerProps) {
 
   function renderTabletView(rounds: any[], currentRound: number) {
     return (
-      <div className="mobile-bracket-container">
+      <div className={styles.mobileBracketContainer}>
         <button
-          className="previous-button"
+          className={styles.previousButton}
           onClick={(e) => setRoundView(Math.max(currentRound - 1, 1))}
         ></button>
         {renderDesktopView(
@@ -203,7 +203,7 @@ function BracketManager(props: BracketManagerProps) {
           currentRound === rounds.length - 1
         )}
         <button
-          className="next-button"
+          className={styles.nextButton}
           onClick={(e) =>
             setRoundView(Math.min(currentRound + 1, rounds.length - 1))
           }
@@ -214,7 +214,7 @@ function BracketManager(props: BracketManagerProps) {
 
   return (
     <div>
-      <div className="row card container caveat">
+      <div className={styles.bracketPageHeader}>
         <div>
           Switch View
           <i

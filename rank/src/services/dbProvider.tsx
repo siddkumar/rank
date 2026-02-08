@@ -1,5 +1,6 @@
 import React, { createContext, useContext } from "react";
-import { Firestore, getFirestore } from "@firebase/firestore";
+import { Firestore } from "@firebase/firestore";
+import { db } from "../lib/firebaseConfig";
 
 // Define the shape of the AuthContext value
 interface DbContextValue {
@@ -22,7 +23,6 @@ interface DbProviderProps {
 }
 
 export function DbProvider({ children }: DbProviderProps) {
-  const database = getFirestore();
-  const value: DbContextValue = { db: database };
+  const value: DbContextValue = { db: db };
   return <DbContext.Provider value={value}>{children}</DbContext.Provider>;
 }

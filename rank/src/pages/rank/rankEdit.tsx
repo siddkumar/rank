@@ -21,13 +21,13 @@ function RankEdit() {
 
   useEffect(() => {
     setView(RankViews.LOADING);
-    GetRankById(db!, id ?? "").then(({ bloblist, templateId, rankName }) => {
+    GetRankById(id ?? "").then(({ bloblist, templateId, rankName }) => {
       setRanking(bloblist);
       setRankName(rankName);
       setTemplateId(templateId);
       setView(RankViews.RANKING);
     });
-  }, [db, id]);
+  }, [id]);
 
   function loadingView() {
     return (
@@ -90,7 +90,6 @@ function RankEdit() {
         </div>
         <ListRanker
           rankableList={ranking}
-          templateId={templateId ?? "og-template"}
           onSave={save}
           onSaveAs={saveAs}
         />

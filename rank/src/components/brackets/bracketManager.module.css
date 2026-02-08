@@ -4,7 +4,7 @@
   width: auto;
 }
 
-.round-container {
+.roundContainer {
   display: flex;
   flex-direction: column;
   padding-right: 0.5rem;
@@ -13,7 +13,7 @@
   flex-grow: 1;
 }
 
-.bracket-container {
+.bracketContainer {
   display: flex;
   align-items: stretch;
   flex-direction: row;
@@ -27,14 +27,14 @@
   background-color: #eceff1;
 }
 
-.mobile-bracket-container {
+.mobileBracketContainer {
   display: flex;
   align-items: stretch;
   justify-content: space-between;
 }
 
-.previous-button,
-.next-button {
+.previousButton,
+.nextButton {
   background: transparent;
   border: none;
   background-color: rgba(0, 0, 0, 0.1);
@@ -48,13 +48,13 @@
   align-items: center;
 }
 
-.previous-button:hover,
-.next-button:hover {
+.previousButton:hover,
+.nextButton:hover {
   color: #555;
 }
 
-.previous-button::before,
-.next-button::before {
+.previousButton::before,
+.nextButton::before {
   content: "";
   display: block;
   width: 0;
@@ -62,20 +62,48 @@
   border-style: solid;
 }
 
-.previous-button::before {
+.previousButton::before {
   border-width: 8px 12px 8px 0;
   border-color: transparent #888 transparent transparent;
   margin-right: 5px;
 }
 
-.next-button::before {
+.nextButton::before {
   border-width: 8px 0 8px 12px;
   border-color: transparent transparent transparent #888;
   margin-left: 5px;
 }
 
-i {
-  margin-left: 1rem;
-  cursor: pointer;
-  color: #488e98;
+.controls {
+  display: flex;
+}
+
+.bracketItem {
+  text-align: center;
+  border: 1px dotted #160f29;
+  padding: 0.5rem 0.5rem;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+  border-radius: 5px;
+  background-color: #fafafa;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.bracketItem:hover {
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+
+.bracketPageHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+  border-radius: 5px;
+  background-color: #fafafa;
+  margin: 1rem 1rem;
+  padding: 2rem 2rem;
 }

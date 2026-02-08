@@ -1,5 +1,7 @@
 import React from "react";
+import Script from "next/script";
 import "../styles/App.css";
+import { Providers } from "./providers";
 
 export default function RootLayout({
   children,
@@ -9,16 +11,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
         <meta name="theme-color" content="#160f29" />
         <meta name="description" content="Web site to rank anything" />
-        <link rel="apple-touch-icon" href="%PUBLIC_URL%/favicon.ico" />
-        <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <script
+        <Script
           src="https://kit.fontawesome.com/50f8af1926.js"
-          crossOrigin="anonymous"
-        ></script>
+          crossOrigin="anonymous" strategy="beforeInteractive"
+        ></Script>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
           href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Open+Sans&display=swap"
@@ -34,7 +33,9 @@ export default function RootLayout({
         />
       </head>
       <body>
-        <div id="root">{children}</div>
+        <Providers>
+          <div id="root">{children}</div>
+        </Providers>
       </body>
     </html>
   );

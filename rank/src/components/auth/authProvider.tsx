@@ -19,6 +19,7 @@ interface AuthContextValue {
   name: string | null;
   email: string | null;
   id: string | null;
+  isLoading: boolean;
   signOut: () => void;
   saveUserId: (id: string) => void;
   saveEmail: (email: string) => void;
@@ -30,6 +31,7 @@ const AuthContext = createContext<AuthContextValue>({
   name: null,
   email: null,
   id: null,
+  isLoading: true,
   signOut: () => {},
   saveUserId: (id: string) => {},
   saveEmail: (email: string) => {},
@@ -50,6 +52,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [id, setUserId] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const name = localStorage.getItem("name");
@@ -65,6 +68,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
     if (id) {
       setUserId(JSON.parse(id));
     }
+
+    setIsLoading(false);
   }, []);
 
   const signOut = () => {
@@ -94,6 +99,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     name,
     email,
     id,
+    isLoading,
     signOut,
     saveUserId,
     saveEmail,

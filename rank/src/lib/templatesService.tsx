@@ -1,4 +1,4 @@
-import { Firestore, collection, doc, getDoc } from "@firebase/firestore";
+import { Firestore, collection, doc, getDoc, updateDoc } from "@firebase/firestore";
 import RankableItem from "../models/RankableItem";
 import { addDoc } from "firebase/firestore";
 import { db } from "./firebaseConfig";
@@ -90,4 +90,22 @@ export async function PostNewTemplate(
   });
 
   return response.id;
+}
+
+export async function UpdateTemplate(
+  db: Firestore,
+  templateId: string,
+  templateName: string,
+  items: string[],
+  images?: string[]
+) {
+  console.log("updating template");
+  const uniqueArray = Array.from(new Set(items));
+  const docRef = doc(db, "templates", templateId);
+
+  await updateDoc(docRef, {
+    items: uniqueArray,
+    name: templateName,
+    images: images ?? [],
+  });
 }

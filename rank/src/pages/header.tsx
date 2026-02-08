@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from "react";
 import logo from "../resources/logo.png";
 import { CreateUser, GetUserIdForEmail } from "../services/userService";
@@ -8,6 +10,8 @@ import { AuthResult } from "../components/auth/authWidget";
 import "../styles/auth.css";
 import { useAuth } from "../components/auth/authProvider";
 import { useDB } from "../services/dbProvider";
+import { useRouter } from "next/navigation";
+import FirebaseAuthUI from "../components/auth/FirebaseAuthUI";
 
 export interface HeaderProps {}
 
@@ -15,6 +19,7 @@ function Header(props: HeaderProps) {
   const auth = useAuth();
   const [showAuth, setShowAuth] = useState(false);
   const db = useDB().db;
+  const router = useRouter();
 
   async function signInWithCredential(authResult: AuthResult) {
     var id = "";
@@ -74,7 +79,7 @@ function Header(props: HeaderProps) {
           className="button-styles caveat-large"
           onClick={() => {
             auth.signOut();
-            navigate("/");
+            router.push("/");
           }}
         >
           {" "}
@@ -89,7 +94,10 @@ function Header(props: HeaderProps) {
       <div className="auth-overlay">
         <div className="auth-container">
           <div className="auth-title">Sign in or Sign Up</div>
-          ~~deleted ui component~~
+          <FirebaseAuthUI
+            uiConfig={uiConfig}
+            firebaseAuth={firebase.auth()}
+          />
           <button
             className="close-auth button-styles caveat-large"
             onClick={() => setShowAuth(false)}
@@ -106,7 +114,7 @@ function Header(props: HeaderProps) {
       <div className="header-container">
         <div className="header-left">
           <a href="/">
-            <img src={logo} alt="logo" className="header-logo" />
+            <img src={logo.src} alt="logo" className="header-logo" />
           </a>
           <a href="/">
             <h1 className="header-title">rank anything</h1>
