@@ -65,7 +65,7 @@ export function RanksList(props: RanksListProps) {
             <a
               className="template-link row"
               key={stub.id}
-              href={"/rank/edit?id=" + stub.id}
+              href={"/rank/edit/" + stub.id}
             >
               {stub.name}{" "}
               {stub.images.length > 2 ? (

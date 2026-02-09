@@ -8,11 +8,12 @@ import RankTitle from "../../components/ranker/rankTitle";
 import { useAuth } from "../../components/auth/authProvider";
 import { useDB } from "../../services/dbProvider";
 
-function RankEdit() {
+interface RankEditProps {
+  id: string;
+}
+
+function RankEdit({ id }: RankEditProps) {
   const [view, setView] = useState(RankViews.LOADING);
-  // const [searchParams] = useSearchParams();
-  // const id = searchParams.get("id");
-  const id = "temp-id";
   const [ranking, setRanking] = useState<RankableItem[]>([]);
   const [rankName, setRankName] = useState("");
   const [templateId, setTemplateId] = useState("");

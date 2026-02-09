@@ -50,7 +50,7 @@ function RankView(props: RankViewProps) {
         rankName
       );
       alert("Ranking saved successfully!");
-      router.push("/rank/edit?id=" + rankId);
+      router.push("/rank/edit/" + rankId);
     } catch (error) {
       console.error("Error saving ranking:", error);
       alert("Failed to save ranking. Please try again.");
