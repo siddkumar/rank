@@ -1,5 +1,5 @@
 import { ExistingTemplateStub } from "../components/templates/templates";
-import { ExistingRankStub } from "../pages/rank/ranks";
+import { ExistingRankStub } from "../models/ExistingRankStub";
 import {
   Firestore,
   addDoc,

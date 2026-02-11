@@ -1,12 +1,12 @@
 "use client";
 
 import React, { useState } from "react";
-import ListRanker from "../../components/ranker/listRanker";
+import ListRanker from "../ranker/listRanker";
 import RankableItem from "../../models/RankableItem";
 import "../../styles/rank.css";
-import RankTitle from "../../components/ranker/rankTitle";
+import RankTitle from "../ranker/rankTitle";
 import { PostNewRank } from "../../lib/ranksService";
-import { useAuth } from "../../components/auth/authProvider";
+import { useAuth } from "../auth/authProvider";
 import { useDB } from "../../services/dbProvider";
 import { useRouter } from "next/navigation";
 
@@ -61,6 +61,13 @@ function RankView(props: RankViewProps) {
     <div className="rank-page-layout">
       <div className="rank-title">
         <RankTitle defaultTitle={rankName} onChange={(s) => setRankName(s)} />
+        {props.templateId && (
+          <div>
+            <a href={"/bracket/" + props.templateId}>
+              Bracket View
+            </a>
+          </div>
+        )}
       </div>
       <ListRanker rankableList={ranking} onSave={save} />
     </div>

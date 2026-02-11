@@ -1,13 +1,15 @@
+"use client";
+
 import React, { useEffect, useState } from "react";
-import { RankViews } from "./rank";
-import "../../styles/rank.css";
-import RankableItem from "../../models/RankableItem";
-import { GetRankById, PostNewRank, UpdateRank } from "../../lib/ranksService";
-import ListRanker from "../../components/ranker/listRanker";
-import RankTitle from "../../components/ranker/rankTitle";
-import { useAuth } from "../../components/auth/authProvider";
-import { useDB } from "../../services/dbProvider";
-import { Icon } from "../../components/common/Icon";
+import { RankViews } from "../../../../components/rank/RankView";
+import "../../../../styles/rank.css";
+import RankableItem from "../../../../models/RankableItem";
+import { GetRankById, PostNewRank, UpdateRank } from "../../../../lib/ranksService";
+import ListRanker from "../../../../components/ranker/listRanker";
+import RankTitle from "../../../../components/ranker/rankTitle";
+import { useAuth } from "../../../../components/auth/authProvider";
+import { useDB } from "../../../../services/dbProvider";
+import { Icon } from "../../../../components/common/Icon";
 
 interface RankEditProps {
   id: string;
@@ -83,6 +85,11 @@ function RankEdit({ id }: RankEditProps) {
       <div className="rank-page-layout">
         <div className="rank-title">
           <RankTitle defaultTitle={rankName} onChange={onRankNameChange} />
+          <div>
+            <a href={"/bracket/" + templateId}>
+              Bracket View
+            </a>
+          </div>
           <div>
             <a href={"/template/" + templateId}>
               Template

@@ -1,26 +1,37 @@
 import BracketManager from "../../../components/brackets/bracketManager";
-import { GetRankById } from "../../../lib/ranksService";
+import BracketView from "./BracketView";
+import { GetBracketById } from "../../../lib/bracketsService";
+import { GetTemplateById } from "../../../lib/templatesService";
 
 const Bracket = async ({ params }: { params: { id: string } }) => {
   const { id } = params;
 
-  const x = await GetRankById(id ?? "");
+  // Try to fetch as an existing bracket first
+  const bracket = await GetBracketById(id ?? "");
 
-  if (!x) {
-    // Handle not found, optionally return a 404 page
-    return <div>List not found</div>;
+  if (bracket && bracket.bloblist.length > 1) {
+    // Display existing bracket (read-only view)
+    return (
+      <div className="rank-page-layout">
+        <BracketManager bracketItems={[...bracket.bloblist]}></BracketManager>
+      </div>
+    );
   }
 
-  if (x.bloblist.length <= 1 )
-  {
-    return <div>List not found</div>;
+  // If not found as a bracket, try as a template (for creating new bracket)
+  const template = await GetTemplateById(id ?? "");
+  if (template && template.rankableList && template.rankableList.length > 1) {
+    // Display template in bracket view with save functionality
+    return (
+      <BracketView
+        bracketItems={[...template.rankableList]}
+        bracketName={template.templateName}
+        templateId={id}
+      />
+    );
   }
 
-  return (
-    <div className="rank-page-layout">
-      <BracketManager bracketItems={[...x.bloblist]}></BracketManager>
-    </div>
-  );
+  return <div>List not found</div>;
 };
 
 export default Bracket;

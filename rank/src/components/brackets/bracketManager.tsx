@@ -8,6 +8,7 @@ import styles from "./bracketManager.module.css";
 
 export interface BracketManagerProps {
   bracketItems: RankableItem[];
+  onSave?: (bracketItems: RankableItem[]) => void;
 }
 
 enum BracketViews {
@@ -213,6 +214,36 @@ function BracketManager(props: BracketManagerProps) {
     );
   }
 
+  function handleSave() {
+    if (!props.onSave) return;
+
+    // Extract the final ranking from the bracket results
+    const finalRanking: RankableItem[] = [];
+
+    // Get all items from the last round (winners)
+    const lastRound = roundByRound[roundByRound.length - 1];
+    lastRound.forEach((item: RankableItem) => {
+      if (item.name !== "BYE" && item.name !== RankableDefaultString) {
+        finalRanking.push(item);
+      }
+    });
+
+    // Get items from earlier rounds (in order of elimination)
+    for (let i = roundByRound.length - 2; i >= 0; i--) {
+      roundByRound[i].forEach((item: RankableItem) => {
+        if (
+          item.name !== "BYE" &&
+          item.name !== RankableDefaultString &&
+          !finalRanking.some((r) => r.name === item.name)
+        ) {
+          finalRanking.push(item);
+        }
+      });
+    }
+
+    props.onSave(finalRanking);
+  }
+
   return (
     <div>
       <div className={styles.bracketPageHeader}>
@@ -237,6 +268,21 @@ function BracketManager(props: BracketManagerProps) {
         renderTabletView(rounds, Math.max(mobileRoundView, 1))}
       {view === BracketViews.MOBILE &&
         renderMobileView(rounds, mobileRoundView)}
+      {props.onSave && (
+        <div style={{ textAlign: "center", marginTop: "20px" }}>
+          <button
+            className={styles.buttonStyles}
+            onClick={handleSave}
+            style={{
+              padding: "10px 30px",
+              fontSize: "16px",
+              cursor: "pointer",
+            }}
+          >
+            Save Bracket
+          </button>
+        </div>
+      )}
     </div>
   );
 }

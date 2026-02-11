@@ -1,5 +1,5 @@
 import { GetRankById } from "../../../lib/ranksService";
-import RankView from "../../../pages/rank/rank";
+import RankView from "../../../components/rank/RankView";
 
 const Rank = async ({ params }: { params: { id: string } }) => {
   const { id } = params;

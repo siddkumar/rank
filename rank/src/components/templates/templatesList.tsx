@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { ExistingTemplateStub } from "./templates";
-import { ExistingRankStub } from "../../pages/rank/ranks";
+import { ExistingRankStub } from "../../models/ExistingRankStub";
 import { useDB } from "../../services/dbProvider";
 import { Firestore } from "@firebase/firestore";
 import { DeleteRank } from "../../lib/ranksService";

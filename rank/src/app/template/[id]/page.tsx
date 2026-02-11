@@ -1,4 +1,4 @@
-import RankView from "../../../pages/rank/rank";
+import RankView from "../../../components/rank/RankView";
 import { GetTemplateById } from "../../../lib/templatesService";
 
 const Template = async ({ params }: { params: { id: string } }) => {
