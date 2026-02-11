@@ -1,27 +1,79 @@
+/* Sleek Dark My Stuff Page */
 .myStuff-page-layout {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  font-family: "Open Sans", sans-serif;
+  font-family: var(--font-primary);
+  padding: var(--spacing-3xl) var(--spacing-xl);
+  gap: var(--spacing-xl);
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
 }
 
 .stuff-subtitle {
-  margin-bottom: 1rem;
+  margin-bottom: var(--spacing-lg);
   display: flex;
   align-items: center;
-  font-family: "Caveat", cursive;
-  color: #160f29;
-  font-size: x-large;
+  font-family: var(--font-primary);
+  color: var(--text-primary);
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lg);
+  padding: var(--spacing-lg) var(--spacing-xl);
+  transition: all var(--transition-base);
+  width: 100%;
+}
 
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  transition: 0.3s;
-  border-radius: 5px;
-  background-color: #f9f9fb;
-
-  padding: 1rem 1rem;
+.stuff-subtitle:hover {
+  box-shadow: var(--shadow-xl);
+  border-color: var(--border-secondary);
 }
 
 .myStuffContainer {
   display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xl);
+  width: 100%;
+}
+
+/* Section Headers */
+.section-header {
+  font-family: var(--font-primary);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  margin-bottom: var(--spacing-md);
+  padding-bottom: var(--spacing-sm);
+  border-bottom: 2px solid var(--border-primary);
+  letter-spacing: -0.01em;
+}
+
+/* Grid Layout */
+.stuffGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: var(--spacing-lg);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .myStuff-page-layout {
+    padding: var(--spacing-xl) var(--spacing-md);
+  }
+
+  .stuff-subtitle {
+    font-size: 1.5rem;
+    padding: var(--spacing-md) var(--spacing-lg);
+  }
+
+  .stuffGrid {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-md);
+  }
 }

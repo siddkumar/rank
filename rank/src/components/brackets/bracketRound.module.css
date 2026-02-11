@@ -1,53 +1,186 @@
+/* Modern Bracket Round Styles */
 .roundContainer {
   display: flex;
   flex-direction: column;
-  padding-right: 0.5rem;
-  padding-left: 0.5rem;
+  padding-right: var(--spacing-md);
+  padding-left: var(--spacing-md);
   justify-content: space-around;
   flex-grow: 1;
-  background-color: #f5f5f5;
-}
-
-i .glyph {
-  margin-left: 1rem;
-  cursor: pointer;
-  color: #488e98;
-}
-
-.bracketItem {
-  text-align: center;
-  border: 1px dotted #160f29;
-  padding: 0.5rem 0.5rem;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  transition: 0.3s;
-  border-radius: 5px;
-  background-color: #fafafa;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  cursor: pointer;
-}
-
-.bracketItem:hover {
-  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
-}
-
-.controls {
-  display: flex;
+  min-width: 250px;
+  gap: var(--spacing-lg);
 }
 
 .roundContainerOdd {
   display: flex;
   flex-direction: column;
-  padding-right: 0.5rem;
-  padding-left: 0.5rem;
+  padding-right: var(--spacing-md);
+  padding-left: var(--spacing-md);
   justify-content: space-around;
   flex-grow: 1;
-  background-color: #eceff1;
+  min-width: 250px;
+  gap: var(--spacing-lg);
+  background-color: var(--surface-secondary);
 }
 
+/* Round Title */
+.roundTitle {
+  text-align: center;
+  font-family: var(--font-primary);
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--neutral-600);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: var(--spacing-lg);
+  padding-bottom: var(--spacing-sm);
+  border-bottom: 2px solid var(--border-light);
+}
+
+/* Matchup Container */
 .matchupContainer {
-  margin-bottom: 0.5rem;
-  margin-top: 0.5rem;
+  margin-bottom: var(--spacing-md);
+  margin-top: var(--spacing-md);
   width: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+/* Bracket Item */
+.bracketItem {
+  text-align: left;
+  border: 2px solid var(--border-light);
+  padding: var(--spacing-md);
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-base);
+  border-radius: var(--radius-md);
+  background-color: var(--surface-primary);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  min-height: 60px;
+  gap: var(--spacing-sm);
+  position: relative;
+}
+
+.bracketItem:hover {
+  box-shadow: var(--shadow-md);
+  border-color: var(--accent-400);
+  transform: translateX(4px);
+}
+
+.bracketItem:active {
+  transform: translateX(2px);
+  box-shadow: var(--shadow-sm);
+}
+
+.bracketItem.selected {
+  border-color: var(--accent-500);
+  background-color: var(--accent-50, #eff6ff);
+  box-shadow: var(--shadow-md);
+}
+
+.bracketItem.winner {
+  border-color: var(--success-500);
+  background-color: var(--success-50, #f0fdf4);
+  border-width: 2px;
+}
+
+.bracketItem.winner::before {
+  content: '✓';
+  position: absolute;
+  right: var(--spacing-sm);
+  top: var(--spacing-sm);
+  color: var(--success-600);
+  font-weight: bold;
+  font-size: 1.125rem;
+}
+
+/* Controls */
+.controls {
+  display: flex;
+  gap: var(--spacing-xs);
+  align-items: center;
+}
+
+.controls i {
+  cursor: pointer;
+  color: var(--neutral-500);
+  transition: all var(--transition-fast);
+  font-size: 1rem;
+  padding: var(--spacing-xs);
+  border-radius: var(--radius-sm);
+}
+
+.controls i:hover {
+  color: var(--accent-500);
+  background-color: var(--neutral-50);
+}
+
+/* Glyph/Avatar */
+.glyph {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: var(--radius-md);
+  background-color: var(--neutral-100);
+  border: 1px solid var(--border-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  flex-shrink: 0;
+  margin-left: var(--spacing-sm);
+}
+
+.glyph img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.glyphStub {
+  width: 2rem;
+  height: 2rem;
+  border-radius: var(--radius-sm);
+  background-color: var(--neutral-100);
+  border: 1px solid var(--border-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.glyphStub img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .roundContainer,
+  .roundContainerOdd {
+    min-width: 200px;
+  }
+}
+
+@media (max-width: 768px) {
+  .roundContainer,
+  .roundContainerOdd {
+    min-width: 180px;
+    padding-right: var(--spacing-sm);
+    padding-left: var(--spacing-sm);
+  }
+
+  .bracketItem {
+    min-height: 50px;
+    padding: var(--spacing-sm);
+  }
+
+  .glyph {
+    width: 2rem;
+    height: 2rem;
+  }
 }
