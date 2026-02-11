@@ -7,6 +7,7 @@ import ListRanker from "../../components/ranker/listRanker";
 import RankTitle from "../../components/ranker/rankTitle";
 import { useAuth } from "../../components/auth/authProvider";
 import { useDB } from "../../services/dbProvider";
+import { Icon } from "../../components/common/Icon";
 
 interface RankEditProps {
   id: string;
@@ -83,9 +84,9 @@ function RankEdit({ id }: RankEditProps) {
         <div className="rank-title">
           <RankTitle defaultTitle={rankName} onChange={onRankNameChange} />
           <div>
-            <a href={"/rank?templateId=" + templateId}>
+            <a href={"/template/" + templateId}>
               Template
-              <i className="icon-override fa-regular fa-share-from-square"></i>
+              <Icon className="icon-override fa-regular fa-share-from-square" />
             </a>
           </div>
         </div>

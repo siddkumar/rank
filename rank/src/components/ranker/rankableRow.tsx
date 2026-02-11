@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { Icon } from "../common/Icon";
 
 import styles from "./rankableRow.module.css";
 
@@ -34,16 +35,16 @@ export function RankableRow(props: RankableRowProps) {
       </div>
       <div className={styles.controls}>
         <div onClick={props.onBotton}>
-          <i className="fa-solid fa-angles-down"></i>
+          <Icon className="fa-solid fa-angles-down" />
         </div>
         <div onClick={props.onDown}>
-          <i className="fa-solid fa-angle-down"></i>
+          <Icon className="fa-solid fa-angle-down" />
         </div>
         <div onClick={props.onUp}>
-          <i className="fa-solid fa-angle-up"></i>
+          <Icon className="fa-solid fa-angle-up" />
         </div>
         <div onClick={props.onTop}>
-          <i className="fa-solid fa-angles-up"></i>
+          <Icon className="fa-solid fa-angles-up" />
         </div>
       </div>
     </>

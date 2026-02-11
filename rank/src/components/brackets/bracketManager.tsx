@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import RankableItem, { RankableDefaultString } from "../../models/RankableItem";
 import BracketRound from "./bracketRound";
+import { Icon } from "../common/Icon";
 import styles from "./bracketManager.module.css";
 
 export interface BracketManagerProps {
@@ -144,7 +145,7 @@ function BracketManager(props: BracketManagerProps) {
             <div className={styles.bracketItem}>
               {winner ?? RankableDefaultString}
               <div className={styles.controls}>
-                <i className="fa-solid fa-trophy"></i>
+                <Icon className="fa-solid fa-trophy" />
               </div>
             </div>
           </div>
@@ -165,7 +166,7 @@ function BracketManager(props: BracketManagerProps) {
             <div className={styles.bracketItem}>
               {winner ?? RankableDefaultString}
               <div className={styles.controls}>
-                <i className="fa-solid fa-trophy"></i>
+                <Icon className="fa-solid fa-trophy" />
               </div>
             </div>
           </div>
@@ -217,18 +218,18 @@ function BracketManager(props: BracketManagerProps) {
       <div className={styles.bracketPageHeader}>
         <div>
           Switch View
-          <i
+          <Icon
             onClick={(e) => setView(BracketViews.DESKTOP)}
             className="fa-solid fa-desktop"
-          ></i>
-          <i
+          />
+          <Icon
             onClick={(e) => setView(BracketViews.TABLET)}
             className="fa-solid fa-tablet-screen-button"
-          ></i>
-          <i
+          />
+          <Icon
             onClick={(e) => setView(BracketViews.MOBILE)}
             className="fa-solid fa-mobile-screen-button"
-          ></i>
+          />
         </div>
       </div>
       {view === BracketViews.DESKTOP && renderDesktopView(rounds)}

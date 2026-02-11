@@ -1,4 +1,4 @@
-"use client" 
+"use client"
 
 import React, { useEffect, useState } from "react";
 import { ExistingTemplateStub } from "./templates";
@@ -6,6 +6,7 @@ import { ExistingRankStub } from "../../pages/rank/ranks";
 import { useDB } from "../../services/dbProvider";
 import { Firestore } from "@firebase/firestore";
 import { DeleteRank } from "../../lib/ranksService";
+import { Icon } from "../common/Icon";
 import styles from "./templatesList.module.css"
 
 export interface TemplatesListProps {
@@ -78,10 +79,10 @@ export function RanksList(props: RanksListProps) {
                 <></>
               )}
             </a>
-            <i
+            <Icon
               onClick={(e) => deleteRank(stub, i, db!)}
               className="fa-regular fa-trash-can"
-            ></i>
+            />
           </div>
         );
       })}

@@ -2,6 +2,7 @@
 
 import React from "react";
 import RankableItem, { RankableDefaultString } from "../../models/RankableItem";
+import { Icon } from "../common/Icon";
 import styles from "./bracketRound.module.css";
 
 export interface BracketRoundProps {
@@ -49,7 +50,7 @@ function BracketRound(props: BracketRoundProps) {
               {MiniPic(x?.imageUrl)}
               <div>{getNiceString(x.name, x.rank)}</div>
               <div className={styles.controls}>
-                <i className="fa-solid fa-square-caret-right"></i>
+                <Icon className="fa-solid fa-square-caret-right" />
               </div>
             </div>
             <div
@@ -62,7 +63,7 @@ function BracketRound(props: BracketRoundProps) {
               {MiniPic(y?.imageUrl)}
               <div>{getNiceString(y.name, y.rank)}</div>
               <div className={styles.controls}>
-                <i className="fa-solid fa-square-caret-right"></i>
+                <Icon className="fa-solid fa-square-caret-right" />
               </div>
             </div>
           </div>

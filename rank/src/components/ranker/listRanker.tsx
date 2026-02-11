@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   DragDropContext,
   Droppable,
@@ -23,6 +23,15 @@ function ListRanker(props: ListRankerProps) {
     (obj, index, self) => index === self.findIndex((o) => o.name === obj.name)
   );
   const [blobList, setBloblist] = useState<RankableItem[]>(uniqueList);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <>
@@ -41,24 +50,22 @@ function ListRanker(props: ListRankerProps) {
                   index={index}
                 >
                   {(provided) => (
-                    <>
-                      <div
-                        className={styles.rankableRowWrapper}
-                        ref={provided.innerRef}
-                        {...provided.dragHandleProps}
-                        {...provided.draggableProps}
-                      >
-                        <RankableRow
-                          index={index}
-                          item={item.name}
-                          imageUrl={item.imageUrl}
-                          onDown={() => moveItem(index, index + 1)}
-                          onUp={() => moveItem(index, index - 1)}
-                          onTop={() => moveItem(index, 0)}
-                          onBotton={() => moveItem(index, blobList.length)}
-                        />
-                      </div>
-                    </>
+                    <div
+                      className={styles.rankableRowWrapper}
+                      ref={provided.innerRef}
+                      {...provided.dragHandleProps}
+                      {...provided.draggableProps}
+                    >
+                      <RankableRow
+                        index={index}
+                        item={item.name}
+                        imageUrl={item.imageUrl}
+                        onDown={() => moveItem(index, index + 1)}
+                        onUp={() => moveItem(index, index - 1)}
+                        onTop={() => moveItem(index, 0)}
+                        onBotton={() => moveItem(index, blobList.length)}
+                      />
+                    </div>
                   )}
                 </Draggable>
               ))}

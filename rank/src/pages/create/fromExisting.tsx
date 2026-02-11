@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { ExistingTemplateStub } from "../../components/templates/templates";
 import { TemplatesList } from "../../components/templates/templatesList";
 import { GetTemplatesList } from "../../lib/templatesService";
+import { Icon } from "../../components/common/Icon";
 import "../../styles/create.css";
 
 function CreateFromExisting() {
@@ -14,7 +15,7 @@ function CreateFromExisting() {
   return (
     <div>
       <div className="main-subtitle">
-        <i className="fa-solid fa-medal no-left no-pointer"></i> Featured
+        <Icon className="fa-solid fa-medal no-left no-pointer" /> Featured
         Templates
       </div>
       <TemplatesList stubs={stubs} />
