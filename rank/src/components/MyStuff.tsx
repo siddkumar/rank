@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from "react";
 import "firebaseui/dist/firebaseui.css";
-import "../../styles/myStuff.css";
-import { ExistingTemplateStub } from "../../components/templates/templates";
+import "../styles/myStuff.css";
+import { ExistingTemplateStub } from "./templates/templates";
 import {
   RanksList,
   TemplatesList,
-} from "../../components/templates/templatesList";
-import { ExistingRankStub } from "../rank/ranks";
+} from "./templates/templatesList";
+import { ExistingRankStub } from "../models/ExistingRankStub";
 import {
   GetRanksForUserId,
   GetTemplatesForUserId,
-} from "../../services/userService";
-import { useAuth } from "../../components/auth/authProvider";
-import { useDB } from "../../services/dbProvider";
+} from "../services/userService";
+import { useAuth } from "./auth/authProvider";
+import { useDB } from "../services/dbProvider";
 
 enum MyStuffViews {
   SignIn = "SignIn",

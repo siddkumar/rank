@@ -1,6 +1,6 @@
 "use client";
 
-import MyStuff from "../../pages/home/myStuff";
+import MyStuff from "../../components/MyStuff";
 
 export default function MyStuffPage() {
   return <MyStuff />;

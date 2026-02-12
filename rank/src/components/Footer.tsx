@@ -1,5 +1,7 @@
+"use client";
+
 import React from "react";
-import { Icon } from "../components/common/Icon";
+import { Icon } from "./common/Icon";
 
 const Footer = () => {
   return (

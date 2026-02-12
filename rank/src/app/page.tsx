@@ -1,11 +1,9 @@
+"use client";
+
 import React from "react";
-import { ClientOnly } from "./client";
+import Create from "../components/create/create";
 
-export function generateStaticParams() {
-  return [{ slug: [""] }];
-}
-
-export default function Page() {
-  return <ClientOnly />;
+export default function HomePage() {
+  return <Create />;
 }
  

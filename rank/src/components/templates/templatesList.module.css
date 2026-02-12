@@ -152,6 +152,83 @@
   line-height: 1.6;
 }
 
+/* Pagination Controls */
+.paginationContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-lg);
+  margin-top: var(--spacing-md);
+  padding: var(--spacing-sm) 0;
+}
+
+.paginationArrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  background-color: var(--bg-tertiary);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-lg);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  font-size: 1rem;
+  padding: 0;
+}
+
+.paginationArrow:hover:not(:disabled) {
+  background-color: var(--bg-elevated);
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
+  transform: scale(1.05);
+}
+
+.paginationArrow:active:not(:disabled) {
+  transform: scale(0.95);
+}
+
+.paginationArrow:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.paginationDots {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.paginationDot {
+  width: 0.625rem;
+  height: 0.625rem;
+  background-color: var(--bg-tertiary);
+  border: 1px solid var(--border-primary);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  padding: 0;
+}
+
+.paginationDot:hover {
+  background-color: var(--bg-elevated);
+  border-color: var(--accent-primary);
+  transform: scale(1.2);
+}
+
+.activeDot {
+  background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+  width: 0.75rem;
+  height: 0.75rem;
+}
+
+.activeDot:hover {
+  transform: scale(1.1);
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .templatesGrid {
@@ -171,5 +248,25 @@
 
   .templateName {
     font-size: 1rem;
+  }
+
+  .paginationContainer {
+    gap: var(--spacing-md);
+  }
+
+  .paginationArrow {
+    width: 2rem;
+    height: 2rem;
+    font-size: 0.875rem;
+  }
+
+  .paginationDot {
+    width: 0.5rem;
+    height: 0.5rem;
+  }
+
+  .activeDot {
+    width: 0.625rem;
+    height: 0.625rem;
   }
 }

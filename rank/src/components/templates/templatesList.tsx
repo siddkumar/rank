@@ -18,59 +18,45 @@ export interface RanksListProps {
 }
 
 export function TemplatesList(props: TemplatesListProps) {
-  return (
-    <div className="list-container">
-      {props.stubs.map((stub, _s) => {
-        return (
-          <a
-            className="template-link item-container card row"
-            key={stub.id}
-            href={"/template/" + stub.id}
-          >
-            {stub.name}
-            {stub.images.length > 2 ? (
-              <div key={stub.id} className="controls">
-                <img src={stub.images[0]} alt={"i"} className={styles.glyphStub} />
-                <img src={stub.images[1]} alt={"i"} className={styles.glyphStub} />
-                <img src={stub.images[2]} alt={"i"} className={styles.glyphStub} />
-              </div>
-            ) : (
-              <></>
-            )}
-          </a>
-        );
-      })}
-    </div>
-  );
-}
+  const [currentPage, setCurrentPage] = useState(0);
+  const itemsPerPage = 10;
+  const totalPages = Math.ceil(props.stubs.length / itemsPerPage);
 
-export function RanksList(props: RanksListProps) {
-  const db = useDB().db;
-  const [rankList, setRankList] = useState(props.stubs);
-
+  // Reset to first page when stubs change
   useEffect(() => {
-    setRankList(props.stubs);
+    setCurrentPage(0);
   }, [props.stubs]);
 
-  function deleteRank(s: ExistingRankStub, i: number, db: Firestore) {
-    const updatedList = rankList.slice(0, i).concat(rankList.slice(i + 1));
-    DeleteRank(db, s.id);
-    setRankList(updatedList);
-  }
+  // Calculate which items to show
+  const startIndex = currentPage * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const currentItems = props.stubs.slice(startIndex, endIndex);
+
+  const goToPreviousPage = () => {
+    setCurrentPage((prev) => Math.max(0, prev - 1));
+  };
+
+  const goToNextPage = () => {
+    setCurrentPage((prev) => Math.min(totalPages - 1, prev + 1));
+  };
+
+  const goToPage = (pageIndex: number) => {
+    setCurrentPage(pageIndex);
+  };
 
   return (
     <>
-      {rankList.map((stub, i) => {
-        return (
-          <div className="item-container card row" key={stub.id}>
+      <div className="list-container">
+        {currentItems.map((stub, _s) => {
+          return (
             <a
-              className="template-link row"
+              className="template-link item-container card row"
               key={stub.id}
-              href={"/rank/edit/" + stub.id}
+              href={"/template/" + stub.id}
             >
-              {stub.name}{" "}
+              {stub.name}
               {stub.images.length > 2 ? (
-                <div key={stub.id} className="controls-rank">
+                <div key={stub.id} className="controls">
                   <img src={stub.images[0]} alt={"i"} className={styles.glyphStub} />
                   <img src={stub.images[1]} alt={"i"} className={styles.glyphStub} />
                   <img src={stub.images[2]} alt={"i"} className={styles.glyphStub} />
@@ -79,13 +65,146 @@ export function RanksList(props: RanksListProps) {
                 <></>
               )}
             </a>
-            <Icon
-              onClick={(e) => deleteRank(stub, i, db!)}
-              className="fa-regular fa-trash-can"
-            />
+          );
+        })}
+      </div>
+
+      {/* Pagination Controls */}
+      {totalPages > 1 && (
+        <div className={styles.paginationContainer}>
+          <button
+            className={styles.paginationArrow}
+            onClick={goToPreviousPage}
+            disabled={currentPage === 0}
+          >
+            <Icon className="fa-solid fa-chevron-left" />
+          </button>
+
+          <div className={styles.paginationDots}>
+            {Array.from({ length: totalPages }, (_, index) => (
+              <button
+                key={index}
+                className={`${styles.paginationDot} ${
+                  index === currentPage ? styles.activeDot : ""
+                }`}
+                onClick={() => goToPage(index)}
+                aria-label={`Go to page ${index + 1}`}
+              />
+            ))}
           </div>
-        );
-      })}
+
+          <button
+            className={styles.paginationArrow}
+            onClick={goToNextPage}
+            disabled={currentPage === totalPages - 1}
+          >
+            <Icon className="fa-solid fa-chevron-right" />
+          </button>
+        </div>
+      )}
+    </>
+  );
+}
+
+export function RanksList(props: RanksListProps) {
+  const db = useDB().db;
+  const [rankList, setRankList] = useState(props.stubs);
+  const [currentPage, setCurrentPage] = useState(0);
+  const itemsPerPage = 10;
+  const totalPages = Math.ceil(rankList.length / itemsPerPage);
+
+  useEffect(() => {
+    setRankList(props.stubs);
+    setCurrentPage(0);
+  }, [props.stubs]);
+
+  // Calculate which items to show
+  const startIndex = currentPage * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const currentItems = rankList.slice(startIndex, endIndex);
+
+  function deleteRank(s: ExistingRankStub, i: number, db: Firestore) {
+    const updatedList = rankList.slice(0, i).concat(rankList.slice(i + 1));
+    DeleteRank(db, s.id);
+    setRankList(updatedList);
+  }
+
+  const goToPreviousPage = () => {
+    setCurrentPage((prev) => Math.max(0, prev - 1));
+  };
+
+  const goToNextPage = () => {
+    setCurrentPage((prev) => Math.min(totalPages - 1, prev + 1));
+  };
+
+  const goToPage = (pageIndex: number) => {
+    setCurrentPage(pageIndex);
+  };
+
+  return (
+    <>
+      <div className="list-container">
+        {currentItems.map((stub, i) => {
+          return (
+            <div className="item-container card row" key={stub.id}>
+              <a
+                className="template-link row"
+                key={stub.id}
+                href={"/rank/edit/" + stub.id}
+              >
+                {stub.name}{" "}
+                {stub.images.length > 2 ? (
+                  <div key={stub.id} className="controls-rank">
+                    <img src={stub.images[0]} alt={"i"} className={styles.glyphStub} />
+                    <img src={stub.images[1]} alt={"i"} className={styles.glyphStub} />
+                    <img src={stub.images[2]} alt={"i"} className={styles.glyphStub} />
+                  </div>
+                ) : (
+                  <></>
+                )}
+              </a>
+              <Icon
+                onClick={() => deleteRank(stub, startIndex + i, db!)}
+                className="fa-regular fa-trash-can"
+              />
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Pagination Controls */}
+      {totalPages > 1 && (
+        <div className={styles.paginationContainer}>
+          <button
+            className={styles.paginationArrow}
+            onClick={goToPreviousPage}
+            disabled={currentPage === 0}
+          >
+            <Icon className="fa-solid fa-chevron-left" />
+          </button>
+
+          <div className={styles.paginationDots}>
+            {Array.from({ length: totalPages }, (_, index) => (
+              <button
+                key={index}
+                className={`${styles.paginationDot} ${
+                  index === currentPage ? styles.activeDot : ""
+                }`}
+                onClick={() => goToPage(index)}
+                aria-label={`Go to page ${index + 1}`}
+              />
+            ))}
+          </div>
+
+          <button
+            className={styles.paginationArrow}
+            onClick={goToNextPage}
+            disabled={currentPage === totalPages - 1}
+          >
+            <Icon className="fa-solid fa-chevron-right" />
+          </button>
+        </div>
+      )}
     </>
   );
 }

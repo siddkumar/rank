@@ -13,14 +13,14 @@
 
 /* Hero Section */
 .home-title {
-  font-size: 4rem;
-  font-weight: 900;
+  font-size: 2rem;
+  font-weight: 800;
   text-align: center;
   width: 100%;
   margin: 0;
   font-family: var(--font-primary);
-  letter-spacing: -0.04em;
-  line-height: 1.1;
+  letter-spacing: -0.03em;
+  line-height: 1.2;
   background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent-primary) 50%, var(--accent-tertiary) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -41,7 +41,7 @@
 .main-subtitle {
   font-size: 1.25rem;
   font-weight: 400;
-  margin: var(--spacing-lg) 0;
+  margin: var(--spacing-sm) 0;
   width: 100%;
   max-width: 600px;
   font-family: var(--font-primary);
@@ -56,7 +56,41 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--spacing-2xl);
+  gap: var(--spacing-md);
+}
+
+/* Card Header with Collapse Button */
+.card-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-md);
+  user-select: none;
+}
+
+.card-header .home-title {
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.card-header .home-title:hover {
+  opacity: 0.8;
+}
+
+.card-header i {
+  font-size: 1.25rem;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  padding: var(--spacing-sm);
+  border-radius: var(--radius-md);
+}
+
+.card-header i:hover {
+  color: var(--accent-primary);
+  background-color: var(--bg-elevated);
+  transform: scale(1.1);
 }
 
 /* Hero Section with Gradient Background */

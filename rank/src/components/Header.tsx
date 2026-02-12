@@ -1,17 +1,22 @@
 "use client";
 
 import React, { useState } from "react";
+import dynamic from "next/dynamic";
 import logo from "../resources/logo.png";
 import { CreateUser, GetUserIdForEmail } from "../services/userService";
 import firebase from "firebase/compat/app";
 import "firebase/compat/firestore";
 import "firebase/compat/auth";
-import { AuthResult } from "../components/auth/authWidget";
+import { AuthResult } from "./auth/authWidget";
 import "../styles/auth.css";
-import { useAuth } from "../components/auth/authProvider";
+import { useAuth } from "./auth/authProvider";
 import { useDB } from "../services/dbProvider";
 import { useRouter } from "next/navigation";
-import FirebaseAuthUI from "../components/auth/FirebaseAuthUI";
+
+// Dynamically import FirebaseAuthUI to prevent SSR issues with firebaseui library
+const FirebaseAuthUI = dynamic(() => import("./auth/FirebaseAuthUI"), {
+  ssr: false,
+});
 
 export interface HeaderProps {}
 

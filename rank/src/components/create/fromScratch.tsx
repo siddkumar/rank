@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { TemplateEditor } from "../../components/templates/templateEditor";
+import { TemplateEditor } from "../templates/templateEditor";
 import { PostNewTemplate } from "../../lib/templatesService";
 import "../../styles/create.css";
-import { useAuth } from "../../components/auth/authProvider";
+import { useAuth } from "../auth/authProvider";
 import { useDB } from "../../services/dbProvider";
 import { useRouter } from "next/navigation";
 

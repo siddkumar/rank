@@ -2,6 +2,8 @@ import React from "react";
 import Script from "next/script";
 import "../styles/App.css";
 import { Providers } from "./providers";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
 
 export default function RootLayout({
   children,
@@ -27,7 +29,11 @@ export default function RootLayout({
       </head>
       <body>
         <Providers>
-          <div id="root">{children}</div>
+          <div id="root">
+            <Header />
+            {children}
+            <Footer />
+          </div>
         </Providers>
       </body>
     </html>

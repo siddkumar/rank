@@ -15,7 +15,7 @@
 .main-subtitle {
   font-size: 1.5rem;
   font-weight: 700;
-  margin: var(--spacing-xl) 0 var(--spacing-md);
+  margin: var(--spacing-sm) 0 var(--spacing-md);
   font-family: var(--font-primary);
   color: var(--text-primary);
   letter-spacing: -0.02em;
@@ -145,6 +145,7 @@ textarea:focus {
 /* Template Wrappers */
 .potential-template-wrapper,
 .choices-container {
+  width: 100%;
   background-color: var(--bg-secondary);
   border: 1px solid var(--border-primary);
   border-radius: var(--radius-xl);
@@ -220,6 +221,25 @@ textarea:focus {
 .template-item-text-input {
   margin-left: var(--spacing-md);
   flex: 1;
+}
+
+/* Wikipedia Input Container */
+.wiki-input-container {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  width: 100%;
+}
+
+.wiki-input-container i {
+  color: var(--text-secondary);
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.wiki-input-container input {
+  flex: 1;
+  margin: 0;
 }
 
 /* Form Labels */
