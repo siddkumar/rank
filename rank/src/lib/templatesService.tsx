@@ -5,7 +5,7 @@ import { db } from "./firebaseConfig";
 
 export async function GetTemplateById(templateId: string) {
   console.log("requesting");
-  const docRef = doc(db, "templates", templateId);
+  const docRef = doc(db!, "templates", templateId);
   var rankableList: RankableItem[] = [];
   var templateName: string = "";
 

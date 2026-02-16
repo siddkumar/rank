@@ -1,6 +1,6 @@
 // lib/firebaseConfig.ts
-import { initializeApp, getApps, getApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
+import { initializeApp, getApps, getApp, FirebaseApp } from "firebase/app";
+import { getFirestore, Firestore } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC__API_KEY,
@@ -11,7 +11,13 @@ const firebaseConfig = {
   appId: process.env.NEXT_PUBLIC__APP_ID,
 };
 
-const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
-const db = getFirestore(app);
+// Only initialize Firebase on the client side
+let app: FirebaseApp | undefined;
+let db: Firestore | undefined;
+
+if (typeof window !== "undefined") {
+  app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
+  db = getFirestore(app);
+}
 
 export { db };

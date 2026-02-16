@@ -13,7 +13,7 @@ import { db } from "./firebaseConfig";
 
 export async function GetRankById(id: string) {
   console.log("requesting");
-  const docRef = doc(db, "ranks", id);
+  const docRef = doc(db!, "ranks", id);
   const docSnap = await getDoc(docRef);
   var bloblist: RankableItem[] = [];
   var templateId = "";

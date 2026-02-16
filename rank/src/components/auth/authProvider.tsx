@@ -1,8 +1,8 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { getAuth } from "firebase/auth";
+import { getAuth, Auth } from "firebase/auth";
 import firebase from "firebase/compat/app";
 
-// Initialize Firebase
+// Initialize Firebase (client-side only)
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC__API_KEY,
   authDomain: process.env.NEXT_PUBLIC__AUTH_DOMAIN,
@@ -11,8 +11,14 @@ const firebaseConfig = {
   messagingSenderId: process.env.NEXT_PUBLIC__MESSAGING_SENDER_ID,
   appId: process.env.NEXT_PUBLIC__APP_ID,
 };
-firebase.initializeApp(firebaseConfig);
-const auth = getAuth();
+
+let auth: Auth | undefined;
+if (typeof window !== "undefined") {
+  if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+  }
+  auth = getAuth();
+}
 
 // Define the shape of the AuthContext value
 interface AuthContextValue {
@@ -76,7 +82,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
     setName("");
     setEmail("");
     setUserId("");
-    auth.signOut();
+    if (auth) {
+      auth.signOut();
+    }
     localStorage.setItem("name", "");
     localStorage.setItem("email", "");
     localStorage.setItem("id", "");

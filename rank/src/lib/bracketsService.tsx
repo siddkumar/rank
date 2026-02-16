@@ -13,7 +13,7 @@ import { db } from "./firebaseConfig";
 
 export async function GetBracketById(id: string) {
   console.log("requesting bracket");
-  const docRef = doc(db, "brackets", id);
+  const docRef = doc(db!, "brackets", id);
   const docSnap = await getDoc(docRef);
   var bloblist: RankableItem[] = [];
   var templateId = "";
