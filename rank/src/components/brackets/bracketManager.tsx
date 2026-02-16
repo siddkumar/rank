@@ -258,13 +258,8 @@ function BracketManager(props: BracketManagerProps) {
       {props.onSave && (
         <div style={{ textAlign: "center", marginTop: "20px" }}>
           <button
-            className={styles.buttonStyles}
+            className="button-styles"
             onClick={handleSave}
-            style={{
-              padding: "10px 30px",
-              fontSize: "16px",
-              cursor: "pointer",
-            }}
           >
             Save Bracket
           </button>

@@ -12,11 +12,12 @@ cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 
 @app.route("/parser/getImgUrl", methods=['GET'] )
-def getImgUrl(): 
+def getImgUrl():
     url = request.args.get("url")
     base_url = 'https://en.wikipedia.org'
     full_url = urljoin(base_url, url)
-    response = requests.get(full_url)
+    headers = {'User-Agent': 'Rank Anything/2.0 (hobby project)'}
+    response = requests.get(full_url, headers=headers)
     soup = BeautifulSoup(response.text, 'html.parser')
 
     thumbnail_urls = []
@@ -34,13 +35,15 @@ def getImgUrl():
 def parse():
     try:
         link = request.json['link']
-        html = requests.get(link).text
+        headers = {'User-Agent': 'Rank Anything/2.0 (hobby project)'}
+        html = requests.get(link, headers=headers).text
         soup = BeautifulSoup(html, 'html.parser')
 
         tablesAndHeaders = soup.find_all(["h1", "h2", "h3", "table"])
 
         listOfTableTuples = []
         likelyTableName = ""
+
         for e in tablesAndHeaders:
             if (e.name == "table"):
                 if(e.has_attr('class') and "wikitable" in e["class"]):
@@ -109,9 +112,8 @@ def parse():
         }
         return jsonify(data), 200
     except Exception as e:
+        print(e)
         return f"An Error Occured:{e}"
-    
-
 
 
 def clean_string(s):

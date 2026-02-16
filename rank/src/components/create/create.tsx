@@ -12,6 +12,7 @@ import { ExistingRankStub } from "../../models/ExistingRankStub";
 import { useAuth } from "../auth/authProvider";
 import { useDB } from "../../services/dbProvider";
 import { Icon } from "../common/Icon";
+import { useRouter } from "next/navigation";
 
 export enum HomeViews {
   HOME = "home",
@@ -20,7 +21,7 @@ export enum HomeViews {
 
 function Create() {
   const [wikiLink, setWikiLink] = useState("");
-  // const navigate = useNavigate();
+  const router = useRouter();
 
   const [view, setView] = useState(HomeViews.HOME);
   const [scratchName, setScratchName] = useState("");
@@ -74,8 +75,8 @@ function Create() {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const params = new URLSearchParams();
-    params.set("link", wikiLink);
-    // navigate("/create/fromLink?" + params.toString());
+    params.set("wikiurl", wikiLink);
+    router.push("/template/createFromWiki?" + params.toString());
   };
 
   function fromScratchForm() {
