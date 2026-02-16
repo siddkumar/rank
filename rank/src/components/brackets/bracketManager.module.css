@@ -227,13 +227,13 @@
   transition: all var(--transition-fast);
   width: 3rem;
   min-width: 3rem;
-  height: 100%;
-  min-height: 48px;
+  align-self: stretch;
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-sm);
+  padding: var(--spacing-md) 0;
 }
 
 .previousButton:hover,
@@ -301,6 +301,42 @@
   border-bottom: 2px solid var(--border-primary);
 }
 
+/* Trophy Container */
+.trophyContainer {
+  display: flex;
+  flex-direction: column;
+  padding: 0 var(--spacing-lg);
+  justify-content: space-around;
+  flex: 1 1 auto;
+  min-width: 150px;
+  width: 0;
+  gap: var(--spacing-xl);
+}
+
+.trophyItem {
+  text-align: center;
+  border: 2px solid var(--accent-primary);
+  padding: var(--spacing-lg);
+  box-shadow: var(--shadow-lg);
+  transition: all var(--transition-base);
+  border-radius: var(--radius-lg);
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.15) 0%, rgba(139, 92, 246, 0.15) 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-md);
+  min-height: 120px;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.trophyItem i {
+  font-size: 2.5rem;
+  color: #fbbf24;
+}
+
 /* Responsive */
 @media (max-width: 1024px) {
   .bracketContainer {
@@ -315,10 +351,26 @@
     gap: var(--spacing-md);
   }
 
+  .trophyContainer {
+    min-width: 120px;
+    padding: 0 var(--spacing-md);
+    gap: var(--spacing-md);
+  }
+
   .bracketItem {
     font-size: 0.85rem;
     padding: var(--spacing-sm) var(--spacing-md);
     min-height: 55px;
+  }
+
+  .trophyItem {
+    font-size: 1rem;
+    padding: var(--spacing-md);
+    min-height: 100px;
+  }
+
+  .trophyItem i {
+    font-size: 2rem;
   }
 }
 
@@ -345,10 +397,26 @@
     gap: var(--spacing-sm);
   }
 
+  .trophyContainer {
+    min-width: 100px;
+    padding: 0 var(--spacing-xs);
+    gap: var(--spacing-sm);
+  }
+
   .bracketItem {
     min-height: 48px;
     padding: var(--spacing-xs) var(--spacing-sm);
     font-size: 0.75rem;
+  }
+
+  .trophyItem {
+    font-size: 0.9rem;
+    padding: var(--spacing-sm);
+    min-height: 80px;
+  }
+
+  .trophyItem i {
+    font-size: 1.5rem;
   }
 
   .controls i {

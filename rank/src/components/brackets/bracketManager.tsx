@@ -133,12 +133,10 @@ function BracketManager(props: BracketManagerProps) {
           );
         })}
         {showTrophy && (
-          <div className={styles.roundContainer}>
-            <div className={styles.bracketItem}>
-              {winner ?? RankableDefaultString}
-              <div className={styles.controls}>
-                <Icon className="fa-solid fa-trophy" />
-              </div>
+          <div className={styles.trophyContainer}>
+            <div className={styles.trophyItem}>
+              <Icon className="fa-solid fa-trophy" />
+              <div>{winner ?? RankableDefaultString}</div>
             </div>
           </div>
         )}
@@ -154,12 +152,10 @@ function BracketManager(props: BracketManagerProps) {
             className={styles.previousButton}
             onClick={(e) => setRoundView(Math.max(currentRound - 1, 0))}
           ></button>
-          <div className={styles.roundContainer}>
-            <div className={styles.bracketItem}>
-              {winner ?? RankableDefaultString}
-              <div className={styles.controls}>
-                <Icon className="fa-solid fa-trophy" />
-              </div>
+          <div className={styles.trophyContainer}>
+            <div className={styles.trophyItem}>
+              <Icon className="fa-solid fa-trophy" />
+              <div>{winner ?? RankableDefaultString}</div>
             </div>
           </div>
         </div>
