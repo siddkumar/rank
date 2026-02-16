@@ -36,7 +36,13 @@ function ListRanker(props: ListRankerProps) {
   return (
     <>
       <DragDropContext onDragEnd={handleDrop}>
-        <Droppable droppableId="list-container">
+        <Droppable
+          droppableId="list-container"
+          direction="vertical"
+          isDropDisabled={false}
+          isCombineEnabled={false}
+          ignoreContainerClipping={false}
+        >
           {(provided) => (
             <div
               className={styles.listContainer}
@@ -49,9 +55,9 @@ function ListRanker(props: ListRankerProps) {
                   draggableId={item.name}
                   index={index}
                 >
-                  {(provided) => (
+                  {(provided, snapshot) => (
                     <div
-                      className={styles.rankableRowWrapper}
+                      className={`${styles.rankableRowWrapper} ${snapshot.isDragging ? styles.dragging : ''}`}
                       ref={provided.innerRef}
                       {...provided.dragHandleProps}
                       {...provided.draggableProps}
@@ -75,18 +81,18 @@ function ListRanker(props: ListRankerProps) {
         </Droppable>
       </DragDropContext>
       <div className={styles.listRankerButtonRow}>
-        <div className={props.onSaveAs ? "button-wrapper" : "w-100"}>
+        <div className={props.onSaveAs ? styles.buttonWrapper : styles.w100}>
           <button
-            className={styles.buttonStyles}
+            className="button-styles"
             onClick={() => props.onSave(blobList)}
           >
             Save
           </button>
         </div>
         {props.onSaveAs && (
-          <div className={styles.buttonStyles}>
+          <div className={styles.buttonWrapper}>
             <button
-              className={styles.buttonStyles}
+              className="button-styles"
               onClick={() => {
                 if (props.onSaveAs) {
                   props.onSaveAs(blobList);

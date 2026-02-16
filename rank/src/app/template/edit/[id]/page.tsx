@@ -1,13 +1,13 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { TemplateEditor } from "../../../../components/templates/templateEditor";
 import { GetTemplateById, UpdateTemplate } from "../../../../lib/templatesService";
 import { useRouter } from "next/navigation";
 import { useDB } from "../../../../services/dbProvider";
 import "../../../../styles/create.css";
 
-export enum TemplateEditViews {
+enum TemplateEditViews {
   LOADING = "loading",
   EDIT = "edit",
   SAVING = "saving",
@@ -128,6 +128,7 @@ function TemplateEditClient({ id }: TemplateEditClientProps) {
   );
 }
 
-export default function TemplateEditPage({ params }: { params: { id: string } }) {
-  return <TemplateEditClient id={params.id} />;
+export default async function TemplateEditPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  return <TemplateEditClient id={id} />;
 }

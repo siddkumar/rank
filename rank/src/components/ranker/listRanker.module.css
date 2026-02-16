@@ -1,91 +1,7 @@
 /* Sleek Dark List Ranker */
-.rank-page-layout {
-  display: flex;
-  padding: var(--spacing-3xl) var(--spacing-xl);
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  width: 100%;
-  max-width: 900px;
-  margin: 0 auto;
-  gap: var(--spacing-xl);
-}
 
-.rank-title {
-  display: flex;
-  align-items: center;
-  font-family: var(--font-primary);
-  font-size: 2rem;
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  color: var(--text-primary);
-  background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
-  border: 1px solid var(--border-primary);
-  border-radius: var(--radius-xl);
-  box-shadow: var(--shadow-lg);
-  padding: var(--spacing-lg) var(--spacing-xl);
-  transition: all var(--transition-base);
-  width: 100%;
-}
-
-.rank-title:hover {
-  box-shadow: var(--shadow-xl);
-  border-color: var(--border-secondary);
-}
-
-.rank-title input {
-  background: transparent;
-  border: none;
-  font-family: var(--font-primary);
-  font-size: 2rem;
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  color: var(--text-primary);
-  width: 100%;
-  outline: none;
-}
-
-.rank-title input::placeholder {
-  color: var(--text-muted);
-}
-
-.main-subtitle {
-  font-size: 1.125rem;
-  font-weight: 600;
-  margin-top: var(--spacing-lg);
-  margin-bottom: var(--spacing-md);
-  color: var(--text-secondary);
-}
-
-.bracket-button {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--spacing-sm);
-  padding: 0.625rem 1.125rem;
-  background: transparent;
-  border: 1px solid var(--border-secondary);
-  border-radius: var(--radius-lg);
-  color: var(--text-secondary);
-  text-decoration: none;
-  font-family: var(--font-primary);
-  font-size: 0.875rem;
-  font-weight: 600;
-  transition: all var(--transition-fast);
-  box-shadow: var(--shadow-sm);
-}
-
-.bracket-button:hover {
-  background-color: var(--bg-elevated);
-  border-color: var(--accent-primary);
-  color: var(--accent-primary);
-  box-shadow: var(--shadow-md);
-  transform: translateY(-2px);
-}
-
-.bracket-button i {
-  margin: 0;
-  color: inherit;
-}
+/* Note: rank-page-layout, rank-title, main-subtitle, and bracket-button
+   are global styles defined in rank.css */
 
 /* Tooltip */
 .tooltip {
@@ -123,7 +39,7 @@
 }
 
 /* Button Layout */
-.button-wrapper {
+.buttonWrapper {
   width: 100%;
 }
 
@@ -149,7 +65,7 @@
   width: 100%;
 }
 
-.w-100 {
+.w100 {
   width: 100%;
 }
 
@@ -205,7 +121,7 @@
   border: 1px solid var(--border-primary);
   padding: var(--spacing-md) var(--spacing-lg);
   box-shadow: var(--shadow-sm);
-  transition: all var(--transition-base);
+  transition: background-color var(--transition-base), border-color var(--transition-base), box-shadow var(--transition-base);
   border-radius: var(--radius-lg);
   background: var(--bg-tertiary);
   display: flex;
@@ -214,12 +130,13 @@
   cursor: move;
   user-select: none;
   gap: var(--spacing-md);
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .rankableRowWrapper:hover {
   box-shadow: var(--shadow-md);
   border-color: var(--border-secondary);
-  transform: translateX(4px);
   background: var(--bg-elevated);
 }
 
@@ -231,66 +148,6 @@
   opacity: 0.6;
   box-shadow: var(--shadow-xl);
   border-color: var(--accent-primary);
-}
-
-/* Buttons */
-.buttonStyles {
-  background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
-  color: white;
-  border: none;
-  border-radius: var(--radius-lg);
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--spacing-sm);
-  text-align: center;
-  text-decoration: none;
-  transition: all var(--transition-base);
-  user-select: none;
-  font-size: 0.875rem;
-  font-weight: 600;
-  line-height: 1;
-  margin-top: var(--spacing-sm);
-  margin-bottom: var(--spacing-sm);
-  padding: 0.875rem 1.5rem;
-  font-family: var(--font-primary);
-  width: 100%;
-  box-shadow: var(--shadow-md);
-  position: relative;
-  overflow: hidden;
-}
-
-.buttonStyles::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, var(--accent-hover) 0%, var(--accent-tertiary) 100%);
-  opacity: 0;
-  transition: opacity var(--transition-base);
-}
-
-.buttonStyles:not([disabled]):hover::before {
-  opacity: 1;
-}
-
-.buttonStyles:not([disabled]):hover {
-  box-shadow: var(--shadow-lg), var(--shadow-glow);
-  transform: translateY(-2px);
-}
-
-.buttonStyles:not([disabled]):active {
-  transform: translateY(0);
-}
-
-.buttonStyles > * {
-  position: relative;
-  z-index: 1;
-}
-
-.buttonStyles:disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
 }
 
 /* Responsive */

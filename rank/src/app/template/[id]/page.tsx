@@ -1,8 +1,8 @@
 import RankView from "../../../components/rank/RankView";
 import { GetTemplateById } from "../../../lib/templatesService";
 
-const Template = async ({ params }: { params: { id: string } }) => {
-  const { id } = params;
+const Template = async ({ params }: { params: Promise<{ id: string }> }) => {
+  const { id } = await params;
 
   const x = await GetTemplateById(id ?? "");
 

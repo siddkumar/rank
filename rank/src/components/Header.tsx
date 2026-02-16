@@ -9,6 +9,7 @@ import "firebase/compat/firestore";
 import "firebase/compat/auth";
 import { AuthResult } from "./auth/authWidget";
 import "../styles/auth.css";
+import "firebaseui/dist/firebaseui.css";
 import { useAuth } from "./auth/authProvider";
 import { useDB } from "../services/dbProvider";
 import { useRouter } from "next/navigation";

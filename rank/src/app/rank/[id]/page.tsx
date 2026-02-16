@@ -1,8 +1,8 @@
 import { GetRankById } from "../../../lib/ranksService";
 import RankView from "../../../components/rank/RankView";
 
-const Rank = async ({ params }: { params: { id: string } }) => {
-  const { id } = params;
+const Rank = async ({ params }: { params: Promise<{ id: string }> }) => {
+  const { id } = await params;
 
   const x = await GetRankById(id ?? "");
 

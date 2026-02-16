@@ -1,8 +1,9 @@
 "use client";
 
-import React from "react";
+import React, { use } from "react";
 import RankEdit from "./RankEdit";
 
-export default function RankEditPage({ params }: { params: { id: string } }) {
-  return <RankEdit id={params.id} />;
+export default function RankEditPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = use(params);
+  return <RankEdit id={id} />;
 }

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import "firebaseui/dist/firebaseui.css";
 import "../styles/myStuff.css";
 import { ExistingTemplateStub } from "./templates/templates";
 import {

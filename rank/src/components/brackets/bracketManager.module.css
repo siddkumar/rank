@@ -11,6 +11,10 @@
   border-radius: var(--radius-xl);
   box-shadow: var(--shadow-lg);
   min-height: 500px;
+  width: 100%;
+  max-width: calc(100vw - var(--spacing-xl) * 2);
+  box-sizing: border-box;
+  scroll-behavior: smooth;
 }
 
 .bracketContainer::-webkit-scrollbar {
@@ -38,8 +42,9 @@
   flex-direction: column;
   padding: 0 var(--spacing-lg);
   justify-content: space-around;
-  flex-grow: 1;
-  min-width: 280px;
+  flex: 1 1 auto;
+  min-width: 150px;
+  width: 0;
   gap: var(--spacing-xl);
 }
 
@@ -74,9 +79,16 @@
   align-items: center;
   justify-content: space-between;
   cursor: pointer;
-  min-height: 65px;
+  min-height: 60px;
   gap: var(--spacing-sm);
   position: relative;
+  font-size: 0.9rem;
+  width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  min-width: 0;
 }
 
 .bracketItem:hover {
@@ -161,6 +173,35 @@
   letter-spacing: -0.02em;
   color: var(--text-primary);
   margin: 0;
+}
+
+/* View Switcher */
+.viewSwitcher {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+.viewSwitcher span {
+  font-family: var(--font-primary);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.viewSwitcher i {
+  cursor: pointer;
+  color: var(--text-tertiary);
+  transition: all var(--transition-fast);
+  font-size: 1.25rem;
+  padding: var(--spacing-xs);
+  border-radius: var(--radius-sm);
+}
+
+.viewSwitcher i:hover {
+  color: var(--accent-primary);
+  background-color: var(--bg-elevated);
+  transform: scale(1.1);
 }
 
 /* Mobile Bracket Container */
@@ -265,11 +306,19 @@
   .bracketContainer {
     padding: var(--spacing-md);
     gap: var(--spacing-md);
+    max-width: calc(100vw - var(--spacing-md) * 2);
   }
 
   .roundContainer {
-    min-width: 220px;
+    min-width: 120px;
     padding: 0 var(--spacing-md);
+    gap: var(--spacing-md);
+  }
+
+  .bracketItem {
+    font-size: 0.85rem;
+    padding: var(--spacing-sm) var(--spacing-md);
+    min-height: 55px;
   }
 }
 
@@ -284,13 +333,26 @@
     font-size: 1.5rem;
   }
 
-  .bracketItem {
-    min-height: 55px;
-    padding: var(--spacing-sm) var(--spacing-md);
+  .bracketContainer {
+    padding: var(--spacing-sm);
+    gap: var(--spacing-sm);
+    max-width: calc(100vw - var(--spacing-sm) * 2);
   }
 
   .roundContainer {
-    min-width: 180px;
-    padding: 0 var(--spacing-sm);
+    min-width: 100px;
+    padding: 0 var(--spacing-xs);
+    gap: var(--spacing-sm);
+  }
+
+  .bracketItem {
+    min-height: 48px;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    font-size: 0.75rem;
+  }
+
+  .controls i {
+    font-size: 0.9rem;
+    padding: 2px;
   }
 }

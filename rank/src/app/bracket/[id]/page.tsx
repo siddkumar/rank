@@ -3,8 +3,8 @@ import BracketView from "./BracketView";
 import { GetBracketById } from "../../../lib/bracketsService";
 import { GetTemplateById } from "../../../lib/templatesService";
 
-const Bracket = async ({ params }: { params: { id: string } }) => {
-  const { id } = params;
+const Bracket = async ({ params }: { params: Promise<{ id: string }> }) => {
+  const { id } = await params;
 
   // Try to fetch as an existing bracket first
   const bracket = await GetBracketById(id ?? "");

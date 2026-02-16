@@ -1,7 +1,11 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -15,7 +19,7 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "preserve",
+    "jsx": "react-jsx",
     "incremental": true,
     "plugins": [
       {
@@ -23,6 +27,14 @@
       }
     ]
   },
-  "include": ["src", "src/index.tsx", "./build/types/**/*.ts"],
-  "exclude": ["node_modules"]
+  "include": [
+    "src",
+    "src/index.tsx",
+    "./build/types/**/*.ts",
+    "build/types/**/*.ts",
+    "build/dev/types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

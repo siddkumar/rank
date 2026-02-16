@@ -202,7 +202,7 @@ function Create() {
           {!collapsedCards.wikipedia && (
             <form onSubmit={handleSubmit}>
               <div className="wiki-input-container">
-                <i className="fa-brands fa-wikipedia-w"></i>
+                <Icon className="fa-brands fa-wikipedia-w" />
                 <input
                   type="text"
                   value={wikiLink}

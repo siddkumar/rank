@@ -1,8 +1,9 @@
 "use client";
 
-import React from "react";
+import React, { use } from "react";
 import BracketEdit from "./BracketEdit";
 
-export default function BracketEditPage({ params }: { params: { id: string } }) {
-  return <BracketEdit id={params.id} />;
+export default function BracketEditPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = use(params);
+  return <BracketEdit id={id} />;
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import RankableItem, { RankableDefaultString } from "../../models/RankableItem";
 import BracketRound from "./bracketRound";
 import { Icon } from "../common/Icon";
@@ -69,17 +69,8 @@ function BracketManager(props: BracketManagerProps) {
   const [winner, setWinner] = useState<string | null>(null);
   const [mobileRoundView, setRoundView] = useState(0);
 
-  const width = 1024;
-  var defaultView = BracketViews.TABLET;
-  if (width >= 1024) {
-    defaultView = BracketViews.DESKTOP;
-  } else if (width >= 768) {
-    defaultView = BracketViews.TABLET;
-  } else {
-    defaultView = BracketViews.MOBILE;
-  }
-
-  const [view, setView] = useState(defaultView);
+  // View state for manual switching only
+  const [view, setView] = useState<BracketViews>(BracketViews.DESKTOP);
 
   function advance(psuedoSeed: number, i: RankableItem, round: number) {
     if (round + 1 === roundByRound.length) {
@@ -247,8 +238,8 @@ function BracketManager(props: BracketManagerProps) {
   return (
     <div>
       <div className={styles.bracketPageHeader}>
-        <div>
-          Switch View
+        <div className={styles.viewSwitcher}>
+          <span>Switch View</span>
           <Icon
             onClick={(e) => setView(BracketViews.DESKTOP)}
             className="fa-solid fa-desktop"
