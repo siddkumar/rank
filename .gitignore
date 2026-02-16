@@ -5,3 +5,9 @@ rank-backend/env
 .prettierrc.json
 
 venv/
+
+# Environment variables
+.env
+.env.local
+.env*.local
+rank/.env

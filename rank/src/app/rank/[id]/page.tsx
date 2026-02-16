@@ -1,17 +1,36 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import { GetRankById } from "../../../lib/ranksService";
 import RankView from "../../../components/rank/RankView";
+import RankableItem from "../../../models/RankableItem";
 
-const Rank = async ({ params }: { params: Promise<{ id: string }> }) => {
-  const { id } = await params;
+const Rank = ({ params }: { params: Promise<{ id: string }> }) => {
+  const [id, setId] = useState<string>("");
+  const [rankableList, setRankableList] = useState<RankableItem[]>([]);
+  const [rankName, setRankName] = useState<string>("");
+  const [loading, setLoading] = useState(true);
 
-  const x = await GetRankById(id ?? "");
+  useEffect(() => {
+    params.then(({ id }) => {
+      setId(id);
+      GetRankById(id ?? "").then((x) => {
+        setRankableList(x.bloblist);
+        setRankName(x.rankName);
+        setLoading(false);
+      });
+    });
+  }, [params]);
 
-  if (!x) {
-    // Handle not found, optionally return a 404 page
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (!rankableList.length) {
     return <div>List not found</div>;
   }
 
-  return <RankView ranking={x.bloblist} rankName={x.rankName}></RankView>;
+  return <RankView ranking={rankableList} rankName={rankName}></RankView>;
 };
 
 export default Rank;
