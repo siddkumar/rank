@@ -29,10 +29,10 @@
   },
   "include": [
     "src",
-    "src/index.tsx",
     "./build/types/**/*.ts",
     "build/types/**/*.ts",
-    "build/dev/types/**/*.ts"
+    "build/dev/types/**/*.ts",
+    "./build/dev/types/**/*.ts"
   ],
   "exclude": [
     "node_modules"
