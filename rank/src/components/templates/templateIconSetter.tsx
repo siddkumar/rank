@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { GetImgSrc } from "../../services/parserService";
 import { ItemCandidate } from "./templateEditor";
+import { Icon } from "../common/Icon";
 
 interface TemplateIconSetterProps {
   item: ItemCandidate;
@@ -39,21 +40,21 @@ export default function TemplateIconSetter(props: TemplateIconSetterProps) {
 
   function IconImageView() {
     return (
-      <i
+      <Icon
         onClick={(e) => {
           setView(TemplateIconSetterViews.TextInputBox);
         }}
         className="fa-regular fa-image no-left"
-      ></i>
+      />
     );
   }
 
   function IconDownloadView() {
     return (
-      <i
+      <Icon
         onClick={(e) => pullImage(item).then((s) => props.onSave(s))}
         className="fa-solid fa-file-arrow-down no-left"
-      ></i>
+      />
     );
   }
 
@@ -66,10 +67,10 @@ export default function TemplateIconSetter(props: TemplateIconSetterProps) {
           value={imageUrl}
           onChange={(e) => setImageUrl(e.target.value)}
         ></input>
-        <i
+        <Icon
           onClick={(e) => props.onSave(imageUrl)}
           className="fa-regular fa-floppy-disk no-left"
-        ></i>
+        />
       </>
     );
   }

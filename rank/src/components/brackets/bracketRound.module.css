@@ -1,0 +1,242 @@
+/* Modern Bracket Round Styles */
+.roundContainer {
+  display: flex;
+  flex-direction: column;
+  padding-right: var(--spacing-md);
+  padding-left: var(--spacing-md);
+  justify-content: space-around;
+  flex-grow: 1;
+  min-width: 250px;
+  gap: var(--spacing-lg);
+}
+
+.roundContainerOdd {
+  display: flex;
+  flex-direction: column;
+  padding-right: var(--spacing-md);
+  padding-left: var(--spacing-md);
+  justify-content: space-around;
+  flex-grow: 1;
+  min-width: 250px;
+  gap: var(--spacing-lg);
+  background-color: var(--bg-tertiary);
+}
+
+/* Round Title */
+.roundTitle {
+  text-align: center;
+  font-family: var(--font-primary);
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: var(--spacing-lg);
+  padding-bottom: var(--spacing-sm);
+  border-bottom: 2px solid var(--border-primary);
+}
+
+/* Matchup Container */
+.matchupContainer {
+  margin-bottom: var(--spacing-md);
+  margin-top: var(--spacing-md);
+  width: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+/* Bracket Item */
+.bracketItem {
+  text-align: left;
+  border: 2px solid var(--border-primary);
+  padding: var(--spacing-md);
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-base);
+  border-radius: var(--radius-md);
+  background-color: var(--bg-secondary);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  position: relative;
+  cursor: pointer;
+  min-height: 60px;
+  min-width: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-behavior: smooth;
+}
+
+.bracketItem::-webkit-scrollbar {
+  height: 4px;
+}
+
+.bracketItem::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.bracketItem::-webkit-scrollbar-thumb {
+  background: var(--border-secondary);
+  border-radius: var(--radius-sm);
+}
+
+.bracketItem::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-primary);
+}
+
+.bracketItem > div:not(.controls):not(.glyph) {
+  white-space: nowrap;
+  min-width: max-content;
+  flex-shrink: 0;
+}
+
+.bracketItem:hover {
+  box-shadow: var(--shadow-md);
+  border-color: var(--accent-primary);
+  transform: translateX(4px);
+}
+
+.bracketItem:active {
+  transform: translateX(2px);
+  box-shadow: var(--shadow-sm);
+}
+
+.bracketItem.selected {
+  border-color: var(--accent-primary);
+  background-color: rgba(99, 102, 241, 0.1);
+  box-shadow: var(--shadow-md);
+}
+
+.bracketItem.winner {
+  border-color: var(--success);
+  background-color: rgba(16, 185, 129, 0.1);
+  border-width: 2px;
+}
+
+.bracketItem.winner::before {
+  content: '✓';
+  position: absolute;
+  right: var(--spacing-sm);
+  top: var(--spacing-sm);
+  color: var(--success);
+  font-weight: bold;
+  font-size: 1.125rem;
+}
+
+/* Controls */
+.controls {
+  display: flex;
+  gap: var(--spacing-xs);
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.controls i {
+  cursor: pointer;
+  color: var(--text-tertiary);
+  transition: all var(--transition-fast);
+  font-size: 1rem;
+  padding: var(--spacing-xs);
+  border-radius: var(--radius-sm);
+}
+
+.controls i:hover {
+  color: var(--accent-primary);
+  background-color: var(--bg-tertiary);
+}
+
+/* Glyph/Avatar */
+.glyph {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: var(--radius-md);
+  background-color: var(--bg-elevated);
+  border: 1px solid var(--border-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.bracketItem .glyph {
+  margin-right: var(--spacing-xs);
+}
+
+.glyph img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.glyphStub {
+  width: 2rem;
+  height: 2rem;
+  border-radius: var(--radius-sm);
+  background-color: var(--bg-elevated);
+  border: 1px solid var(--border-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.glyphStub img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .roundContainer,
+  .roundContainerOdd {
+    min-width: 200px;
+  }
+
+  .bracketItem {
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .roundContainer,
+  .roundContainerOdd {
+    min-width: 180px;
+    padding-right: var(--spacing-sm);
+    padding-left: var(--spacing-sm);
+  }
+
+  .bracketItem {
+    min-height: 50px;
+    padding: var(--spacing-sm);
+    font-size: 0.8rem;
+  }
+
+  .glyph {
+    width: 2rem;
+    height: 2rem;
+  }
+
+  .controls i {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .bracketItem {
+    font-size: 0.75rem;
+    padding: var(--spacing-xs);
+    min-height: 45px;
+  }
+
+  .glyph {
+    width: 1.75rem;
+    height: 1.75rem;
+  }
+
+  .controls i {
+    font-size: 0.85rem;
+  }
+}

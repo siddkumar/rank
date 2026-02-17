@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { GetImgSrc } from "../../services/parserService";
 import TemplateIconSetter from "./templateIconSetter";
+import { Icon } from "../common/Icon";
 
 interface TemplateEditorProps {
   initialName: string;
@@ -116,10 +117,10 @@ export function TemplateEditor(props: TemplateEditorProps) {
     return (
       <div className="row">
         <div className="main-subtitle">Download all images:</div>
-        <i
+        <Icon
           onClick={async (e) => await pullImages()}
           className="fa-solid fa-file-zipper"
-        ></i>
+        />
       </div>
     );
   }
@@ -149,7 +150,7 @@ export function TemplateEditor(props: TemplateEditorProps) {
             }}
           />
           <div key={i + "-button-key"} onClick={(e) => removeItem(i)}>
-            <i className="fa-solid fa-trash"></i>
+            <Icon className="fa-solid fa-trash" />
           </div>
         </div>
       ))}

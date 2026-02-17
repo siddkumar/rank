@@ -1,24 +1,31 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { getAuth } from "firebase/auth";
+import { getAuth, Auth } from "firebase/auth";
 import firebase from "firebase/compat/app";
 
-// Initialize Firebase
+// Initialize Firebase (client-side only)
 const firebaseConfig = {
-  apiKey: process.env.REACT_APP_API_KEY,
-  authDomain: process.env.REACT_APP_AUTH_DOMAIN,
-  projectId: process.env.REACT_APP_PROJECT_ID,
-  storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
-  messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
-  appId: process.env.REACT_APP_APP_ID,
+  apiKey: process.env.NEXT_PUBLIC__API_KEY,
+  authDomain: process.env.NEXT_PUBLIC__AUTH_DOMAIN,
+  projectId: process.env.NEXT_PUBLIC__PROJECT_ID,
+  storageBucket: process.env.NEXT_PUBLIC__STORAGE_BUCKET,
+  messagingSenderId: process.env.NEXT_PUBLIC__MESSAGING_SENDER_ID,
+  appId: process.env.NEXT_PUBLIC__APP_ID,
 };
-firebase.initializeApp(firebaseConfig);
-const auth = getAuth();
+
+let auth: Auth | undefined;
+if (typeof window !== "undefined") {
+  if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+  }
+  auth = getAuth();
+}
 
 // Define the shape of the AuthContext value
 interface AuthContextValue {
   name: string | null;
   email: string | null;
   id: string | null;
+  isLoading: boolean;
   signOut: () => void;
   saveUserId: (id: string) => void;
   saveEmail: (email: string) => void;
@@ -30,6 +37,7 @@ const AuthContext = createContext<AuthContextValue>({
   name: null,
   email: null,
   id: null,
+  isLoading: true,
   signOut: () => {},
   saveUserId: (id: string) => {},
   saveEmail: (email: string) => {},
@@ -50,6 +58,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [id, setUserId] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const name = localStorage.getItem("name");
@@ -65,13 +74,17 @@ export function AuthProvider({ children }: AuthProviderProps) {
     if (id) {
       setUserId(JSON.parse(id));
     }
+
+    setIsLoading(false);
   }, []);
 
   const signOut = () => {
     setName("");
     setEmail("");
     setUserId("");
-    auth.signOut();
+    if (auth) {
+      auth.signOut();
+    }
     localStorage.setItem("name", "");
     localStorage.setItem("email", "");
     localStorage.setItem("id", "");
@@ -94,6 +107,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     name,
     email,
     id,
+    isLoading,
     signOut,
     saveUserId,
     saveEmail,

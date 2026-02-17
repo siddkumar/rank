@@ -1,0 +1,131 @@
+/* Sleek Dark Rankable Row */
+.rankableRowLeft {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  flex: 1;
+  min-width: 0;
+}
+
+.rankableRowLeft span {
+  font-family: var(--font-primary);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  letter-spacing: 0.01em;
+}
+
+/* Controls */
+.controls {
+  display: flex;
+  gap: var(--spacing-md);
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.controls i {
+  cursor: pointer;
+  color: var(--text-tertiary);
+  transition: all var(--transition-fast);
+  font-size: 1.25rem;
+  padding: var(--spacing-xs);
+  border-radius: var(--radius-sm);
+}
+
+.controls i:hover {
+  color: var(--accent-primary);
+  background-color: var(--bg-elevated);
+  transform: scale(1.1);
+}
+
+.controls i:active {
+  transform: scale(0.95);
+}
+
+/* Glyph/Avatar */
+.glyph {
+  width: 4rem;
+  height: 4rem;
+  border-radius: var(--radius-lg);
+  background-color: var(--bg-elevated);
+  border: 2px solid var(--border-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  flex-shrink: 0;
+  transition: all var(--transition-fast);
+}
+
+.glyph img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.glyph:hover {
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15);
+}
+
+/* Small Glyph */
+.glyphStub {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: var(--radius-md);
+  background-color: var(--bg-elevated);
+  border: 1px solid var(--border-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.glyphStub img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Drag Handle */
+.rankableRowLeft::before {
+  content: '⋮⋮';
+  color: var(--text-muted);
+  font-size: 1.25rem;
+  line-height: 1;
+  letter-spacing: -2px;
+  cursor: grab;
+  user-select: none;
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+  margin-right: var(--spacing-xs);
+}
+
+.rankableRowLeft:hover::before {
+  opacity: 0.6;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .glyph {
+    width: 3rem;
+    height: 3rem;
+  }
+
+  .glyphStub {
+    width: 2rem;
+    height: 2rem;
+  }
+
+  .rankableRowLeft span {
+    font-size: 0.938rem;
+  }
+
+  .controls i {
+    font-size: 1.125rem;
+  }
+}

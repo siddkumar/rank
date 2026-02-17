@@ -1,0 +1,86 @@
+import React, { useState } from "react";
+import { TemplateEditor } from "../templates/templateEditor";
+import { PostNewTemplate } from "../../lib/templatesService";
+import "../../styles/create.css";
+import { useAuth } from "../auth/authProvider";
+import { useDB } from "../../services/dbProvider";
+import { useRouter } from "next/navigation";
+
+export enum CreateFromScratchViews {
+  CREATE = "create",
+  SAVING = "saving",
+  READY = "ready",
+}
+
+export interface CreateFromScratchProps {
+  initialName: string;
+  initialItems: string[];
+}
+
+function CreateFromScratch(props: CreateFromScratchProps) {
+  const [view, setView] = useState(CreateFromScratchViews.CREATE);
+  const router = useRouter();
+  const auth = useAuth();
+  const db = useDB().db;
+
+  const submitTemplate = async (
+    templateName: string,
+    items: string[],
+    images?: string[]
+  ) => {
+    setView(CreateFromScratchViews.SAVING);
+
+    var id = await PostNewTemplate(
+      db!,
+      templateName,
+      items,
+      auth?.id ?? "unknownId",
+      images
+    );
+    router.push("/template/"+id)
+  };
+
+  function createView() {
+    return (
+      <div className="create-page-layout">
+        <div className="main-title">Let's create a template</div>
+        <br></br>
+        <div className="card container">
+          <TemplateEditor
+            initialName={props.initialName}
+            initialItems={props.initialItems}
+            onSubmit={submitTemplate}
+          />
+        </div>
+      </div>
+    );
+  }
+
+  function savingView() {
+    return (
+      <div className="create-page-layout">
+        <div className="main-title">Saving...</div>
+      </div>
+    );
+  }
+
+  function readyView() {
+    return (
+      <div className="create-page-layout">
+        <div>
+          <div className="main-title">Your Template is Ready!</div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <>
+      {view === CreateFromScratchViews.CREATE && createView()}
+      {view === CreateFromScratchViews.SAVING && savingView()}
+      {view === CreateFromScratchViews.READY && readyView()}
+    </>
+  );
+}
+
+export default CreateFromScratch;

@@ -1,5 +1,9 @@
+"use client";
+
 import React from "react";
 import RankableItem, { RankableDefaultString } from "../../models/RankableItem";
+import { Icon } from "../common/Icon";
+import styles from "./bracketRound.module.css";
 
 export interface BracketRoundProps {
   seeds: Map<number, any>;
@@ -24,8 +28,7 @@ function BracketRound(props: BracketRoundProps) {
   return (
     <div
       className={
-        "round-container " +
-        (props.roundNumber % 2 === 0 ? "bg-even" : "bg-odd")
+        (props.roundNumber % 2 === 0 ? styles.roundContainer : styles.roundContainerOdd)
       }
     >
       {props.matchupList.map((item, index) => {
@@ -35,32 +38,32 @@ function BracketRound(props: BracketRoundProps) {
         return (
           <div
             key={index + "." + x.name + "vs" + y.name + "." + props.roundNumber}
-            className="matchup-container"
+            className={styles.matchupContainer}
           >
             <div
               key={x.name + x.rank + "." + props.roundNumber}
-              className="row card item-container pointer"
+              className={styles.bracketItem}
               onClick={() =>
                 props.clickCallback(psuedoSeed, x, props.roundNumber - 1)
               }
             >
               {MiniPic(x?.imageUrl)}
               <div>{getNiceString(x.name, x.rank)}</div>
-              <div className="controls">
-                <i className="fa-solid fa-square-caret-right"></i>
+              <div className={styles.controls}>
+                <Icon className="fa-solid fa-square-caret-right" />
               </div>
             </div>
             <div
               key={y.name + y.rank + props.roundNumber}
-              className="row card item-container pointer"
+              className={styles.bracketItem}
               onClick={() =>
                 props.clickCallback(psuedoSeed, y, props.roundNumber - 1)
               }
             >
               {MiniPic(y?.imageUrl)}
               <div>{getNiceString(y.name, y.rank)}</div>
-              <div className="controls">
-                <i className="fa-solid fa-square-caret-right"></i>
+              <div className={styles.controls}>
+                <Icon className="fa-solid fa-square-caret-right" />
               </div>
             </div>
           </div>
