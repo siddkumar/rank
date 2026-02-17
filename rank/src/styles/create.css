@@ -152,7 +152,7 @@ textarea:focus {
   padding: var(--spacing-xl);
   box-shadow: var(--shadow-lg);
   display: grid;
-  gap: var(--spacing-md);
+  gap: var(--spacing-xl);
   transition: all var(--transition-base);
 }
 
@@ -240,6 +240,22 @@ textarea:focus {
 .wiki-input-container input {
   flex: 1;
   margin: 0;
+}
+
+.beta-tag {
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background: var(--accent-primary, #6366f1);
+  color: #fff;
+  -webkit-text-fill-color: #fff;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+  padding: 0.1em 0.5em;
+  border-radius: 4px;
+  vertical-align: middle;
+  margin-left: 0.4rem;
 }
 
 /* Form Labels */

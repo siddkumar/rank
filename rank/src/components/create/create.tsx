@@ -194,7 +194,7 @@ function Create() {
 
         <div className="choices-container card container">
           <div className="card-header">
-            <div className="home-title" onClick={() => expandCard('wikipedia')}>Import a Template from Wikipedia</div>
+            <div className="home-title" onClick={() => expandCard('wikipedia')}>Import a Template from Wikipedia <span className="beta-tag">Beta</span></div>
             <Icon
               className={`fa-solid ${collapsedCards.wikipedia ? 'fa-chevron-down' : 'fa-chevron-up'}`}
               onClick={() => toggleCard('wikipedia')}

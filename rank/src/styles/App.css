@@ -119,6 +119,7 @@ body {
   box-shadow: var(--shadow-md);
   position: relative;
   overflow: hidden;
+  isolation: isolate;
 }
 
 .button-styles::before {
@@ -131,6 +132,7 @@ body {
   background: linear-gradient(135deg, var(--accent-hover) 0%, var(--accent-tertiary) 100%);
   opacity: 0;
   transition: opacity var(--transition-base);
+  z-index: -1;
 }
 
 .button-styles:not([disabled]):hover::before {

@@ -123,7 +123,7 @@ function Header(props: HeaderProps) {
             <img src={logo.src} alt="logo" className="header-logo" />
           </a>
           <a href="/">
-            <h1 className="header-title">rank anything</h1>
+            <h1 className="header-title">banter anything</h1>
           </a>
           <nav className="header-right">
             {auth.id && auth.id.length > 0 ? (
